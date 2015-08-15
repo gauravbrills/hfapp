@@ -50,10 +50,17 @@ angular.module('starter.services', ['ngResource'])
     };
   })
   .factory('funds', function($resource) {
-    // http://10.0.2.2:8100 for android
-        return $resource('/data/aum.json', {}, {
+    // http://10.0.2.2:8100 for android http://es.pixelsorcery.in:9200/transactions/transaction/_search
+        return $resource('/api/transactions/transaction/_search', {}, {
           get: {
             method: 'GET'
           }
         });
-  });
+  })  .factory('acctsumm', function($resource) {
+      // http://10.0.2.2:8100 for android http://es.pixelsorcery.in:9200/transactions/transaction/_search
+          return $resource('/data/sample.json', {}, {
+            get: {
+              method: 'GET'
+            }
+          });
+    });
