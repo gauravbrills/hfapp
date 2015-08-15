@@ -1,6 +1,6 @@
 {
-  "name": "iHWorld",
-  "app_id": "",
+  "name": "hfApp",
+  "app_id": "hfapp",
   "proxies": [
     {
       "path": "/api",
