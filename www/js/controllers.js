@@ -1,4 +1,4 @@
-angular.module('starter.controllers', [])
+angular.module('hfapp.controllers', [])
 
 .controller('DashCtrl', function($scope) {
   myFunction();

@@ -60,7 +60,11 @@ var fundDescRenderer = function(data) {
         enabled: false
       },
       tooltip: {
-        valueSuffix: ' million $'
+        valueSuffix: ' million $',
+        crosshairs: [true, true],
+        followPointer: true,
+        followTouchMove: false
+
       },
       series: [{
         type: 'area',

@@ -1,5 +1,5 @@
 'use strict'
-angular.module('starter.services', ['ngResource'])
+angular.module('hfapp.services', ['ngResource'])
 
 .factory('Chats', function($resource) {
     // Might use a resource here that returns a JSON array
