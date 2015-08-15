@@ -1,0 +1,10 @@
+{
+  "name": "iHWorld",
+  "app_id": "",
+  "proxies": [
+    {
+      "path": "/api",
+      "proxyUrl": "http://es.pixelsorcery.in:9200/"
+    }
+  ]
+}
