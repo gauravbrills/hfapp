@@ -14,7 +14,7 @@ var fundDescRenderer = function(data) {
   shortPositions = data.hits.hits[index]._source.ShortPositions;
   // aum chart
   $(function() {
-    $('#container1').highcharts({
+    $('#container').highcharts({
       chart: {
         zoomType: 'x'
       },

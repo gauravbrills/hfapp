@@ -30,22 +30,49 @@ angular.module('hfapp', ['ionic', 'hfapp.controllers', 'hfapp.services'])
 
 
   $stateProvider
-// side menu
-.state('app', {
-url: '/app',
-abstract: true,
-templateUrl: 'templates/menu.html'
-})
-  // setup an abstract state for the tabs directive
+  // side menu
+    .state('app', {
+      url: '/app',
+      abstract: true,
+      templateUrl: 'templates/menu.html'
+    })
+    .state('app.acctsumm', {
+      url: '/acctsumm',
+      views: {
+        'menuContent': {
+          templateUrl: 'templates/acctsumm.html',
+          controller: 'acctSummCtrl'
+        }
+      }
+    })
+    .state('app.allfunds', {
+      url: '/allfunds',
+      views: {
+        'menuContent': {
+          templateUrl: 'templates/allfunds.html',
+          controller: 'allfundsCtrl'
+        }
+      }
+    })
+    .state('app.fundDescription', {
+      url: '/fundDescription',
+      views: {
+        'menuContent': {
+          templateUrl: 'templates/fundDescription.html',
+          controller: 'fundAumCtrl'
+        }
+      }
+    })
+    // setup an abstract state for the tabs directive
     .state('tab', {
-    url: "/tab",
-    abstract: true,
-    templateUrl: "templates/tabs.html"
-  })
+      url: "/tab",
+      abstract: true,
+      templateUrl: "templates/tabs.html"
+    })
 
   // Each tab has its own nav history stack:
 
-  .state('tab.dash', {
+  /*.state('tab.dash', {
     url: '/dash',
     views: {
       'tab-dash': {
@@ -54,37 +81,36 @@ templateUrl: 'templates/menu.html'
       }
     }
   })
+    .state('tab.chats', {
+        url: '/chats',
+        views: {
+          'tab-chats': {
+            templateUrl: 'templates/tab-chats.html',
+            controller: 'ChatsCtrl'
+          }
+        }
+      })
+      .state('tab.chat-detail', {
+        url: '/chats/:chatId',
+        views: {
+          'tab-chats': {
+            templateUrl: 'templates/chat-detail.html',
+            controller: 'ChatDetailCtrl'
+          }
+        }
+      })
 
-  .state('tab.chats', {
-      url: '/chats',
+    .state('tab.account', {
+      url: '/account',
       views: {
-        'tab-chats': {
-          templateUrl: 'templates/tab-chats.html',
-          controller: 'ChatsCtrl'
+        'tab-account': {
+          templateUrl: 'templates/tab-account.html',
+          controller: 'AccountCtrl'
         }
       }
-    })
-    .state('tab.chat-detail', {
-      url: '/chats/:chatId',
-      views: {
-        'tab-chats': {
-          templateUrl: 'templates/chat-detail.html',
-          controller: 'ChatDetailCtrl'
-        }
-      }
-    })
-
-  .state('tab.account', {
-    url: '/account',
-    views: {
-      'tab-account': {
-        templateUrl: 'templates/tab-account.html',
-        controller: 'AccountCtrl'
-      }
-    }
-  });
+    });*/
 
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/tab/dash');
+  $urlRouterProvider.otherwise('/app/acctsumm');
 
 });
