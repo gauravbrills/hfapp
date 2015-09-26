@@ -1,39 +1,56 @@
 <ion-view view-title="All Funds">
-  <ion-content class="center">
-    <div class="row responsive-sm padding-left"><u><h4>Fund Dependency</h4></u></div>
+  <ion-content class="center" data-tap-disabled="true">
+    <ion-refresher pulling-text="Pull to refresh..." on-refresh="doRefresh()">
+    </ion-refresher>
     <div class="row">
-      <p id="categoryName"><i>Showing funds in category : All</i></p>
+      <div class="col-xs">
+        <div class="box">
+          <h3>Fund Dependency</h3>
+        </div>
+      </div>
     </div>
-
-    <div id="main-wrap" class="row responsive-sm">
-      <div id="sidebar" class="col"></div>
-      <div id="content-wrap" class="col col-60"><u><h4>Fund Info</h4></u>
-        <div id="fundDetails">
-          <div id="fundName">Click a Fund on Left</div>
-          <ul>
+    <div class="row">
+      <div class="col-xs">
+        <div class="box">
+          <p id="categoryName"><i>Showing funds in Investment Approach : {{fundapproach}}</i></p>
+        </div>
+      </div>
+    </div>
+    <div id="main-wrap" class="row">
+      <div id="canvas" class="col-md-8 col-lg-7">
+        <div id="sidebar" class="box"></div>
+      </div>
+      <div id="content-wrap" class="col-md-4 col-sm-3 col-lg-4">
+        <div class="box">
+          <h4>Fund Info</h4>
+          <div id="fundDetails">
+            <h5 class="icon-left ion-arrow-left-c">
+              Click a Fund on Left
+            </h5>
             <div id="fundProps" style="display: none;">
-              <li>
-                <div id="fundApproach"></div>
-              </li>
-              <li>
-                <div id="inceptionDate"></div>
-              </li>
-              <li>
-                <div id="strategyAUM"></div>
-              </li>
-              <li>
-                <div id="MTD"></div>
-              </li>
-              <li>
-                <div id="YTD"></div>
-              </li>
-              <li>
-                <div id="annualizedSinceInception"></div>
-              </li>
-              <li>
-                <div id="status"></div>
-              </li>
-          </ul>
+              <ul class='list'>
+                <div id="fundName" class="item item-divider">
+                </div>
+                <li class="item">Investment Approach : {{fundapproach}}
+                </li>
+                <li class="item">Inception Date : {{inceptionDate}}
+                </li>
+                <li class="item">Strategy AUM (US$ mil) : {{strategyAUM}}
+                </li>
+                <li class="item">MTD(net) : {{MTD}}
+                </li>
+                <li class="item">YTD(net) : {{YTD}}
+                </li>
+                <li class="item">Annualized Since Inception(net) : {{annualizedSinceInception}}
+                </li>
+                <li class="item">Status : {{status}}
+                </li>
+              </ul>
+              <div class="">
+                <button class="button button-positive icon-right ion-stats-bars" ng-click="openFndVizModal($event)">
+                  Analyze Funds in {{fundapproach}} Approach</button>
+              </div>
+            </div>
           </div>
         </div>
       </div>

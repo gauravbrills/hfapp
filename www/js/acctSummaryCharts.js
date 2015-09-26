@@ -1,4 +1,4 @@
-function drawacctsumm(data) {
+function drawacctsumm(data, $window) {
   var hedgeFundArray = [];
   var hedgeFundequity = [];
   var hedgeFundYtd = [];
@@ -50,7 +50,7 @@ function drawacctsumm(data) {
       .push(data.hits.publicCapitalFundHoldings[i]._source.MTD);
   }
 
-  showHedgeFunds(hedgeFundArray,publicCapitalFundArray);
+  showHedgeFunds(hedgeFundArray, publicCapitalFundArray, $window);
 
 }
 
@@ -75,23 +75,16 @@ function showDivPie1() {
 
 }
 
-function showHedgeFunds(hedgeFundArray,publicCapitalFundArray) {
+function showHedgeFunds(hedgeFundArray, publicCapitalFundArray, $window) {
   document.getElementById("pieChart").innerHTML = "";
   document.getElementById("pieChart2").style.display = 'none';
   document.getElementById("pieChart").style.display = 'block';
   document.getElementById("chartdiv2").style.display = 'none';
 
-  var graphWidth = 400,
-    graphHeight = 400;
-  if (document.getElementById('main-wrap').clientWidth < 500) {
-    var fluidDim = .9 * document.getElementById('main-wrap').clientWidth;
-    graphWidth = fluidDim;
-    graphHeight = fluidDim;
-  }
-
-  var width = graphWidth,
-    height = graphHeight,
-    color = d3.scale.category20(),
+  var width = 400,
+    height = $window.innerHeight ;
+  console.log("canvas params " + width + " : " + height);
+  var color = d3.scale.category20(),
     radius = Math
     .min(width, height) / 2,
     innerRadiusFinal = 100 * .5,
@@ -253,7 +246,7 @@ function showPublicCapital(publicCapitalFundArray) {
     /* update bar chart when user selects piece of the pie chart */
     //updateBarChart(dataset[i].category);
     //	updateBarChart(d.FundName, color(i));
-    showPublicCapitalTransactions(d.data.fundName, color(i),publicCapitalFundArray);
+    showPublicCapitalTransactions(d.data.fundName, color(i), publicCapitalFundArray);
     //	updateLineChart(d.data.category, color(i));
 
   }
@@ -425,7 +418,7 @@ function getTransactionsPublicCapital(fundName, publicCapitalFundArray) {
 
 }
 
-function showPublicCapitalTransactions(fundName, color,publicCapitalFundArray) {
+function showPublicCapitalTransactions(fundName, color, publicCapitalFundArray) {
   document.getElementById("chartdiv").style.display = 'block';
   document.getElementById("chartdiv2").style.display = 'none';
   var chart = AmCharts.makeChart("chartdiv", {
@@ -488,7 +481,7 @@ function showPublicCapitalTransactions(fundName, color,publicCapitalFundArray) {
     "export": {
       "enabled": true
     },
-    "dataProvider": getTransactionsPublicCapital(fundName,publicCapitalFundArray)
+    "dataProvider": getTransactionsPublicCapital(fundName, publicCapitalFundArray)
   });
 
   chart.addListener("rendered", zoomChart);

@@ -1,10 +1,10 @@
 angular.module('hfapp.controllers', [])
 
-.controller('acctSummCtrl', function($scope, acctsumm) {
-  $scope.data = acctsumm.get();
-  $scope.data.$promise.then(function(data) {
-    drawacctsumm(data);
-  });
+.controller('acctSummCtrl', function($scope, $window, acctsumm) {
+    $scope.data = acctsumm.get();
+    $scope.data.$promise.then(function(data) {
+      drawacctsumm(data, $window);
+    });
 
   })
   .controller('fundAumCtrl', function($scope, funds) {
@@ -18,53 +18,56 @@ angular.module('hfapp.controllers', [])
   $scope.chat = Chats.get($stateParams.chatId);
 })
 
-.controller('allfundsCtrl', function($scope, $ionicLoading, allfunds) {
-  var graphWidth = 420,
-    graphHeight = 420;
-  if (document.getElementById('main-wrap').clientWidth < 420) {
-    var fluidDim = .9 * document.getElementById('main-wrap').clientWidth;
-    graphWidth = fluidDim;
-    graphHeight = fluidDim;
-  }
-  var width = graphWidth,
-    height = graphHeight,
-    outerRadius = Math.min(width, height) / 2 - 10,
-    innerRadius = outerRadius - 24;
-
-  var formatPercent = d3.format(".1%");
-
-  var arc = d3.svg.arc()
-    .innerRadius(innerRadius)
-    .outerRadius(outerRadius);
-
-  var layout = d3.layout.chord()
-    .padding(.04)
-    .sortSubgroups(d3.descending)
-    .sortChords(d3.ascending);
-
-  var path = d3.svg.chord()
-    .radius(innerRadius);
-
-  var svg = d3.select("#sidebar").append("svg")
-    .attr("width", width)
-    .attr("height", height)
-    .append("g")
-    .attr("id", "circle")
-    .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
-
-  svg.append("circle")
-    .attr("r", outerRadius);
+.controller('allfundsCtrl', function($scope, $ionicModal, $ionicLoading, $window, allfunds, allfundsmodel) {
+  $scope.fundapproach = "All";
   // get all funds data
+  $scope.model = allfundsmodel.get();
   $scope.data = allfunds.get();
-  $scope.show = function() {
-    $ionicLoading.show({
-      template: 'Loading...'
-    });
-  };
-  $scope.data.$promise.then(function(data) {
-    createAllFundsViz(data, svg, arc, path, layout);
+  $ionicLoading.show({
+    template: 'Loading the awesome...'
   });
-  $scope.hide = function() {
-    $ionicLoading.hide();
-  };
+  $scope.data.$promise.then(function(data) {
+    $scope.model.$promise.then(function(model) {
+      createAllFundsViz($scope, $window, model, data);
+      $ionicLoading.hide();
+    });
+    // modal stuff
+    $ionicModal.fromTemplateUrl('templates/allfunds-modal.html', {
+      scope: $scope,
+      animation: 'slide-in-up'
+    }).then(function(modal) {
+      $scope.modal = modal;
+    });
+    $scope.openFndVizModal = function() {
+      renderDataVizModal($scope.data);
+      $scope.modal.show();
+    };
+    $scope.closeModal = function() {
+      $scope.modal.hide();
+    };
+    //Cleanup the modal when we're done with it!
+    $scope.$on('$destroy', function() {
+      $scope.modal.remove();
+    });
+    // Execute action on hide modal
+    $scope.$on('modal.hidden', function() {
+      // Execute action
+    });
+    // Execute action on remove modal
+    $scope.$on('modal.removed', function() {
+      // Execute action
+    });
+  });
+
+  $scope.doRefresh = function() {
+    $scope.data = allfunds.get();
+    $scope.data.$promise.then(function(data) {
+      $scope.model.$promise.then(function(model) {
+        createAllFundsViz($scope, $window, model, data);
+        // Stop the ion-refresher from spinning
+        $scope.$broadcast('scroll.refreshComplete');
+      });
+    });
+  }
+
 });

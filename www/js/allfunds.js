@@ -1,7 +1,40 @@
-function createAllFundsViz(funds, svg, arc, path, layout) {
+function renderDataVizModal(data){
+  /// aum chart defaults
+}
 
+function createAllFundsViz($scope, $window, model, funds, svg, arc, path, layout) {
+  var modelObj = model.hits.hits[0]._source._source;
+
+  var width = $window.innerWidth / 1.3,
+    height = $window.innerHeight / 1.4;
+  console.log("canvas params " + width + " : " + height);
+  var outerRadius = Math.min(width, height) / 2.3;
+  var innerRadius = outerRadius - 24;
+  var formatPercent = d3.format(".1%");
+
+  var arc = d3.svg.arc()
+    .innerRadius(innerRadius)
+    .outerRadius(outerRadius);
+
+  var layout = d3.layout.chord()
+    .padding(.04)
+    .sortSubgroups(d3.descending)
+    .sortChords(d3.ascending);
+
+  var path = d3.svg.chord()
+    .radius(innerRadius);
+
+  var svg = d3.select("#sidebar").append("svg")
+    .attr("width", width)
+    .attr("height", height)
+    .append("g")
+    .attr("id", "circle")
+    .attr("transform", "translate(" + width/2.9 + "," + height/2+ ")");
+
+  svg.append("circle")
+    .attr("r", outerRadius);
   // Compute the chord layout.
-  layout.matrix(funds.hits.hits[0]._source.fundRelation);
+  layout.matrix(modelObj.fundRelation);
 
   // Add a group per neighborhood.
   var group = svg.selectAll(".group")
@@ -12,33 +45,31 @@ function createAllFundsViz(funds, svg, arc, path, layout) {
 
 
   // Add the group arc.
-  var groupPath = group.append("path")
+  var groupPath = group.append("svg:path")
     .attr("id", function(d, i) {
       return "group" + i;
     })
     .attr("d", arc)
     .style("fill", function(d, i) {
-      return funds.hits.hits[0]._source.fundColor[i];
+      return modelObj.fundColor[i];
     });
 
-  // Add a text label.
   var groupText = group.append("text")
-    .attr("x", 6)
-    .attr("dy", 15);
-
-  groupText.append("textPath")
-    .attr("xlink:href", function(d, i) {
-      return "#group" + i;
+    .each(function(d) {
+      d.angle = (d.startAngle + d.endAngle) / 2;
     })
-    .text(function(d, i) {
-      return funds.hits.hits[0]._source.fundName[i];
+    .attr("dy", ".35em")
+    .attr("text-anchor", function(d) {
+      return d.angle > Math.PI ? "end" : null;
+    })
+    .attr("transform", function(d) {
+      return "rotate(" + (d.angle * 180 / Math.PI - 90) + ")" + "translate(" + (innerRadius + 26) + ")" + (d.angle > Math.PI ? "rotate(180)" : "");
+    }).attr("font-family", "Arial")
+    .attr("font-size", "10px").style("fill", "#005a96")
+    .text(function(d) {
+      return modelObj.fundName[d.index];
     });
 
-  // Remove the labels that don't fit. :(
-  groupText.filter(function(d, i) {
-      return groupPath[0][i].getTotalLength() / 2 - 16 < this.getComputedTextLength();
-    })
-    .remove();
 
   // Add the chords.
   var chord = svg.selectAll(".chord")
@@ -53,7 +84,7 @@ function createAllFundsViz(funds, svg, arc, path, layout) {
 
   // Add an elaborate mouseover title for each chord.
   chord.append("title").text(function(d) {
-    return funds.hits.hits[0]._source.fundName[d.source.index] + " & " + funds.hits.hits[0]._source.fundName[d.target.index] + "\nBelong to Same Category";
+    return modelObj.fundName[d.source.index] + " & " + modelObj.fundName[d.target.index] + "\nBelong to Same Category";
   });
 
   function click(d, i) {
@@ -77,27 +108,27 @@ function createAllFundsViz(funds, svg, arc, path, layout) {
     var category;
 
 
-
-    fundName = funds.hits.hits[index]._source.fundName
-    investmentApproach = "Investment Approach : " + funds.hits.hits[index]._source.InvestmentApproach;
-    inceptionDate = "Inception Date :" + funds.hits.hits[index]._source.InceptionDate;
-    strategyAUM = "Strategy AUM (US$ mil) : " + funds.hits.hits[index]._source.StrategyAUM;
-    MTD = "MTD(net) : " + funds.hits.hits[index]._source.MTD + "%";
-    YTD = "YTD(net) : " + funds.hits.hits[index]._source.YTD + "%";
-    annualizedSinceInception = "Annualized Since Inception(net) : " + funds.hits.hits[index]._source.AnnualizedSinceInception;
-    status = "Status : " + funds.hits.hits[index]._source.Status;
-    category = funds.hits.hits[index]._source.Category;
+    fundName = funds.hits.hits[index]._source._source.fundName
+    investmentApproach = funds.hits.hits[index]._source._source.InvestmentApproach;
+    inceptionDate = funds.hits.hits[index]._source._source.InceptionDate;
+    strategyAUM = funds.hits.hits[index]._source._source.StrategyAUM;
+    MTD = funds.hits.hits[index]._source._source.MTD + "%";
+    YTD = funds.hits.hits[index]._source._source.YTD + "%";
+    annualizedSinceInception = funds.hits.hits[index]._source._source.AnnualizedSinceInception;
+    status = funds.hits.hits[index]._source._source.Status;
+    category = funds.hits.hits[index]._source._source.Category;
 
 
     d3.select("#fundName").text(fundName);
-    d3.select("#fundApproach").text(investmentApproach);
-    d3.select("#inceptionDate").text(inceptionDate);
-    d3.select("#strategyAUM").text(strategyAUM);
-    d3.select("#MTD").text(MTD);
-    d3.select("#YTD").text(YTD);
-    d3.select("#annualizedSinceInception").text(annualizedSinceInception);
-    d3.select("#status").text(status);
-    d3.select("#categoryName").text("Showing funds in category :" + category);
-
+    $scope.fundapproach = investmentApproach;
+    $scope.inceptionDate = inceptionDate;
+    $scope.strategyAUM = strategyAUM;
+    $scope.MTD = MTD;
+    $scope.YTD = YTD;
+    $scope.annualizedSinceInception = annualizedSinceInception;
+    $scope.status = status;
+    //  d3.select("#categoryName").text("Showing funds in category :" + category);
+    $scope.category = funds.hits.hits[index]._source._source.Category;
+    $scope.$apply();
   }
 }
