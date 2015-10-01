@@ -3,9 +3,8 @@ angular.module('hfapp.controllers', [])
 .controller('acctSummCtrl', function($scope, $window, acctsumm) {
     $scope.data = acctsumm.get();
     $scope.data.$promise.then(function(data) {
-      drawacctsumm(data, $window);
+      drawacctsumm(data, $window, $scope);
     });
-
   })
   .controller('fundAumCtrl', function($scope, funds) {
     $scope.data = funds.get();
@@ -22,7 +21,8 @@ angular.module('hfapp.controllers', [])
   $scope.fundapproach = "All";
   // get all funds data
   $scope.model = allfundsmodel.get();
-  $scope.data = allfunds.get();
+  //$scope.data = allfunds.getSortedFunds('{ "sort": { "fundName": { "order": "asc" }}}');
+  $scope.data = allfunds.getSortedFunds();
   $ionicLoading.show({
     template: 'Loading the awesome...'
   });
@@ -39,8 +39,9 @@ angular.module('hfapp.controllers', [])
       $scope.modal = modal;
     });
     $scope.openFndVizModal = function() {
-      renderDataVizModal($scope.data);
       $scope.modal.show();
+      renderDataVizModal($scope);
+
     };
     $scope.closeModal = function() {
       $scope.modal.hide();

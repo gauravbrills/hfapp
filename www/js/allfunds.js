@@ -1,14 +1,102 @@
-function renderDataVizModal(data){
+function renderDataVizModal($scope) {
   /// aum chart defaults
+  $scope.showYTDMTD = true;
+  $scope.charttyp = 'YTDMTD';
+  showYTDMTD(pruneData($scope.fundapproach, $scope.data));
+  // show modal now once stuff completes
+
+}
+// Graph Data Pojo
+var graphResource = function(approach, YTD, MTD, fundnames, HistoricalDates) {
+  this.approach = approach;
+  this.YTD = YTD;
+  this.MTD = MTD;
+  this.fundnames = fundnames;
+  this.HistoricalDates = HistoricalDates;
+}
+
+function pruneData(approach, datum) {
+  var ytd = [];
+  var mtd = [];
+  var fundnames = [];
+  var HistoricalDates = [];
+  angular.forEach(datum.hits.hits, function(value, key) {
+    if (value._source._source.InvestmentApproach == approach) {
+      ytd.push(value._source._source.YTD);
+      mtd.push(value._source._source.MTD);
+      fundnames.push(value._source._source.fundName);
+      HistoricalDates.push(value._source._source.HistoricalDates);
+    }
+  });
+  resource = new graphResource(approach, ytd, mtd, fundnames, HistoricalDates);
+  console.log("graphResource  " + angular.toJson(resource, true));
+  return resource
+}
+
+function showYTDMTD(data) {
+  $(function() {
+    $('#mtdytd').highcharts({
+      chart: {
+        type: 'bar'
+      },
+      xAxis: {
+        categories: data.fundnames,
+        title: {
+          text: null
+        }
+      },
+      yAxis: {
+        min: 0,
+        title: {
+          text: '(net)',
+          align: 'high'
+        },
+        labels: {
+          overflow: 'justify'
+        }
+      },
+      tooltip: {
+        valueSuffix: ' %'
+      },
+      plotOptions: {
+        bar: {
+          dataLabels: {
+            enabled: true
+          }
+        }
+      },
+      legend: {
+        layout: 'vertical',
+        align: 'right',
+        verticalAlign: 'top',
+        x: -40,
+        y: 80,
+        floating: true,
+        borderWidth: 1,
+        backgroundColor: ((Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'),
+        shadow: true
+      },
+      credits: {
+        enabled: false
+      },
+      series: [{
+        name: 'YTD',
+        data: data.YTD
+      }, {
+        name: 'MTD',
+        data: data.MTD
+      }]
+    });
+  });
 }
 
 function createAllFundsViz($scope, $window, model, funds, svg, arc, path, layout) {
   var modelObj = model.hits.hits[0]._source._source;
 
   var width = $window.innerWidth / 1.3,
-    height = $window.innerHeight / 1.4;
+    height = $window.innerHeight / 1.3;
   console.log("canvas params " + width + " : " + height);
-  var outerRadius = Math.min(width, height) / 2.3;
+  var outerRadius = Math.min(width, height) / 2.6;
   var innerRadius = outerRadius - 24;
   var formatPercent = d3.format(".1%");
 
@@ -29,7 +117,7 @@ function createAllFundsViz($scope, $window, model, funds, svg, arc, path, layout
     .attr("height", height)
     .append("g")
     .attr("id", "circle")
-    .attr("transform", "translate(" + width/2.9 + "," + height/2+ ")");
+    .attr("transform", "translate(" + width / 2.9 + "," + height / 1.9 + ")");
 
   svg.append("circle")
     .attr("r", outerRadius);
@@ -88,7 +176,7 @@ function createAllFundsViz($scope, $window, model, funds, svg, arc, path, layout
   });
 
   function click(d, i) {
-    populateFundInfo(i + 1); // as in json 0th entry is different , generic info not fund specific
+    populateFundInfo(i); // as in json 0th entry is different , generic info not fund specific
     document.getElementById("fundProps").style.display = 'block';
 
     chord.classed("fade", function(p) {
@@ -97,6 +185,7 @@ function createAllFundsViz($scope, $window, model, funds, svg, arc, path, layout
   }
 
   function populateFundInfo(index) {
+    console.log(" fund index " + index);
     var investmentApproach;
     var inceptionDate;
     var strategyAUM;
@@ -106,9 +195,13 @@ function createAllFundsViz($scope, $window, model, funds, svg, arc, path, layout
     var status;
     var fundName;
     var category;
+    // sort funds
+    funds.hits.hits.sort(function compare(a, b) {
+      return a._source._source.fundName.localeCompare(b._source._source.fundName);
+    });
 
 
-    fundName = funds.hits.hits[index]._source._source.fundName
+    fundName = funds.hits.hits[index]._source._source.fundName;
     investmentApproach = funds.hits.hits[index]._source._source.InvestmentApproach;
     inceptionDate = funds.hits.hits[index]._source._source.InceptionDate;
     strategyAUM = funds.hits.hits[index]._source._source.StrategyAUM;
@@ -118,8 +211,7 @@ function createAllFundsViz($scope, $window, model, funds, svg, arc, path, layout
     status = funds.hits.hits[index]._source._source.Status;
     category = funds.hits.hits[index]._source._source.Category;
 
-
-    d3.select("#fundName").text(fundName);
+    $scope.fundName = fundName;
     $scope.fundapproach = investmentApproach;
     $scope.inceptionDate = inceptionDate;
     $scope.strategyAUM = strategyAUM;
@@ -127,7 +219,6 @@ function createAllFundsViz($scope, $window, model, funds, svg, arc, path, layout
     $scope.YTD = YTD;
     $scope.annualizedSinceInception = annualizedSinceInception;
     $scope.status = status;
-    //  d3.select("#categoryName").text("Showing funds in category :" + category);
     $scope.category = funds.hits.hits[index]._source._source.Category;
     $scope.$apply();
   }

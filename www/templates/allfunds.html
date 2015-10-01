@@ -1,26 +1,15 @@
 <ion-view view-title="All Funds">
   <ion-content class="center" data-tap-disabled="true">
+    <!--  <ion-scroll  zooming="true" direction="xy" style="height: 800px"> -->
     <ion-refresher pulling-text="Pull to refresh..." on-refresh="doRefresh()">
     </ion-refresher>
-    <div class="row">
-      <div class="col-xs">
-        <div class="box">
-          <h3>Fund Dependency</h3>
-        </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-xs">
-        <div class="box">
-          <p id="categoryName"><i>Showing funds in Investment Approach : {{fundapproach}}</i></p>
-        </div>
-      </div>
-    </div>
+
+
     <div id="main-wrap" class="row">
-      <div id="canvas" class="col-md-8 col-lg-7">
+      <div id="canvas" class="col-md-8 col-lg-7 col-sm-3 col-xs-6">
         <div id="sidebar" class="box"></div>
       </div>
-      <div id="content-wrap" class="col-md-4 col-sm-3 col-lg-4">
+      <div id="content-wrap" class="col-md-4 col-sm-2 col-xs-6 col-lg-4">
         <div class="box">
           <h4>Fund Info</h4>
           <div id="fundDetails">
@@ -29,7 +18,7 @@
             </h5>
             <div id="fundProps" style="display: none;">
               <ul class='list'>
-                <div id="fundName" class="item item-divider">
+                <div id="fundName" class="item item-divider">{{fundName}}
                 </div>
                 <li class="item">Investment Approach : {{fundapproach}}
                 </li>
@@ -48,7 +37,7 @@
               </ul>
               <div class="">
                 <button class="button button-positive icon-right ion-stats-bars" ng-click="openFndVizModal($event)">
-                  Analyze Funds in {{fundapproach}} Approach</button>
+                  Analyze {{fundapproach}} Approach</button>
               </div>
             </div>
           </div>
@@ -56,4 +45,10 @@
       </div>
     </div>
   </ion-content>
+  <div class="bar bar-footer bar-balanced">
+    <div class="col-xs">
+      <div class="box pull-right"><i>Showing funds in Investment Approach : {{fundapproach}}</i>
+      </div>
+    </div>
+  </div>
 </ion-view>

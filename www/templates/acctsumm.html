@@ -1,13 +1,42 @@
 <ion-view view-title="Account Summary">
-  <ion-content padding="100" class="center">
-    <div id='main-wrap'>
-      <div id="pieChart"></div>
-      <div id="pieChart2"></div>
-      <div id="legend"></div>
-      <div id="chartdiv"></div>
-      <div id="chartdiv2">
-        <label id="label2"></label>
+  <ion-content class="center" data-tap-disabled="true">
+    <div class="bar ">
+      <div class="col-md-8 col-lg-8">
+        <div class="box">
+          Account Summary (Split by Fund AUM)
+          <br>
+          <div class="ion-android-hand"> Touch the center to see {{fundtyp}}</div>
+        </div>
+      </div>
+      <div class="pull-right">
+        <div ng-show="showbanner">
+          Touch a Fund to see Transaction History
+        </div>
+        <div ng-hide="showbanner">
+          Displaying Transaction for {{fundSelected}}
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-4 col-lg-2">
+        <div class="box">
+          <div id="pieChart"></div>
+          <div id="pieChart2"></div>
+        </div>
+      </div>
+      <div class="col-md-7 col-lg-8">
+        <div class="box">
+          <div id="chartdiv"></div>
+          <div id="chartdiv2"> </div>
+        </div>
       </div>
     </div>
   </ion-content>
+  <div class="bar bar-footer bar-balanced">
+    <div class="button button-clear pull-left">
+      <div>
+        Total Assets under management : $ {{totalAUM}}
+      </div>
+    </div>
+  </div>
 </ion-view>

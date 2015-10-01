@@ -1,14 +1,12 @@
-function drawacctsumm(data, $window) {
+function drawacctsumm(data, $window, $scope) {
   var hedgeFundArray = [];
   var hedgeFundequity = [];
   var hedgeFundYtd = [];
   var hedgeFundMtd = [];
 
   var publicCapitalFundArray = [];
-  var publicCapitalFundequity = [];
-  var publicCapitalFundYtd = [];
-  var publicCapitalFundMtd = [];
-
+  var totalHF = 0;
+  var totalPHF = 0;
   var formatAsPercentage = d3.format("%"),
     formatAsPercentage1Dec = d3
     .format(".1%"),
@@ -22,42 +20,30 @@ function drawacctsumm(data, $window) {
     fdat = d3.time
     .format("%d d"),
     fmon = d3.time.format("%b");
-
-  /*
-   ############# PIE CHART ###################
-   -------------------------------------------
-   */
-  for (var i = 0; i < data.hits.HedgeFundHoldings.length; i++) {
-
-    hedgeFundArray
-      .push(data.hits.HedgeFundHoldings[i]._source);
-    hedgeFundequity
-      .push(data.hits.HedgeFundHoldings[i]._source.Equity);
-    hedgeFundYtd
-      .push(data.hits.HedgeFundHoldings[i]._source.YTD);
-    hedgeFundMtd
-      .push(data.hits.HedgeFundHoldings[i]._source.MTD);
+  // hide show message
+  $scope.showbanner = true
+    /*
+     ############# PIE CHART ###################
+     -------------------------------------------
+     */
+  for (var i = 0; i < data.hits.hits.length; i++) {
+    node = data.hits.hits[i];
+    if (node._source.privateFundFlg == true) {
+      publicCapitalFundArray.push(node._source);
+      totalPHF = totalPHF + node._source.Equity;
+    } else {
+      hedgeFundArray.push(node._source);
+      totalHF = totalHF + node._source.Equity;
+    }
   }
-
-  for (var i = 0; i < data.hits.publicCapitalFundHoldings.length; i++) {
-    publicCapitalFundArray
-      .push(data.hits.publicCapitalFundHoldings[i]._source);
-    publicCapitalFundequity
-      .push(data.hits.publicCapitalFundHoldings[i]._source.Equity);
-    publicCapitalFundYtd
-      .push(data.hits.publicCapitalFundHoldings[i]._source.YTD);
-    publicCapitalFundMtd
-      .push(data.hits.publicCapitalFundHoldings[i]._source.MTD);
-  }
-
-  showHedgeFunds(hedgeFundArray, publicCapitalFundArray, $window);
+  console.log(angular.toJson(publicCapitalFundArray,true) + " -< public");
+  console.log(angular.toJson(hedgeFundArray,true) + " -< hedge");
+  showHedgeFundsMaster(hedgeFundArray, publicCapitalFundArray, $window, totalHF, totalPHF, $scope);
 
 }
 
 function myFunction() {
   document.getElementById("pieChart2").style.display = 'none';
-
-
 }
 
 function showDivPie2() {
@@ -75,243 +61,257 @@ function showDivPie1() {
 
 }
 
-function showHedgeFunds(hedgeFundArray, publicCapitalFundArray, $window) {
-  document.getElementById("pieChart").innerHTML = "";
-  document.getElementById("pieChart2").style.display = 'none';
-  document.getElementById("pieChart").style.display = 'block';
-  document.getElementById("chartdiv2").style.display = 'none';
-
-  var width = 400,
-    height = $window.innerHeight ;
+function showHedgeFundsMaster(hedgeFundArray, publicCapitalFundArray, $window, totalHF, totalPHF, $scope) {
+  var tweenDuration = 250;
+  var width = $window.innerWidth / 2,
+    height = $window.innerWidth / 1.8;
   console.log("canvas params " + width + " : " + height);
-  var color = d3.scale.category20(),
-    radius = Math
-    .min(width, height) / 2,
-    innerRadiusFinal = 100 * .5,
-    innerRadiusFinal3 = (width / 2) * .45;
+  showHedgeFunds();
+  // Computes the label angle of an arc, converting from radians to degrees.
+  function angle(d) {
+    var a = (d.startAngle + d.endAngle) * 90 / Math.PI - 90;
+    return a > 90 ? a - 180 : a;
+  }
 
-  var vis = d3.select("#pieChart").append("svg:svg") //create the SVG element inside the <body>
-    .data([hedgeFundArray]) //associate our data with the document
-    .attr("width", width) //set the width and height of our visualization (these will be attributes of the <svg> tag
-    .attr("height", height).append("svg:g") //make a group to hold our pie chart
-    .attr("transform", "translate(" + width / 2 + "," + 200 + ")");
+  function showHedgeFunds() {
+    $scope.totalAUM = totalHF;
+    $scope.showbanner = true;
+    $scope.fundtyp = "Public Hedge Funds";
+    // apply scope
+    if (!$scope.$$phase) {
+      $scope.$apply();
+    }
+    console.log("canvas params HF " + width + " : " + height);
+    document.getElementById("pieChart").innerHTML = "";
+    document.getElementById("pieChart2").style.display = 'none';
+    document.getElementById("pieChart").style.display = 'block';
+    document.getElementById("chartdiv2").style.display = 'none';
 
+    var color = d3.scale.category20(),
+      radius = width / 2.35,
+      innerRadius = (width / 2) * .45;
 
+    var canvas = d3.select("#pieChart").append("svg:svg") //create the SVG element inside the <body>
+      //associate our data with the document
+      .attr("width", width) //set the width and height of our visualization (these will be attributes of the <svg> tag
+      .attr("height", height)
+    var vis = canvas.append("svg:g").data([hedgeFundArray]) //make a group to hold our pie chart
 
+    .attr("transform", "translate(" + width / 1.9 + "," + height / 1.8 + ")");
+    var arc = d3.svg.arc() //this will create <path> elements for us using arc data
+      .outerRadius(radius).innerRadius(100);
 
-  var arc = d3.svg.arc() //this will create <path> elements for us using arc data
-    .outerRadius(width / 2).innerRadius(100);
+    var arcFinal = d3.svg.arc().innerRadius(100).outerRadius(radius);
+    var arcFinal3 = d3.svg.arc().innerRadius(innerRadius)
+      .outerRadius(radius * 1.05);
+    var pie = d3.layout.pie() //this will create arc data for us given a list of values
+      .value(function(d) {
+        return d.Equity;
+      });
+    var arcs = vis.selectAll("g.slice") //this selects all <g> elements with class slice (there aren't any yet)
+      .data(pie) //associate the generated pie data (an array of arcs, each having startAngle, endAngle and value properties)
+      .enter() //this will create <g> elements for every "extra" data element that should be associated with a selection. The result is creating a <g> for every object in the data array
+      .append("svg:g") //create a group to hold each slice (we will have a <path> and a <text> element associated with each slice)
+      .attr("class", "slice").on("mouseover", mouseover).on("mouseout",
+        mouseout).on("click", function(d, i) {
+        $scope.fundSelected = d.data.fundName;
+        $scope.showbanner = false;
+        // apply scope
+        if (!$scope.$$phase) {
+          $scope.$apply();
+        }
+        showHedgeFundTransactions(d.data.fundName, d.data.Equity, color(i), hedgeFundArray);
+      });
 
-  var arcFinal = d3.svg.arc().innerRadius(100).outerRadius(width / 2);
-  var arcFinal3 = d3.svg.arc().innerRadius(innerRadiusFinal3)
-    .outerRadius(width / 2);
-  var pie = d3.layout.pie() //this will create arc data for us given a list of values
-    .value(function(d) {
-      return d.Equity;
+    var paths = arcs.append("svg:path").attr("fill", function(d, i) {
+      return Highcharts.Color(Highcharts.getOptions().colors[0]).brighten((i - 3) / 7).get();
     });
+    arcs.filter(function(d) {
+        return d.endAngle - d.startAngle > .2;
+      })
+      .append("svg:text")
+      .attr("dy", ".20em")
+      .attr("text-anchor", "middle")
+      .attr("transform", function(d) {
+        return "translate(" + arcFinal.centroid(d) + ")rotate(" + angle(d) + ")";
+      })
+      .text(function(d) {
+        return d.data.fundName;
+      });
+    arcs.filter(function(d) {
+        return d.endAngle - d.startAngle > .2;
+      })
+      .append("svg:text")
+      .attr("dy", "1.8em").attr("font-size", "11")
+      .attr("text-anchor", "middle")
+      .attr("transform", function(d) {
+        return "translate(" + arcFinal.centroid(d) + ")rotate(" + angle(d) + ")";
+      })
+      .text(function(d) {
+        return "$ " + d.data.Equity;
+      });
+    paths.transition().ease("bounce").duration(1700).attrTween("d",
+      tweenPie).transition().ease("elastic").delay(
+      function(d, i) {
+        return 5000 + i * 50;
+      }).duration(3000).attrTween("d", tweenDonut);
+    // circle center
+    var center = vis.append("circle").attr("r", 30).attr("fill",
+      "#212121").on("click", showPublicCapital).on("mouseout", function() {
+      d3.select(this).style("fill", "#hello");
+    });;
 
-  var arcs = vis.selectAll("g.slice") //this selects all <g> elements with class slice (there aren't any yet)
-    .data(pie) //associate the generated pie data (an array of arcs, each having startAngle, endAngle and value properties)
-    .enter() //this will create <g> elements for every "extra" data element that should be associated with a selection. The result is creating a <g> for every object in the data array
-    .append("svg:g") //create a group to hold each slice (we will have a <path> and a <text> element associated with each slice)
-    .attr("class", "slice").on("mouseover", mouseover).on("mouseout",
-      mouseout).on("click", function(d, i) {
-      showHedgeFundTransactions(d.data.fundName, d.data.Equity, color(i), hedgeFundArray);
-    });
+    function mouseover(d, i) {
+      d3.select(this).select("path").transition().duration(750).attr(
+        "stroke", "white").attr("stroke-width", 3).attr("d",
+        arcFinal3);
+    }
 
-  arcs.append("svg:path").attr("fill", function(d, i) {
-    return color(i);
-  }).transition().ease("bounce").duration(1700).attrTween("d",
-    tweenPie).transition().ease("elastic").delay(
-    function(d, i) {
-      return 5000 + i * 50;
-    }).duration(3000).attrTween("d", tweenDonut);
+    function mouseout() {
+      d3.select(this).select("path").transition().duration(750).attr(
+        "stroke", "transparent").attr("stroke-width", 3).attr(
+        "d", arcFinal);
+    }
 
-  function mouseover(d, i) {
-    d3.select(this).select("path").transition().duration(750).attr(
-      "stroke", "red").attr("stroke-width", 1.5).attr("d",
-      arcFinal3)
 
-    ;
+    function tweenPie(b) {
+      b.innerRadius = 0;
+      var i = d3.interpolate({
+        startAngle: 0,
+        endAngle: 0
+      }, b);
+      return function(t) {
+        return arc(i(t));
+      };
+    }
+
+    function tweenDonut(b) {
+      b.innerRadius = radius * .6;
+      var i = d3.interpolate({
+        innerRadius: 0
+      }, b);
+      return function(t) {
+        return arc(i(t));
+      };
+    }
+
   }
 
-  function mouseout() {
-    d3.select(this).select("path").transition().duration(750).attr(
-      "stroke", "transparent").attr("stroke-width", 0).attr(
-      "d", arcFinal);
+  function showPublicCapital() {
+    $scope.totalAUM = totalPHF;
+    $scope.showbanner = true;
+    $scope.fundtyp = "Private Hedge Funds";
+    // apply scope
+    if (!$scope.$$phase) {
+      $scope.$apply();
+    }
+    console.log("canvas params HF PRIV " + width + " : " + height);
+    document.getElementById("pieChart2").innerHTML = "";
+    document.getElementById("pieChart").style.display = 'none';
+    document.getElementById("pieChart2").style.display = 'block';
+    document.getElementById("chartdiv").style.display = 'none';
+
+    var color = d3.scale.category20(),
+      radius = width / 2.35,
+      innerRadius = (width / 2) * .45;
+
+    var canvas = d3.select("#pieChart2").append("svg:svg") //create the SVG element inside the <body>
+      //associate our data with the document
+      .attr("width", width) //set the width and height of our visualization (these will be attributes of the <svg> tag
+      .attr("height", height)
+    var vis = canvas.append("svg:g").data([publicCapitalFundArray]) //make a group to hold our pie chart
+      .attr("transform", "translate(" + width / 1.9 + "," + height / 1.8 + ")");
+    var arc = d3.svg.arc() //this will create <path> elements for us using arc data
+      .outerRadius(radius).innerRadius(100);
+
+    var arcFinal = d3.svg.arc().innerRadius(100).outerRadius(radius);
+    var arcFinal3 = d3.svg.arc().innerRadius(innerRadius)
+      .outerRadius(radius * 1.05);
+    var pie = d3.layout.pie() //this will create arc data for us given a list of values
+      .value(function(d) {
+        return d.Equity;
+      });
+    var arcs = vis.selectAll("g.slice") //this selects all <g> elements with class slice (there aren't any yet)
+      .data(pie) //associate the generated pie data (an array of arcs, each having startAngle, endAngle and value properties)
+      .enter() //this will create <g> elements for every "extra" data element that should be associated with a selection. The result is creating a <g> for every object in the data array
+      .append("svg:g") //create a group to hold each slice (we will have a <path> and a <text> element associated with each slice)
+      .attr("class", "slice").on("mouseover", mouseover).on("mouseout",
+        mouseout).on("click", function(d, i) {
+        $scope.fundSelected = d.data.fundName;
+        $scope.showbanner = false;
+        // apply scope
+        if (!$scope.$$phase) {
+          $scope.$apply();
+        }
+        showPublicCapitalTransactions(d.data.fundName, color(i), publicCapitalFundArray);
+      });
+
+    arcs.append("svg:path").attr("fill", function(d, i) {
+      return Highcharts.Color(Highcharts.getOptions().colors[8]).brighten((i - 3) / 7).get();
+    }).transition().ease("bounce").duration(1700).attrTween("d",
+      tweenPie).transition().ease("elastic").delay(
+      function(d, i) {
+        return 5000 + i * 50;
+      }).duration(3000).attrTween("d", tweenDonut);
+    // labels
+    arcs.filter(function(d) {
+        return d.endAngle - d.startAngle > .2;
+      })
+      .append("svg:text")
+      .attr("dy", ".22em")
+      .attr("text-anchor", "middle")
+      .attr("transform", function(d) {
+        return "translate(" + arcFinal.centroid(d) + ")rotate(" + angle(d) + ")";
+      })
+      .text(function(d) {
+        return d.data.fundName;
+      });
+    // circle center
+    var center = vis.append("circle").attr("r", 30).attr("fill",
+      "#212121").on("click", showHedgeFunds).on("mouseout", function() {
+      d3.select(this).style("fill", "#hello");
+    });;
+
+    function mouseover(d, i) {
+      d3.select(this).select("path").transition().duration(750).attr(
+        "stroke", "white").attr("stroke-width", 3).attr("d",
+        arcFinal3)
+
+      ;
+    }
+
+    function mouseout() {
+      d3.select(this).select("path").transition().duration(750).attr(
+        "stroke", "transparent").attr("stroke-width", 0).attr(
+        "d", arcFinal);
+    }
+
+    function up(d, i) {
+      showPublicCapitalTransactions(d.data.fundName, color(i), publicCapitalFundArray);
+    }
+
+    function tweenPie(b) {
+      b.innerRadius = 0;
+      var i = d3.interpolate({
+        startAngle: 0,
+        endAngle: 0
+      }, b);
+      return function(t) {
+        return arc(i(t));
+      };
+    }
+
+    function tweenDonut(b) {
+      b.innerRadius = radius * .6;
+      var i = d3.interpolate({
+        innerRadius: 0
+      }, b);
+      return function(t) {
+        return arc(i(t));
+      };
+    }
   }
-
-
-  function tweenPie(b) {
-    b.innerRadius = 0;
-    var i = d3.interpolate({
-      startAngle: 0,
-      endAngle: 0
-    }, b);
-    return function(t) {
-      return arc(i(t));
-    };
-  }
-
-  function tweenDonut(b) {
-    b.innerRadius = radius * .6;
-    var i = d3.interpolate({
-      innerRadius: 0
-    }, b);
-    return function(t) {
-      return arc(i(t));
-    };
-  }
-
-
-
-  var center = vis.append("circle").attr("r", 30).attr("fill",
-    "#CCFFCC").on("click", showPublicCapital).on("mouseout", function() {
-    d3.select(this).style("fill", "#hello");
-  });;
-
 }
-
-function showPublicCapital(publicCapitalFundArray) {
-  document.getElementById("pieChart2").innerHTML = "";
-  document.getElementById("pieChart").style.display = 'none';
-  document.getElementById("pieChart2").style.display = 'block';
-  document.getElementById("chartdiv").style.display = 'none';
-
-  var graphWidth = 400,
-    graphHeight = 400;
-  if (document.getElementById('main-wrap').clientWidth < 500) {
-    var fluidDim = .9 * document.getElementById('main-wrap').clientWidth;
-    graphWidth = fluidDim;
-    graphHeight = fluidDim;
-  }
-
-  var width = graphWidth,
-    height = graphHeight,
-    color = d3.scale.category20(),
-    radius = Math
-    .min(width, height) / 2,
-    innerRadiusFinal = 100 * .5,
-    innerRadiusFinal3 = (width / 2) * .45;
-
-  var vis = d3.select("#pieChart2").append("svg:svg") //create the SVG element inside the <body>
-    .data([publicCapitalFundArray]) //associate our data with the document
-    .attr("width", width) //set the width and height of our visualization (these will be attributes of the <svg> tag
-    .attr("height", height).append("svg:g") //make a group to hold our pie chart
-    .attr("transform", "translate(" + width / 2 + "," + 200 + ")") //move the center of the pie chart from 0, 0 to radius, radius
-  ;
-
-  var arc = d3.svg.arc() //this will create <path> elements for us using arc data
-    .outerRadius(width / 2).innerRadius(100);
-
-  var arcFinal = d3.svg.arc().innerRadius(100).outerRadius(width / 2);
-  var arcFinal3 = d3.svg.arc().innerRadius(innerRadiusFinal3)
-    .outerRadius(width / 2);
-  var pie = d3.layout.pie() //this will create arc data for us given a list of values
-    .value(function(d) {
-      return d.Equity;
-    });
-
-  var arcs = vis.selectAll("g.slice") //this selects all <g> elements with class slice (there aren't any yet)
-    .data(pie) //associate the generated pie data (an array of arcs, each having startAngle, endAngle and value properties)
-    .enter() //this will create <g> elements for every "extra" data element that should be associated with a selection. The result is creating a <g> for every object in the data array
-    .append("svg:g") //create a group to hold each slice (we will have a <path> and a <text> element associated with each slice)
-    .attr("class", "slice").on("mouseover", mouseover).on("mouseout",
-      mouseout).on("click", up);
-
-  arcs.append("svg:path").attr("fill", function(d, i) {
-    return color(i);
-  }).transition().ease("bounce").duration(1700).attrTween("d",
-    tweenPie).transition().ease("elastic").delay(
-    function(d, i) {
-      return 5000 + i * 50;
-    }).duration(3000).attrTween("d", tweenDonut);
-
-  function mouseover(d, i) {
-    d3.select(this).select("path").transition().duration(750).attr(
-      "stroke", "red").attr("stroke-width", 1.5).attr("d",
-      arcFinal3)
-
-    ;
-  }
-
-  function mouseout() {
-    d3.select(this).select("path").transition().duration(750).attr(
-      "stroke", "transparent").attr("stroke-width", 0).attr(
-      "d", arcFinal);
-  }
-
-  function up(d, i) {
-
-    /* update bar chart when user selects piece of the pie chart */
-    //updateBarChart(dataset[i].category);
-    //	updateBarChart(d.FundName, color(i));
-    showPublicCapitalTransactions(d.data.fundName, color(i), publicCapitalFundArray);
-    //	updateLineChart(d.data.category, color(i));
-
-  }
-
-  function tweenPie(b) {
-    b.innerRadius = 0;
-    var i = d3.interpolate({
-      startAngle: 0,
-      endAngle: 0
-    }, b);
-    return function(t) {
-      return arc(i(t));
-    };
-  }
-
-  function tweenDonut(b) {
-    b.innerRadius = radius * .6;
-    var i = d3.interpolate({
-      innerRadius: 0
-    }, b);
-    return function(t) {
-      return arc(i(t));
-    };
-  }
-
-  var center = vis.append("circle").attr("r", 30).attr("fill",
-    "#CCFFCC").on("click", showHedgeFunds).on("mouseout", function() {
-    d3.select(this).style("fill", "#hello");
-  });;
-
-  var legendRectSize = 18;
-  var legendSpacing = 4;
-  var legend = d3.select("#legend").append("svg:svg").selectAll('.legend')
-    .data(publicCapitalFundArray)
-    .enter()
-    // .append('g')
-    .attr('class', 'legend')
-    .attr('transform', function(d, i) {
-      var height = legendRectSize + legendSpacing;
-      var offset = height * color.domain().length / 2;
-      var horz = -2 * legendRectSize;
-      var vert = i * height - offset;
-      return 'translate(' + horz + ',' + vert + ')';
-    });
-
-
-  legend.append('rect')
-    .attr('width', legendRectSize)
-    .attr('height', legendRectSize)
-    .style('fill', function(d, i) {
-      return color(i);
-    })
-    .style('stroke', function(d, i) {
-      return color(i);
-    });
-
-  legend.append('text')
-    .attr('x', legendRectSize + legendSpacing)
-    .attr('y', legendRectSize - legendSpacing)
-    .text(function(publicCapitalFundArray) {
-      return publicCapitalFundArray.fundName;
-    });
-
-}
-
 
 function showHedgeFundTransactions(fundName, equity, color, hedgeFundArray) {
   document.getElementById("chartdiv").style.display = 'block';
@@ -323,6 +323,12 @@ function showHedgeFundTransactions(fundName, equity, color, hedgeFundArray) {
     "marginRight": 80,
     "autoMarginOffset": 20,
     "dataDateFormat": "YYYY-MM-DD",
+    "titles": [{
+      "text": "Transactions for  " + fundName,
+      "size": 35,
+      "bold": true,
+      "color": "black"
+    }],
     "valueAxes": [{
       "id": "v1",
       "axisAlpha": 0,
@@ -377,45 +383,62 @@ function showHedgeFundTransactions(fundName, equity, color, hedgeFundArray) {
     "export": {
       "enabled": true
     },
+    "responsive": {
+      "enabled": true,
+      "rules": [
+        // at 400px wide, we hide legend
+        {
+          "maxWidth": 400,
+          "overrides": {
+            "legend": "enabled"
+
+          }
+        },
+        // at 300px or less, we move value axis labels inside plot area
+        // the legend is still hidden because the above rule is still applicable
+        {
+          "maxWidth": 300,
+          "overrides": {
+            "valueAxes": {
+              "inside": true
+            }
+          }
+        },
+        // at 200 px we hide value axis labels altogether
+        {
+          "maxWidth": 200,
+          "overrides": {
+            "valueAxes": {
+              "labelsEnabled": false
+            }
+          }
+        }
+      ]
+    },
     "dataProvider": getTransactions(fundName, hedgeFundArray)
   });
-
   chart.addListener("rendered", zoomChart);
-
   zoomChart();
 
   function zoomChart() {
     chart.zoomToIndexes(chart.dataProvider.length - 40, chart.dataProvider.length - 1);
   }
-
-
 }
 
-
 function getTransactions(fundName, hedgeFundArray) {
-
   for (i = 0; i < hedgeFundArray.length; i++) {
-
     if (hedgeFundArray[i].fundName == fundName) {
       return hedgeFundArray[i].Transactions;
     }
-
-
   }
-
 }
 
 function getTransactionsPublicCapital(fundName, publicCapitalFundArray) {
-
   for (i = 0; i < publicCapitalFundArray.length; i++) {
-
     if (publicCapitalFundArray[i].fundName == fundName) {
       return publicCapitalFundArray[i].Transactions;
     }
-
-
   }
-
 }
 
 function showPublicCapitalTransactions(fundName, color, publicCapitalFundArray) {
@@ -427,6 +450,12 @@ function showPublicCapitalTransactions(fundName, color, publicCapitalFundArray) 
     "marginRight": 80,
     "autoMarginOffset": 20,
     "dataDateFormat": "YYYY-MM-DD",
+    "titles": [{
+      "text": "Transactions for  " + fundName,
+      "size": 35,
+      "bold": true,
+      "color": "black"
+    }],
     "valueAxes": [{
       "id": "v1",
       "axisAlpha": 0,
@@ -481,16 +510,46 @@ function showPublicCapitalTransactions(fundName, color, publicCapitalFundArray) 
     "export": {
       "enabled": true
     },
+    "responsive": {
+      "enabled": true,
+      "rules": [
+        // at 400px wide, we hide legend
+        {
+          "maxWidth": 400,
+          "overrides": {
+            "legend": "enabled"
+
+          }
+        },
+        // at 300px or less, we move value axis labels inside plot area
+        // the legend is still hidden because the above rule is still applicable
+        {
+          "maxWidth": 300,
+          "overrides": {
+            "valueAxes": {
+              "inside": true
+            }
+          }
+        },
+
+        // at 200 px we hide value axis labels altogether
+        {
+          "maxWidth": 200,
+          "overrides": {
+            "valueAxes": {
+              "labelsEnabled": false
+            }
+          }
+        }
+      ]
+    },
     "dataProvider": getTransactionsPublicCapital(fundName, publicCapitalFundArray)
   });
 
   chart.addListener("rendered", zoomChart);
-
   zoomChart();
 
   function zoomChart() {
     chart.zoomToIndexes(chart.dataProvider.length - 40, chart.dataProvider.length - 1);
   }
-
-
 }
