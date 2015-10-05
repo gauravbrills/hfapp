@@ -1,6 +1,6 @@
 <ion-view view-title="Account Summary (Split by Fund AUM)">
   <ion-content class="padding" data-tap-disabled="true">
-    <div class="bar">
+    <div class="bar padding">
       <div class="col-md-8 col-lg-8">
         <div class="pull-left">
           <div class="ion-android-hand"> Touch the center to see {{fundtyp}}</div>
@@ -10,8 +10,7 @@
         <div class="ion-android-hand">
           <spam ng-show="showbanner">Touch a Fund to see Transaction History
           </spam>
-          <spam ng-hide="showbanner">
-            Displaying Transaction for {{fundSelected}}
+          <spam ng-hide="showbanner">Displaying Transaction for {{fundSelected}}
           </spam>
         </div>
       </div>
@@ -33,8 +32,7 @@
   </ion-content>
   <div class="bar bar-footer bar-balanced">
     <div class="col-xs">
-      <div class="box pull-left">
-        <i>Total Assets under management : $ {{totalAUM}}</i>
+      <div class="box pull-left"><i>Total Assets under management : $ {{totalAUM}}</i>
       </div>
     </div>
   </div>

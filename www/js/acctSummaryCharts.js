@@ -62,18 +62,38 @@ function showDivPie1() {
 }
 
 function showHedgeFundsMaster(hedgeFundArray, publicCapitalFundArray, $window, totalHF, totalPHF, $scope) {
-  var tweenDuration = 250;
   var width = $window.innerWidth / 2,
     height = $window.innerWidth / 1.8;
   console.log("canvas params " + width + " : " + height);
-  showHedgeFunds();
+  $scope.publicFundRendered = false;
+  $scope.privateFundRendered == false;
+  showHedgeFundView();
   // Computes the label angle of an arc, converting from radians to degrees.
   function angle(d) {
     var a = (d.startAngle + d.endAngle) * 90 / Math.PI - 90;
     return a > 90 ? a - 180 : a;
   }
 
+  function showHedgeFundView() {
+    if ($scope.publicFundRendered == false)
+      showHedgeFunds();
+    else {
+      $scope.totalAUM = totalHF;
+      $scope.showbanner = true;
+      $scope.fundtyp = "Private Hedge Funds";
+      // apply scope
+      if (!$scope.$$phase) {
+        $scope.$apply();
+      }
+      document.getElementById("pieChart2").style.display = 'none';
+      document.getElementById("pieChart").style.display = 'block';
+      document.getElementById("chartdiv2").style.display = 'none';
+    }
+  }
+
   function showHedgeFunds() {
+    $scope.privateFundRendered = false;
+    $scope.publicFundRendered = true;
     $scope.totalAUM = totalHF;
     $scope.showbanner = true;
     $scope.fundtyp = "Private Hedge Funds";
@@ -81,8 +101,6 @@ function showHedgeFundsMaster(hedgeFundArray, publicCapitalFundArray, $window, t
     if (!$scope.$$phase) {
       $scope.$apply();
     }
-    console.log("canvas params HF " + width + " : " + height);
-    document.getElementById("pieChart").innerHTML = "";
     document.getElementById("pieChart2").style.display = 'none';
     document.getElementById("pieChart").style.display = 'block';
     document.getElementById("chartdiv2").style.display = 'none';
@@ -123,9 +141,10 @@ function showHedgeFundsMaster(hedgeFundArray, publicCapitalFundArray, $window, t
         showHedgeFundTransactions(d.data.fundName, d.data.Equity, color(i), hedgeFundArray);
       });
 
-    var paths = arcs.append("svg:path").attr("fill", function(d, i) {
+    arcs.append("svg:path").attr("fill", function(d, i) {
       return Highcharts.Color(Highcharts.getOptions().colors[0]).brighten((i - 3) / 7).get();
-    });
+    }).attr("d", arc);
+    
     arcs.filter(function(d) {
         return d.endAngle - d.startAngle > .2;
       })
@@ -142,7 +161,7 @@ function showHedgeFundsMaster(hedgeFundArray, publicCapitalFundArray, $window, t
         return d.endAngle - d.startAngle > .2;
       })
       .append("svg:text")
-      .attr("dy", "1.8em").attr("font-size", "11")
+      .attr("dy", "1.8em").attr("font-size", "10")
       .attr("text-anchor", "middle")
       .attr("transform", function(d) {
         return "translate(" + arcFinal.centroid(d) + ")rotate(" + angle(d) + ")";
@@ -150,25 +169,20 @@ function showHedgeFundsMaster(hedgeFundArray, publicCapitalFundArray, $window, t
       .text(function(d) {
         return "$ " + d.data.Equity;
       });
-  paths.transition().ease("bounce").duration(0).attrTween("d",
-      tweenPie).transition().ease("elastic").delay(
-      function(d, i) {
-        return 5000 + i * 50;
-      }).duration(0).attrTween("d", tweenDonut);
     // circle center
     var center = vis.append("circle").attr("r", 30).attr("fill",
-      "#212121").on("click", showPublicCapital).on("mouseout", function() {
+      "#212121").on("click", showPublicCapitalView).on("mouseout", function() {
       d3.select(this).style("fill", "#hello");
     });;
 
     function mouseover(d, i) {
-      d3.select(this).select("path").transition().duration(750).attr(
+      d3.select(this).select("path").transition().duration(550).attr(
         "stroke", "white").attr("stroke-width", 2).attr("d",
         arcFinal3);
     }
 
     function mouseout() {
-      d3.select(this).select("path").transition().duration(750).attr(
+      d3.select(this).select("path").transition().duration(550).attr(
         "stroke", "white").attr("stroke-width", 2).attr(
         "d", arcFinal);
     }
@@ -197,7 +211,25 @@ function showHedgeFundsMaster(hedgeFundArray, publicCapitalFundArray, $window, t
 
   }
 
+  function showPublicCapitalView() {
+    if ($scope.privateFundRendered == false)
+      showPublicCapital();
+    else {
+      $scope.totalAUM = totalPHF;
+      $scope.showbanner = true;
+      $scope.fundtyp = "Public Hedge Funds";
+      // apply scope
+      if (!$scope.$$phase) {
+        $scope.$apply();
+      }
+      document.getElementById("pieChart").style.display = 'none';
+      document.getElementById("pieChart2").style.display = 'block';
+      document.getElementById("chartdiv").style.display = 'none';
+    }
+  }
+
   function showPublicCapital() {
+    $scope.privateFundRendered = true;
     $scope.totalAUM = totalPHF;
     $scope.showbanner = true;
     $scope.fundtyp = "Public Hedge Funds";
@@ -205,8 +237,6 @@ function showHedgeFundsMaster(hedgeFundArray, publicCapitalFundArray, $window, t
     if (!$scope.$$phase) {
       $scope.$apply();
     }
-    console.log("canvas params HF PRIV " + width + " : " + height);
-    document.getElementById("pieChart2").innerHTML = "";
     document.getElementById("pieChart").style.display = 'none';
     document.getElementById("pieChart2").style.display = 'block';
     document.getElementById("chartdiv").style.display = 'none';
@@ -248,11 +278,7 @@ function showHedgeFundsMaster(hedgeFundArray, publicCapitalFundArray, $window, t
 
     arcs.append("svg:path").attr("fill", function(d, i) {
       return Highcharts.Color(Highcharts.getOptions().colors[8]).brighten((i - 3) / 7).get();
-    }).transition().ease("bounce").duration(0).attrTween("d",
-      tweenPie).transition().ease("elastic").delay(
-      function(d, i) {
-        return 5000 + i * 50;
-      }).duration(0).attrTween("d", tweenDonut);
+    }).attr("d", arc);
     // labels
     arcs.filter(function(d) {
         return d.endAngle - d.startAngle > .2;
@@ -266,22 +292,32 @@ function showHedgeFundsMaster(hedgeFundArray, publicCapitalFundArray, $window, t
       .text(function(d) {
         return d.data.fundName;
       });
+    arcs.filter(function(d) {
+        return d.endAngle - d.startAngle > .2;
+      })
+      .append("svg:text")
+      .attr("dy", "1.8em").attr("font-size", "10")
+      .attr("text-anchor", "middle")
+      .attr("transform", function(d) {
+        return "translate(" + arcFinal.centroid(d) + ")rotate(" + angle(d) + ")";
+      })
+      .text(function(d) {
+        return "$ " + d.data.Equity;
+      });
     // circle center
     var center = vis.append("circle").attr("r", 30).attr("fill",
-      "#212121").on("click", showHedgeFunds).on("mouseout", function() {
+      "#212121").on("click", showHedgeFundView).on("mouseout", function() {
       d3.select(this).style("fill", "#hello");
     });;
 
     function mouseover(d, i) {
-      d3.select(this).select("path").transition().duration(750).attr(
+      d3.select(this).select("path").transition().duration(550).attr(
         "stroke", "white").attr("stroke-width", 2).attr("d",
-        arcFinal3)
-
-      ;
+        arcFinal3);
     }
 
     function mouseout() {
-      d3.select(this).select("path").transition().duration(750).attr(
+      d3.select(this).select("path").transition().duration(550).attr(
         "stroke", "white").attr("stroke-width", 2).attr(
         "d", arcFinal);
     }

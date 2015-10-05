@@ -20,7 +20,8 @@
     "cordova-plugin-whitelist",
     "cordova-plugin-splashscreen",
     "com.ionic.keyboard",
-    "ionic-plugin-deploy"
+    "ionic-plugin-deploy",
+    "phonegap-plugin-push"
   ],
   "cordovaPlatforms": [
     "android",
