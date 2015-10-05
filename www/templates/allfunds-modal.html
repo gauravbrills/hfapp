@@ -1,11 +1,40 @@
 <ion-modal-view style="width: 90%; height: 90%;top: 5%; left: 5%; right: 5%; bottom: 5%;">
   <ion-header-bar class="bar bar-royal">
-    <h1 class="title">Comparing {{charttyp}}</h1>
+    <h1 class="title">Analyzing {{fundapproach}} Approach</h1>
   </ion-header-bar>
-  <ion-content  data-tap-disabled="true">
-    <div id="mtdytd" ng-show="showYTDMTD"/>
+  <ion-content data-tap-disabled="true">
+    <div class="list card">
+      <div class="item item-body">
+        <div id="graph" />
+      </div>
+      <div class="item tabs tabs-secondary tabs-icon-left">
+        <a class="tab-item" href="" ng-click="openGraph('HAUM')">
+          <i class="icon ion-share"></i> Historical AUM
+        </a>
+        <a class="tab-item" href="" ng-click="openGraph('MTDYTD')">
+          <i class="icon ion-share"></i> MTD YTD
+        </a>
+        <a class="tab-item" href="" ng-click="openGraph('NETRET')">
+          <i class="icon ion-share"></i> Net Return
+        </a>
+        <a class="tab-item" href="#" ng-click="openGraph('GLEXP')">
+          <i class="icon ion-share"></i> Gross Long Exposure
+        </a>
+        <a class="tab-item" href="#" ng-click="openGraph('NETEXP')">
+          <i class="icon ion-share"></i> Net Exposure
+        </a>
+        <a class="tab-item" href="#" ng-click="openGraph('TOTEXP')">
+          <i class="icon ion-share"></i> Total Exposure
+        </a>
+        <a class="tab-item" href="#" ng-click="openGraph('GRSSRET')">
+          <i class="icon ion-share"></i> Gross Return
+        </a>
+        <a class="tab-item" href="#" ng-click="openGraph('LNGPSN')">
+          <i class="icon ion-share"></i> Long Positions
+        </a>
+        <a class="tab-item" href="#" ng-click="openGraph('SHRTPSN')">
+          <i class="icon ion-share"></i> Short Positions
+        </a>
+      </div>
   </ion-content>
-<!--  <ion-footer-bar class="bar bar-royal">
-    <h1 class="title">Analysis of funds of {{fundapproach}} approach</h1>
-  </ion-footer-bar>-->
 </ion-modal-view>

@@ -1,0 +1,18 @@
+<ion-header-bar align-title="center" class="bar-positive">
+  <h1 class="title">Wellington Hedge Fund Management Login <i class="icon ion-log-in"></i></h1>
+</ion-header-bar>
+<ion-view view-title="Wellington Hedge Fund Management Login" name="login-view">
+  <ion-content class="padding" scroll="false">
+    <div class="list list-inset">
+      <label class="item item-input">
+        <span class="input-label">Username</span>
+        <input type="text" ng-model="data.username">
+      </label>
+      <label class="item item-input">
+        <span class="input-label">Password</span>
+        <input type="password" ng-model="data.password">
+      </label>
+    </div>
+    <button class="button button-block button-positive" ng-click="login()">Login</button>
+  </ion-content>
+</ion-view>

@@ -1,48 +1,155 @@
 function renderDataVizModal($scope) {
   /// aum chart defaults
-  $scope.showYTDMTD = true;
-  $scope.charttyp = 'YTDMTD';
-  showYTDMTD(pruneData($scope.fundapproach, $scope.data));
-  // show modal now once stuff completes
-
+  //  $scope.showYTDMTD = true;
+  $scope.charttyp = 'YTD MTD Comparison';
+  $scope.graphdata = pruneData($scope.fundapproach, $scope.data);
+  // default graph
+  showContGraph("Comparing Historical AUM", "Aum million $", $scope.graphdata.HistoricalDates, $scope.graphdata.HistoricalAUM);
 }
-// Graph Data Pojo
-var graphResource = function(approach, YTD, MTD, fundnames, HistoricalDates) {
+
+// series datum Pojo
+var seriesData = function(name, data) {
+    this.name = name;
+    this.data = data;
+  }
+  // Graph Data Pojo
+var graphResource = function(approach, YTD, MTD, AUM, fundnames, HistoricalDates, HistoricalAUM, NetReturn, GrossLongExposure,
+  GrossShortExposure, NetExposure, TotalExposure, GrossReturn, LongPositions, ShortPositions) {
   this.approach = approach;
   this.YTD = YTD;
   this.MTD = MTD;
+  this.AUM = AUM;
   this.fundnames = fundnames;
   this.HistoricalDates = HistoricalDates;
+  this.HistoricalAUM = HistoricalAUM;
+  this.NetReturn = NetReturn;
+  this.GrossLongExposure = GrossLongExposure;
+  this.GrossShortExposure = GrossShortExposure;
+  this.TotalExposure = TotalExposure;
+  this.GrossReturn = GrossReturn;
+  this.LongPositions = LongPositions;
+  this.ShortPositions = ShortPositions;
 }
 
 function pruneData(approach, datum) {
-  var ytd = [];
-  var mtd = [];
-  var fundnames = [];
-  var HistoricalDates = [];
+  var ytd = [],
+    aum = [],
+    mtd = [],
+    fundnames = [],
+    HistoricalDates = [],
+    HistoricalAUM = [],
+    NetReturn = [],
+    GrossLongExposure = [],
+    GrossShortExposure = [],
+    NetExposure = [],
+    TotalExposure = [],
+    GrossReturn = [],
+    LongPositions = [],
+    ShortPositions = [];
   angular.forEach(datum.hits.hits, function(value, key) {
-    if (value._source._source.InvestmentApproach == approach) {
-      ytd.push(value._source._source.YTD);
-      mtd.push(value._source._source.MTD);
-      fundnames.push(value._source._source.fundName);
-      HistoricalDates.push(value._source._source.HistoricalDates);
+    var node = value._source._source;
+    if (node.InvestmentApproach == approach) {
+      ytd.push(node.YTD);
+      mtd.push(node.MTD);
+      aum.push(node.StrategyAUM);
+      fundnames.push(node.fundName);
+      HistoricalDates = node.HistoricalDates;
+      HistoricalAUM.push(new seriesData(node.fundName, node.HistoricalAUM));
+      NetReturn.push(new seriesData(node.fundName, node.NetReturn));
+      GrossLongExposure.push(new seriesData(node.fundName, node.GrossLongExposure));
+      GrossShortExposure.push(new seriesData(node.fundName, node.GrossShortExposure));
+      NetExposure.push(new seriesData(node.fundName, node.NetExposure));
+      TotalExposure.push(new seriesData(node.fundName, node.TotalExposure));
+      GrossReturn.push(new seriesData(node.fundName, node.GrossReturn));
+      LongPositions.push(new seriesData(node.fundName, node.LongPositions));
+      ShortPositions.push(new seriesData(node.fundName, node.ShortPositions));
     }
   });
-  resource = new graphResource(approach, ytd, mtd, fundnames, HistoricalDates);
-  console.log("graphResource  " + angular.toJson(resource, true));
+  resource = new graphResource(approach, ytd, mtd, aum, fundnames, HistoricalDates, HistoricalAUM, NetReturn, GrossLongExposure,
+    GrossShortExposure, NetExposure, TotalExposure, GrossReturn, LongPositions, ShortPositions);
+  //console.log("graphResource  " + angular.toJson(resource, true));
   return resource
 }
 
-function showYTDMTD(data) {
+function showContGraph(title, yText, timeSeries, datum) {
   $(function() {
-    $('#mtdytd').highcharts({
+    $('#graph').highcharts({
+      chart: {
+        zoomType: 'x'
+      },
+      title: {
+        text: title,
+        x: -20 //center
+      },
+      xAxis: {
+        categories: timeSeries
+      },
+      yAxis: {
+        title: {
+          text: yText
+        },
+        plotLines: [{
+          value: 0,
+          width: 1,
+          color: '#808080'
+        }]
+      },
+      tooltip: {
+        valueSuffix: '%'
+      },
+      legend: {
+        layout: 'vertical',
+        align: 'right',
+        verticalAlign: 'middle',
+        borderWidth: 0
+      },
+      tooltip: {
+        shared: true,
+        crosshairs: true
+      },
+      plotOptions: {
+        series: {
+          cursor: 'pointer',
+          point: {
+            events: {
+              click: function(e) {
+                hs.htmlExpand(null, {
+                  pageOrigin: {
+                    x: e.pageX || e.clientX,
+                    y: e.pageY || e.clientY
+                  },
+                  headingText: this.series.name,
+                  maincontentText: Highcharts.dateFormat('%A, %b %e, %Y', this.x) + ':<br/> ' +
+                    this.y + ' visits',
+                  width: 200
+                });
+              }
+            }
+          },
+          marker: {
+            lineWidth: 1
+          }
+        }
+      },
+      series: datum
+    });
+  });
+}
+
+function showBarGph(title, series, data) {
+  $(function() {
+    $('#graph').highcharts({
+      title: {
+        text: title,
+        x: -20 //center
+      },
       chart: {
         type: 'bar'
       },
       xAxis: {
         categories: data.fundnames,
         title: {
-          text: null
+          text: " Funds "
         }
       },
       yAxis: {
@@ -56,6 +163,7 @@ function showYTDMTD(data) {
         }
       },
       tooltip: {
+        crosshairs: true,
         valueSuffix: ' %'
       },
       plotOptions: {
@@ -79,13 +187,7 @@ function showYTDMTD(data) {
       credits: {
         enabled: false
       },
-      series: [{
-        name: 'YTD',
-        data: data.YTD
-      }, {
-        name: 'MTD',
-        data: data.MTD
-      }]
+      series: series
     });
   });
 }
@@ -185,7 +287,6 @@ function createAllFundsViz($scope, $window, model, funds, svg, arc, path, layout
   }
 
   function populateFundInfo(index) {
-    console.log(" fund index " + index);
     var investmentApproach;
     var inceptionDate;
     var strategyAUM;

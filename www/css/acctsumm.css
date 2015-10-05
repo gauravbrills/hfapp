@@ -1,0 +1,199 @@
+#pieChart {
+	position: absolute;
+	top: 10px;
+	left: 10px;
+	width: 400px;
+	height: 400px;
+
+}
+
+#chartdiv {
+	width: 80%;
+	height: 400px;
+	top: 400px;
+	left: 10px;
+	position:absolute;
+}
+
+#chartdiv2 {
+	width: 50%;
+	height: 400px;
+	top: 60%;
+	left: 10px;
+	position:absolute;
+}
+
+#pieChart2 {
+	position: absolute;
+	top: 10px;
+	left: 10px;
+	width: 400px;
+	height: 400px;
+}
+
+#lineChart {
+	position: absolute;
+	top: 10px;
+	left: 410px;
+	height: 150px;
+}
+
+#barChart {
+	position: absolute;
+	top: 70px;
+	left: 380px;
+	height: 250px;
+}
+
+#barChart2 {
+	position: absolute;
+	top: 70px;
+	left: 380px;
+	height: 250px;
+}
+
+.slice {
+	font-size: 12pt;
+	font-family: Verdana;
+	fill: white;
+	font-weight	:bold;
+}
+
+/*for line chart*/
+.axis path, .axis line {
+	fill: none;
+	stroke: black;
+	shape-rendering: crispEdges;
+}
+
+.line {
+	fill: none;
+	/*stroke: steelblue;*/
+	stroke-width: 3px;
+}
+
+.dot {
+	/*fill: white;*/
+	/*stroke: steelblue;*/
+	stroke-width: 1.5px;
+}
+
+.axis text {
+	font-family: Verdana;
+	font-size: 11px;
+}
+
+.title {
+	font-family: Verdana;
+	font-size: 15px;
+}
+
+.xAxis {
+	font-family: verdana;
+	font-size: 11px;
+	fill: black;
+}
+
+.yAxis {
+	font-family: verdana;
+	font-size: 11px;
+	fill: white;
+}
+
+table {
+	border-collapse: collapse;
+	border: 0px;
+	font-family: Verdana;
+	color: #5C5558;
+	font-size: 12px;
+	text-align: right;
+}
+
+td {
+	padding-left: 10px;
+}
+
+#lineChartTitle1 {
+	font-family: Verdana;
+	font-size: 14px;
+	fill: lightgrey;
+	font-weight: bold;
+	text-anchor: middle;
+}
+
+#lineChartTitle2 {
+	font-family: Verdana;
+	font-size: 72px;
+	fill: grey;
+	text-anchor: middle;
+	font-weight: bold;
+	/*font-style: italic;*/
+}
+
+.chart .legend {
+	fill: black;
+	font: 14px sans-serif;
+	text-anchor: start;
+	font-size: 12px;
+}
+
+.chart text {
+	fill: white;
+	font: 10px sans-serif;
+	text-anchor: end;
+}
+
+.chart .label {
+	fill: black;
+	font: 14px sans-serif;
+	text-anchor: end;
+}
+
+.bar:hover {
+	fill: orange;
+}
+
+.axis path, .axis line {
+	fill: none;
+	stroke: #000;
+	shape-rendering: crispEdges;
+}
+
+.pielegend {
+	font-size: 12px;
+}
+
+pierect {
+	stroke-width: 2;
+}
+
+@media screen and (max-width: 700px) {
+	#pieChart svg{
+		height: 400px;
+	}
+	body{
+		overflow-x: hidden;
+	}
+	.col-group {
+		overflow: hidden;
+	}
+	.col-group > div {
+		float: left;
+		width: 50%;
+	}
+	#sidebar{
+		width: 100%;
+	}
+	#chartdiv {
+		top: 400px;
+		width: 110%;
+	}
+	#content-wrap{
+		width: 100% !important;
+		float: none;
+	}
+	#pieChart{
+		max-width: 90%;
+		margin: 0 auto;
+	}
+}

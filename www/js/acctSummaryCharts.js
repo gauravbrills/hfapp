@@ -36,8 +36,8 @@ function drawacctsumm(data, $window, $scope) {
       totalHF = totalHF + node._source.Equity;
     }
   }
-  console.log(angular.toJson(publicCapitalFundArray,true) + " -< public");
-  console.log(angular.toJson(hedgeFundArray,true) + " -< hedge");
+  //  console.log(angular.toJson(publicCapitalFundArray,true) + " -< public");
+  //  console.log(angular.toJson(hedgeFundArray,true) + " -< hedge");
   showHedgeFundsMaster(hedgeFundArray, publicCapitalFundArray, $window, totalHF, totalPHF, $scope);
 
 }
@@ -76,7 +76,7 @@ function showHedgeFundsMaster(hedgeFundArray, publicCapitalFundArray, $window, t
   function showHedgeFunds() {
     $scope.totalAUM = totalHF;
     $scope.showbanner = true;
-    $scope.fundtyp = "Public Hedge Funds";
+    $scope.fundtyp = "Private Hedge Funds";
     // apply scope
     if (!$scope.$$phase) {
       $scope.$apply();
@@ -97,7 +97,7 @@ function showHedgeFundsMaster(hedgeFundArray, publicCapitalFundArray, $window, t
       .attr("height", height)
     var vis = canvas.append("svg:g").data([hedgeFundArray]) //make a group to hold our pie chart
 
-    .attr("transform", "translate(" + width / 1.9 + "," + height / 1.8 + ")");
+    .attr("transform", "translate(" + width / 2.1 + "," + height / 1.8 + ")");
     var arc = d3.svg.arc() //this will create <path> elements for us using arc data
       .outerRadius(radius).innerRadius(100);
 
@@ -150,11 +150,11 @@ function showHedgeFundsMaster(hedgeFundArray, publicCapitalFundArray, $window, t
       .text(function(d) {
         return "$ " + d.data.Equity;
       });
-    paths.transition().ease("bounce").duration(1700).attrTween("d",
+  paths.transition().ease("bounce").duration(0).attrTween("d",
       tweenPie).transition().ease("elastic").delay(
       function(d, i) {
         return 5000 + i * 50;
-      }).duration(3000).attrTween("d", tweenDonut);
+      }).duration(0).attrTween("d", tweenDonut);
     // circle center
     var center = vis.append("circle").attr("r", 30).attr("fill",
       "#212121").on("click", showPublicCapital).on("mouseout", function() {
@@ -163,13 +163,13 @@ function showHedgeFundsMaster(hedgeFundArray, publicCapitalFundArray, $window, t
 
     function mouseover(d, i) {
       d3.select(this).select("path").transition().duration(750).attr(
-        "stroke", "white").attr("stroke-width", 3).attr("d",
+        "stroke", "white").attr("stroke-width", 2).attr("d",
         arcFinal3);
     }
 
     function mouseout() {
       d3.select(this).select("path").transition().duration(750).attr(
-        "stroke", "transparent").attr("stroke-width", 3).attr(
+        "stroke", "white").attr("stroke-width", 2).attr(
         "d", arcFinal);
     }
 
@@ -200,7 +200,7 @@ function showHedgeFundsMaster(hedgeFundArray, publicCapitalFundArray, $window, t
   function showPublicCapital() {
     $scope.totalAUM = totalPHF;
     $scope.showbanner = true;
-    $scope.fundtyp = "Private Hedge Funds";
+    $scope.fundtyp = "Public Hedge Funds";
     // apply scope
     if (!$scope.$$phase) {
       $scope.$apply();
@@ -220,7 +220,7 @@ function showHedgeFundsMaster(hedgeFundArray, publicCapitalFundArray, $window, t
       .attr("width", width) //set the width and height of our visualization (these will be attributes of the <svg> tag
       .attr("height", height)
     var vis = canvas.append("svg:g").data([publicCapitalFundArray]) //make a group to hold our pie chart
-      .attr("transform", "translate(" + width / 1.9 + "," + height / 1.8 + ")");
+      .attr("transform", "translate(" + width / 2.1 + "," + height / 1.8 + ")");
     var arc = d3.svg.arc() //this will create <path> elements for us using arc data
       .outerRadius(radius).innerRadius(100);
 
@@ -248,11 +248,11 @@ function showHedgeFundsMaster(hedgeFundArray, publicCapitalFundArray, $window, t
 
     arcs.append("svg:path").attr("fill", function(d, i) {
       return Highcharts.Color(Highcharts.getOptions().colors[8]).brighten((i - 3) / 7).get();
-    }).transition().ease("bounce").duration(1700).attrTween("d",
+    }).transition().ease("bounce").duration(0).attrTween("d",
       tweenPie).transition().ease("elastic").delay(
       function(d, i) {
         return 5000 + i * 50;
-      }).duration(3000).attrTween("d", tweenDonut);
+      }).duration(0).attrTween("d", tweenDonut);
     // labels
     arcs.filter(function(d) {
         return d.endAngle - d.startAngle > .2;
@@ -274,7 +274,7 @@ function showHedgeFundsMaster(hedgeFundArray, publicCapitalFundArray, $window, t
 
     function mouseover(d, i) {
       d3.select(this).select("path").transition().duration(750).attr(
-        "stroke", "white").attr("stroke-width", 3).attr("d",
+        "stroke", "white").attr("stroke-width", 2).attr("d",
         arcFinal3)
 
       ;
@@ -282,7 +282,7 @@ function showHedgeFundsMaster(hedgeFundArray, publicCapitalFundArray, $window, t
 
     function mouseout() {
       d3.select(this).select("path").transition().duration(750).attr(
-        "stroke", "transparent").attr("stroke-width", 0).attr(
+        "stroke", "white").attr("stroke-width", 2).attr(
         "d", arcFinal);
     }
 

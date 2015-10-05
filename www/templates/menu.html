@@ -1,6 +1,6 @@
-<ion-side-menus enable-menu-with-back-views="true">
-  <ion-side-menu-content>
-    <ion-nav-bar class="bar bar-header bar-royal">
+<ion-side-menus enable-menu-with-back-views="false">
+  <ion-side-menu-content drag-content="false">
+    <ion-nav-bar class="bar bar-header bar-positive">
       <ion-nav-back-button>
       </ion-nav-back-button>
 
@@ -9,7 +9,7 @@
         </button>
       </ion-nav-buttons>
     </ion-nav-bar>
-    <ion-nav-view  animation="none" name="menuContent"></ion-nav-view>
+    <ion-nav-view animation="none" name="menuContent"></ion-nav-view>
   </ion-side-menu-content>
 
   <ion-side-menu side="left">
@@ -27,11 +27,11 @@
         <ion-item menu-close href="#/app/fundDescription">
           Fund Description <i class="icon ion-funnel"></i>
         </ion-item>
-        <ion-item menu-close href="#/app/browse">
-          Browse
+        <ion-item menu-close href="#/app/checkForUpdates">
+          Check For Updates <i class="icon ion-ios-cloud-download"></i>
         </ion-item>
-        <ion-item menu-close href="#/app/playlists">
-          Playlists
+        <ion-item menu-close href="#/login">
+          sign-out <i class="icon ion-log-out"></i>
         </ion-item>
       </ion-list>
     </ion-content>

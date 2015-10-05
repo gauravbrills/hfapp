@@ -1,0 +1,12 @@
+<ion-view view-title="Check For Updates">
+  <ion-content class="padding">
+    <div class="list card">
+      <a class="item item-icon-left" ng-click="checkForUpdates()">
+        <i class="icon ion-ios-cloud-download-outline"></i> Check For Updates
+      </a>
+      <a class="item item-icon-left" ng-if="hasUpdate" ng-click="doUpdate()">
+        <i class="icon ion-ios-cloud-download"></i> Download update
+      </a>
+    </div>
+  </ion-content>
+</ion-view>

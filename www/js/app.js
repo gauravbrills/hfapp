@@ -5,10 +5,14 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('hfapp', ['ionic', 'hfapp.controllers', 'hfapp.services'])
+angular.module('hfapp', ['ionic', 'ionic.service.core', 'hfapp.controllers', 'hfapp.services'])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
+    // kick off the platform web client
+    Ionic.io();
+    var user = Ionic.User.current();
+    console.log(user.id);
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
     if (window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {
@@ -30,10 +34,14 @@ angular.module('hfapp', ['ionic', 'hfapp.controllers', 'hfapp.services'])
   // Learn more here: https://github.com/angular-ui/ui-router
   // Set up the various states which the app can be in.
   // Each state's controller can be found in controllers.js
-
-
   $stateProvider
   // side menu
+  //login page
+    .state('login', {
+      url: '/login',
+      templateUrl: 'templates/login.html',
+      controller: 'LoginCtrl'
+    })
     .state('app', {
       url: '/app',
       abstract: true,
@@ -67,54 +75,23 @@ angular.module('hfapp', ['ionic', 'hfapp.controllers', 'hfapp.services'])
         }
       }
     })
+    .state('app.checkForUpdates', {
+      cache: false,
+      url: '/checkForUpdates',
+      views: {
+        'menuContent': {
+          templateUrl: 'templates/checkForUpdates.html',
+          controller: 'checkForUpdatesCtrl'
+        }
+      }
+    })
     // setup an abstract state for the tabs directive
     .state('tab', {
       url: "/tab",
       abstract: true,
       templateUrl: "templates/tabs.html"
     })
-
-  // Each tab has its own nav history stack:
-
-  /*.state('tab.dash', {
-    url: '/dash',
-    views: {
-      'tab-dash': {
-        templateUrl: 'templates/tab-dash.html',
-        controller: 'DashCtrl'
-      }
-    }
-  })
-    .state('tab.chats', {
-        url: '/chats',
-        views: {
-          'tab-chats': {
-            templateUrl: 'templates/tab-chats.html',
-            controller: 'ChatsCtrl'
-          }
-        }
-      })
-      .state('tab.chat-detail', {
-        url: '/chats/:chatId',
-        views: {
-          'tab-chats': {
-            templateUrl: 'templates/chat-detail.html',
-            controller: 'ChatDetailCtrl'
-          }
-        }
-      })
-
-    .state('tab.account', {
-      url: '/account',
-      views: {
-        'tab-account': {
-          templateUrl: 'templates/tab-account.html',
-          controller: 'AccountCtrl'
-        }
-      }
-    });*/
-
-  // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/app/acctsumm');
+    // if none of the above states are matched, use this as the fallback
+  $urlRouterProvider.otherwise('/login');
 
 });

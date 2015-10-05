@@ -16,6 +16,7 @@
         "_score": 1,
         "_source": {
           "fundName": "Fund A",
+          "privateFundFlg": false,
           "fundId": "ZB3Z",
           "fundType": "xyz",
           "Equity": 18144673,
@@ -85,6 +86,7 @@
         "_score": 1,
         "_source": {
           "fundName": "Fund B",
+          "privateFundFlg": false,
           "fundId": "AB3Z",
           "fundType": "xyz",
           "Equity": 100661617,
@@ -146,6 +148,7 @@
         "_score": 1,
         "_source": {
           "fundName": "Fund C",
+          "privateFundFlg": false,
           "fundId": "AB3Z",
           "fundType": "xyz",
           "Equity": 100661617,
@@ -211,6 +214,7 @@
         "_score": 1,
         "_source": {
           "fundName": "Fund D",
+          "privateFundFlg": false,
           "fundId": "AB3Z",
           "fundType": "xyz",
           "Equity": 100661617,
@@ -279,9 +283,10 @@
         "_score": 1,
         "_source": {
           "fundName": "Fund PA",
+          "privateFundFlg": true,
           "fundId": "ZB3Z",
           "fundType": "xyz",
-          "Equity": 18144673,
+          "Equity": 16144673,
           "MTD": 0.8,
           "YTD": 1.0,
           "HistoricalDates": ["05-01-2012", "06-01-2012", "07-01-2012", "08-01-2012", "09-01-2012", "10-01-2012", "11-01-2012", "12-01-2012", "01-01-2013", "02-01-2013", "03-01-2013", "04-01-2013", "05-01-2013"],
@@ -329,9 +334,10 @@
         "_score": 1,
         "_source": {
           "fundName": "Fund PB",
+          "privateFundFlg": true,
           "fundId": "AB3Z",
           "fundType": "xyz",
-          "Equity": 100661617,
+          "Equity": 90661617,
           "MTD": 0.8,
           "YTD": 1.0,
           "HistoricalDates": ["05-01-2012", "06-01-2012", "07-01-2012", "08-01-2012", "09-01-2012", "10-01-2012", "11-01-2012", "12-01-2012", "01-01-2013", "02-01-2013", "03-01-2013", "04-01-2013", "05-01-2013"],
@@ -382,9 +388,10 @@
         "_score": 1,
         "_source": {
           "fundName": "Fund PC",
+          "privateFundFlg": true,
           "fundId": "AB3Z",
           "fundType": "xyz",
-          "Equity": 100661617,
+          "Equity": 50661617,
           "MTD": 0.8,
           "YTD": 1.0,
           "HistoricalDates": ["05-01-2012", "06-01-2012", "07-01-2012", "08-01-2012", "09-01-2012", "10-01-2012", "11-01-2012", "12-01-2012", "01-01-2013", "02-01-2013", "03-01-2013", "04-01-2013", "05-01-2013"],
@@ -439,9 +446,10 @@
         "_score": 1,
         "_source": {
           "fundName": "Fund PD",
+          "privateFundFlg": true,
           "fundId": "AB3Z",
           "fundType": "xyz",
-          "Equity": 100661617,
+          "Equity": 110661617,
           "MTD": 0.8,
           "YTD": 1.0,
           "HistoricalDates": ["05-01-2012", "06-01-2012", "07-01-2012", "08-01-2012", "09-01-2012", "10-01-2012", "11-01-2012", "12-01-2012", "01-01-2013", "02-01-2013", "03-01-2013", "04-01-2013", "05-01-2013"],
