@@ -1,4 +1,4 @@
-function drawacctsumm(data, $window, $scope) {
+function drawacctsumm(data, $window, $scope, $timeout) {
   var hedgeFundArray = [];
   var hedgeFundequity = [];
   var hedgeFundYtd = [];
@@ -7,6 +7,7 @@ function drawacctsumm(data, $window, $scope) {
   var publicCapitalFundArray = [];
   var totalHF = 0;
   var totalPHF = 0;
+
   var formatAsPercentage = d3.format("%"),
     formatAsPercentage1Dec = d3
     .format(".1%"),
@@ -38,7 +39,7 @@ function drawacctsumm(data, $window, $scope) {
   }
   //  console.log(angular.toJson(publicCapitalFundArray,true) + " -< public");
   //  console.log(angular.toJson(hedgeFundArray,true) + " -< hedge");
-  showHedgeFundsMaster(hedgeFundArray, publicCapitalFundArray, $window, totalHF, totalPHF, $scope);
+  showHedgeFundsMaster(hedgeFundArray, publicCapitalFundArray, $window, totalHF, totalPHF, $scope, $timeout);
 
 }
 
@@ -61,12 +62,11 @@ function showDivPie1() {
 
 }
 
-function showHedgeFundsMaster(hedgeFundArray, publicCapitalFundArray, $window, totalHF, totalPHF, $scope) {
+function showHedgeFundsMaster(hedgeFundArray, publicCapitalFundArray, $window, totalHF, totalPHF, $scope, $timeout) {
   var width = $window.innerWidth / 2,
     height = $window.innerWidth / 1.8;
-  console.log("canvas params " + width + " : " + height);
   $scope.publicFundRendered = false;
-  $scope.privateFundRendered == false;
+  $scope.privateFundRendered = false;
   showHedgeFundView();
   // Computes the label angle of an arc, converting from radians to degrees.
   function angle(d) {
@@ -75,36 +75,22 @@ function showHedgeFundsMaster(hedgeFundArray, publicCapitalFundArray, $window, t
   }
 
   function showHedgeFundView() {
-    if ($scope.publicFundRendered == false)
-      showHedgeFunds();
-    else {
+    //  if ($scope.publicFundRendered == false)
+    //    else {
+    $timeout(function() {
       $scope.totalAUM = totalHF;
       $scope.showbanner = true;
       $scope.fundtyp = "Private Hedge Funds";
-      // apply scope
-      if (!$scope.$$phase) {
-        $scope.$apply();
-      }
-      document.getElementById("pieChart2").style.display = 'none';
-      document.getElementById("pieChart").style.display = 'block';
-      document.getElementById("chartdiv2").style.display = 'none';
-    }
+      //..
+    }, 200);
+    showHedgeFunds();
   }
 
   function showHedgeFunds() {
-    $scope.privateFundRendered = false;
-    $scope.publicFundRendered = true;
-    $scope.totalAUM = totalHF;
-    $scope.showbanner = true;
-    $scope.fundtyp = "Private Hedge Funds";
-    // apply scope
-    if (!$scope.$$phase) {
-      $scope.$apply();
-    }
+    document.getElementById("pieChart").innerHTML = "";
     document.getElementById("pieChart2").style.display = 'none';
     document.getElementById("pieChart").style.display = 'block';
     document.getElementById("chartdiv2").style.display = 'none';
-
     var color = d3.scale.category20(),
       radius = width / 2.35,
       innerRadius = (width / 2) * .45;
@@ -132,22 +118,22 @@ function showHedgeFundsMaster(hedgeFundArray, publicCapitalFundArray, $window, t
       .append("svg:g") //create a group to hold each slice (we will have a <path> and a <text> element associated with each slice)
       .attr("class", "slice").on("mouseover", mouseover).on("mouseout",
         mouseout).on("click", function(d, i) {
-        $scope.fundSelected = d.data.fundName;
-        $scope.showbanner = false;
-        // apply scope
-        if (!$scope.$$phase) {
-          $scope.$apply();
-        }
+        $timeout(function() {
+          $scope.fundSelected = d.data.fundName;
+          $scope.showbanner = false;
+          //..
+        }, 200);
         showHedgeFundTransactions(d.data.fundName, d.data.Equity, color(i), hedgeFundArray);
       });
 
     arcs.append("svg:path").attr("fill", function(d, i) {
       return Highcharts.Color(Highcharts.getOptions().colors[0]).brighten((i - 3) / 7).get();
-    }).attr("d", arc);
-    
-    arcs.filter(function(d) {
-        return d.endAngle - d.startAngle > .2;
-      })
+    }).transition().ease("bounce").duration(1700).attrTween("d", tweenPie).transition().ease("elastic").
+    delay(function(d, i) {                                         
+      return  5000 + i * 50;                                 
+    }).duration(3000).attrTween("d", tweenDonut);
+
+    arcs
       .append("svg:text")
       .attr("dy", ".20em")
       .attr("text-anchor", "middle")
@@ -157,9 +143,7 @@ function showHedgeFundsMaster(hedgeFundArray, publicCapitalFundArray, $window, t
       .text(function(d) {
         return d.data.fundName;
       });
-    arcs.filter(function(d) {
-        return d.endAngle - d.startAngle > .2;
-      })
+    arcs
       .append("svg:text")
       .attr("dy", "1.8em").attr("font-size", "10")
       .attr("text-anchor", "middle")
@@ -212,35 +196,22 @@ function showHedgeFundsMaster(hedgeFundArray, publicCapitalFundArray, $window, t
   }
 
   function showPublicCapitalView() {
-    if ($scope.privateFundRendered == false)
-      showPublicCapital();
-    else {
+    //  if ($scope.privateFundRendered == false)
+    //  else {
+    $timeout(function() {
       $scope.totalAUM = totalPHF;
       $scope.showbanner = true;
       $scope.fundtyp = "Public Hedge Funds";
-      // apply scope
-      if (!$scope.$$phase) {
-        $scope.$apply();
-      }
-      document.getElementById("pieChart").style.display = 'none';
-      document.getElementById("pieChart2").style.display = 'block';
-      document.getElementById("chartdiv").style.display = 'none';
-    }
+      //..
+    }, 200);
+    showPublicCapital();
   }
 
   function showPublicCapital() {
-    $scope.privateFundRendered = true;
-    $scope.totalAUM = totalPHF;
-    $scope.showbanner = true;
-    $scope.fundtyp = "Public Hedge Funds";
-    // apply scope
-    if (!$scope.$$phase) {
-      $scope.$apply();
-    }
+    document.getElementById("pieChart2").innerHTML = "";
     document.getElementById("pieChart").style.display = 'none';
     document.getElementById("pieChart2").style.display = 'block';
     document.getElementById("chartdiv").style.display = 'none';
-
     var color = d3.scale.category20(),
       radius = width / 2.35,
       innerRadius = (width / 2) * .45;
@@ -267,22 +238,21 @@ function showHedgeFundsMaster(hedgeFundArray, publicCapitalFundArray, $window, t
       .append("svg:g") //create a group to hold each slice (we will have a <path> and a <text> element associated with each slice)
       .attr("class", "slice").on("mouseover", mouseover).on("mouseout",
         mouseout).on("click", function(d, i) {
-        $scope.fundSelected = d.data.fundName;
-        $scope.showbanner = false;
-        // apply scope
-        if (!$scope.$$phase) {
-          $scope.$apply();
-        }
+        $timeout(function() {
+          $scope.fundSelected = d.data.fundName;
+          $scope.showbanner = false;
+        }, 200);
         showPublicCapitalTransactions(d.data.fundName, color(i), publicCapitalFundArray);
       });
 
     arcs.append("svg:path").attr("fill", function(d, i) {
       return Highcharts.Color(Highcharts.getOptions().colors[8]).brighten((i - 3) / 7).get();
-    }).attr("d", arc);
+    }).transition().ease("bounce").duration(1700).attrTween("d", tweenPie).transition().ease("elastic").
+    delay(function(d, i) {                                         
+      return  5000 + i * 50;                                 
+    }).duration(3000).attrTween("d", tweenDonut);
     // labels
-    arcs.filter(function(d) {
-        return d.endAngle - d.startAngle > .2;
-      })
+    arcs
       .append("svg:text")
       .attr("dy", ".22em")
       .attr("text-anchor", "middle")
@@ -292,10 +262,7 @@ function showHedgeFundsMaster(hedgeFundArray, publicCapitalFundArray, $window, t
       .text(function(d) {
         return d.data.fundName;
       });
-    arcs.filter(function(d) {
-        return d.endAngle - d.startAngle > .2;
-      })
-      .append("svg:text")
+    arcs.append("svg:text")
       .attr("dy", "1.8em").attr("font-size", "10")
       .attr("text-anchor", "middle")
       .attr("transform", function(d) {

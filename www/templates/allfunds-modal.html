@@ -1,11 +1,16 @@
 <ion-modal-view style="width: 90%; height: 90%;top: 5%; left: 5%; right: 5%; bottom: 5%;">
-  <ion-header-bar class="bar bar-royal">
+  <ion-header-bar class="bar bar-positive">
     <h1 class="title">Analyzing {{fundapproach}} Approach</h1>
   </ion-header-bar>
   <ion-content data-tap-disabled="true">
     <div class="list card">
       <div class="item item-body">
         <div id="graph" />
+      </div>
+      <div class="item range range-positive" ng-show='rangeDisp'>
+        <i class="icon ion-ios-pulse"></i> {{graphCurr}}
+        <input type="range" name="volume" min="{{graphMin}}" max="{{graphMax}}" ng-model="graphCurr" ng-change="translateGraph(graphCurr)"> {{graphMax}}
+        <i class="icon ion-ios-pulse-strong"></i>
       </div>
       <div class="item tabs tabs-secondary tabs-icon-left">
         <a class="tab-item" href="" ng-click="openGraph('HAUM')">
@@ -17,22 +22,22 @@
         <a class="tab-item" href="" ng-click="openGraph('NETRET')">
           <i class="icon ion-share"></i> Net Return
         </a>
-        <a class="tab-item" href="#" ng-click="openGraph('GLEXP')">
+        <a class="tab-item" href="" ng-click="openGraph('GLEXP')">
           <i class="icon ion-share"></i> Gross Long Exposure
         </a>
-        <a class="tab-item" href="#" ng-click="openGraph('NETEXP')">
+        <a class="tab-item" href="" ng-click="openGraph('NETEXP')">
           <i class="icon ion-share"></i> Net Exposure
         </a>
-        <a class="tab-item" href="#" ng-click="openGraph('TOTEXP')">
+        <a class="tab-item" href="" ng-click="openGraph('TOTEXP')">
           <i class="icon ion-share"></i> Total Exposure
         </a>
-        <a class="tab-item" href="#" ng-click="openGraph('GRSSRET')">
+        <a class="tab-item" href="" ng-click="openGraph('GRSSRET')">
           <i class="icon ion-share"></i> Gross Return
         </a>
-        <a class="tab-item" href="#" ng-click="openGraph('LNGPSN')">
+        <a class="tab-item" href="" ng-click="openGraph('LNGPSN')">
           <i class="icon ion-share"></i> Long Positions
         </a>
-        <a class="tab-item" href="#" ng-click="openGraph('SHRTPSN')">
+        <a class="tab-item" href="" ng-click="openGraph('SHRTPSN')">
           <i class="icon ion-share"></i> Short Positions
         </a>
       </div>

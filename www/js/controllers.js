@@ -1,11 +1,14 @@
 angular.module('hfapp.controllers', [])
-  .controller('acctSummCtrl', function($scope, $window, $ionicLoading, acctsumm) {
+  .controller('acctSummCtrl', function($scope, $window, $ionicLoading, $timeout, acctsumm) {
+    $scope.totalAUM = 0;
+    $scope.showbanner = "";
+    $scope.fundtyp = "";
     $scope.data = acctsumm.get();
     $ionicLoading.show({
       template: 'Loading the awesome...'
     });
     $scope.data.$promise.then(function(data) {
-      drawacctsumm(data, $window, $scope);
+      drawacctsumm(data, $window, $scope, $timeout);
       $ionicLoading.hide();
     });
   })
@@ -57,6 +60,7 @@ angular.module('hfapp.controllers', [])
   })
   .controller('allfundsCtrl', function($scope, $ionicModal, $ionicLoading, $window, allfunds, allfundsmodel) {
     $scope.fundapproach = "All";
+    $scope.graphCurr = 0;
     // get all funds data
     $scope.model = allfundsmodel.get();
     //$scope.data = allfunds.getSortedFunds('{ "sort": { "fundName": { "order": "asc" }}}');
@@ -98,39 +102,58 @@ angular.module('hfapp.controllers', [])
       });
       // graph corousal
       $scope.openGraph = function openGraph(key) {
-        if (key == "NETRET") {
-          showContGraph("Comparing Net Returns", "% Returns", $scope.graphdata.HistoricalDates, $scope.graphdata.NetReturn);
-        } else if (key == "TOTEXP") {
-          showContGraph("Comparing Total Exposure", "Aum million $", $scope.graphdata.HistoricalDates, $scope.graphdata.TotalExposure);
-        } else if (key == "GRSSRET") {
-          showContGraph("Comparing Gross Returns", "% Returns", $scope.graphdata.HistoricalDates, $scope.graphdata.GrossReturn);
-        } else if (key == "GLEXP") {
-          showContGraph("Comparing Gross Long Exposure", "Aum million $", $scope.graphdata.HistoricalDates, $scope.graphdata.GrossLongExposure);
-        } else if (key == "NETEXP") {
-          showContGraph("Comparing Long Positions", "Aum million $", $scope.graphdata.HistoricalDates, $scope.graphdata.LongPositions);
-        } else if (key == "GRSSRET") {
-          showContGraph("Comparing Gross Returns", "% Returns", $scope.graphdata.HistoricalDates, $scope.graphdata.GrossReturn);
-        } else if (key == "LNGPSN") {
-          showContGraph("Comparing Long Positions", "Aum million $", $scope.graphdata.HistoricalDates, $scope.graphdata.LongPositions);
-        } else if (key == "MTDYTD") {
-          var series = [{
-            name: 'YTD',
-            data: $scope.graphdata.YTD
-          }, {
-            name: 'MTD',
-            data: $scope.graphdata.MTD
-          }];
-          showBarGph('YTD MTD Comparison', series, $scope.graphdata);
-        } else if (key == "SAUM") {
-          var series = [{
-            name: 'Strategic AUM (million $)',
-            data: $scope.graphdata.AUM
-          }];
-          showBarGph('Strategic AUM Comparison', series, $scope.graphdata);
-        } else if (key == "SHRTPSN") {
-          showContGraph("Comparing Short Positions", "% Returns", $scope.graphdata.HistoricalDates, $scope.graphdata.ShortPositions);
-        } else if (key == "HAUM") {
-          showContGraph("Comparing Historical AUM", "Aum million $", $scope.graphdata.HistoricalDates, $scope.graphdata.HistoricalAUM);
+          if (key == "NETRET") {
+            showContGraph("Comparing Net Returns", "% Returns", $scope, $scope.graphdata.HistoricalDates, $scope.graphdata.NetReturn);
+          } else if (key == "TOTEXP") {
+            showContGraph("Comparing Total Exposure", "Aum million $", $scope, $scope.graphdata.HistoricalDates, $scope.graphdata.TotalExposure);
+          } else if (key == "GRSSRET") {
+            showContGraph("Comparing Gross Returns", "% Returns", $scope, $scope.graphdata.HistoricalDates, $scope.graphdata.GrossReturn);
+          } else if (key == "GLEXP") {
+            showContGraph("Comparing Gross Long Exposure", "Aum million $", $scope, $scope.graphdata.HistoricalDates, $scope.graphdata.GrossLongExposure);
+          } else if (key == "NETEXP") {
+            showContGraph("Comparing Long Positions", "Aum million $", $scope, $scope.graphdata.HistoricalDates, $scope.graphdata.LongPositions);
+          } else if (key == "GRSSRET") {
+            showContGraph("Comparing Gross Returns", "% Returns", $scope, $scope.graphdata.HistoricalDates, $scope.graphdata.GrossReturn);
+          } else if (key == "LNGPSN") {
+            showContGraph("Comparing Long Positions", "Aum million $", $scope, $scope.graphdata.HistoricalDates, $scope.graphdata.LongPositions);
+          } else if (key == "MTDYTD") {
+            $scope.rangeDisp = false;
+            var series = [{
+              name: 'YTD',
+              data: $scope.graphdata.YTD
+            }, {
+              name: 'MTD',
+              data: $scope.graphdata.MTD
+            }];
+            showBarGph('YTD MTD Comparison', series, $scope.graphdata);
+          } else if (key == "SAUM") {
+            $scope.rangeDisp = false;
+            var series = [{
+              name: 'Strategic AUM (million $)',
+              data: $scope.graphdata.AUM
+            }];
+            showBarGph('Strategic AUM Comparison', series, $scope.graphdata);
+          } else if (key == "SHRTPSN") {
+            showContGraph("Comparing Short Positions", "% Returns", $scope, $scope.graphdata.HistoricalDates, $scope.graphdata.ShortPositions);
+          } else if (key == "HAUM") {
+            showContGraph("Comparing Historical AUM", "Aum million $", $scope, $scope.graphdata.HistoricalDates, $scope.graphdata.HistoricalAUM);
+          }
+        }
+        // watch range change
+        /*$scope.$watch('graphCurr', function(newValue, oldValue) {
+          $scope.chart.yAxis[0].setExtremes(newValue, $scope.graphMax);
+          $scope.chart.showResetZoom();
+          console.log("Translate -- " + newValue);
+          if (!$scope.$$phase) {
+            $scope.$apply();
+          }
+        });*/
+      $scope.translateGraph = function translateGraph(graphCurr) {
+        $scope.chart.yAxis[0].setExtremes(graphCurr, $scope.graphMax);
+        $scope.chart.showResetZoom();
+        console.log("Translate -- " + graphCurr);
+        if (!$scope.$$phase) {
+          $scope.$apply();
         }
       }
     });

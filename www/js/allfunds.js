@@ -4,7 +4,7 @@ function renderDataVizModal($scope) {
   $scope.charttyp = 'YTD MTD Comparison';
   $scope.graphdata = pruneData($scope.fundapproach, $scope.data);
   // default graph
-  showContGraph("Comparing Historical AUM", "Aum million $", $scope.graphdata.HistoricalDates, $scope.graphdata.HistoricalAUM);
+  showContGraph("Comparing Historical AUM", "Aum million $", $scope, $scope.graphdata.HistoricalDates, $scope.graphdata.HistoricalAUM);
 }
 
 // series datum Pojo
@@ -71,69 +71,76 @@ function pruneData(approach, datum) {
   return resource
 }
 
-function showContGraph(title, yText, timeSeries, datum) {
-  $(function() {
-    $('#graph').highcharts({
-      chart: {
-        zoomType: 'x'
-      },
+function showContGraph(title, yText, $scope, timeSeries, datum) {
+  $('#graph').highcharts({
+    chart: {
+      zoomType: 'x'
+    },
+    title: {
+      text: title,
+      x: -20 //center
+    },
+    xAxis: {
+      categories: timeSeries
+    },
+    yAxis: {
       title: {
-        text: title,
-        x: -20 //center
+        text: yText
       },
-      xAxis: {
-        categories: timeSeries
-      },
-      yAxis: {
-        title: {
-          text: yText
-        },
-        plotLines: [{
-          value: 0,
-          width: 1,
-          color: '#808080'
-        }]
-      },
-      tooltip: {
-        valueSuffix: '%'
-      },
-      legend: {
-        layout: 'vertical',
-        align: 'right',
-        verticalAlign: 'middle',
-        borderWidth: 0
-      },
-      tooltip: {
-        shared: true,
-        crosshairs: true
-      },
-      plotOptions: {
-        series: {
-          cursor: 'pointer',
-          point: {
-            events: {
-              click: function(e) {
-                hs.htmlExpand(null, {
-                  pageOrigin: {
-                    x: e.pageX || e.clientX,
-                    y: e.pageY || e.clientY
-                  },
-                  headingText: this.series.name,
-                  maincontentText: Highcharts.dateFormat('%A, %b %e, %Y', this.x) + ':<br/> ' +
-                    this.y + ' visits',
-                  width: 200
-                });
-              }
+      plotLines: [{
+        value: 0,
+        width: 1,
+        color: '#808080'
+      }]
+    },
+    tooltip: {
+      valueSuffix: '%'
+    },
+    legend: {
+      layout: 'vertical',
+      align: 'right',
+      verticalAlign: 'middle',
+      borderWidth: 0
+    },
+    tooltip: {
+      shared: true,
+      crosshairs: true
+    },
+    plotOptions: {
+      series: {
+        cursor: 'pointer',
+        point: {
+          events: {
+            click: function(e) {
+              hs.htmlExpand(null, {
+                pageOrigin: {
+                  x: e.pageX || e.clientX,
+                  y: e.pageY || e.clientY
+                },
+                headingText: this.series.name,
+                maincontentText: Highcharts.dateFormat('%A, %b %e, %Y', this.x) + ':<br/> ' +
+                  this.y + ' visits',
+                width: 200
+              });
             }
-          },
-          marker: {
-            lineWidth: 1
           }
+        },
+        marker: {
+          lineWidth: 1
         }
-      },
-      series: datum
-    });
+      }
+    },
+    series: datum
   });
+  $scope.chart = $('#graph').highcharts();
+  var extremes = $scope.chart.yAxis[0].getExtremes();
+  $scope.rangeDisp = true;
+  $scope.graphMin = extremes.min;
+  $scope.graphMax = extremes.max;
+  $scope.graphCurr = extremes.max;
+  if (!$scope.$$phase) {
+    $scope.$apply();
+  }
 }
 
 function showBarGph(title, series, data) {

@@ -1,4 +1,4 @@
-<ion-view view-title="Account Summary (Split by Fund AUM)">
+<ion-view view-title="Account Summary (Split by Fund AUM)" >
   <ion-content class="padding" data-tap-disabled="true">
     <div class="bar padding">
       <div class="col-md-8 col-lg-8">
@@ -18,22 +18,19 @@
     <div class="row">
       <div class="col-md-4 col-lg-2">
         <div class="box">
-          <div id="pieChart"></div>
-          <div id="pieChart2"></div>
+          <div id="pieChart" style="display:none"></div>
+          <div id="pieChart2" style="display:none"></div>
         </div>
       </div>
       <div class="col-md-7 col-lg-8">
         <div class="box">
-          <div id="chartdiv"></div>
-          <div id="chartdiv2"> </div>
+          <div id="chartdiv" style="display:none"></div>
+          <div id="chartdiv2" style="display:none"></div>
         </div>
       </div>
     </div>
   </ion-content>
   <div class="bar bar-footer bar-balanced">
-    <div class="col-xs">
-      <div class="box pull-left"><i>Total Assets under management : $ {{totalAUM}}</i>
-      </div>
-    </div>
+    <i class="pull-left">Total Assets under management : $ {{totalAUM}}</i>
   </div>
 </ion-view>

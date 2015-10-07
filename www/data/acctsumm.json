@@ -9,7 +9,7 @@
   "hits": {
     "total": 44,
     "max_score": 1,
-    "HedgeFundHoldings": [{
+    "hits": [{
         "_index": "transactions",
         "_type": "transaction",
         "_id": "trans0002",
@@ -275,8 +275,7 @@
         }
       }
 
-    ],
-    "publicCapitalFundHoldings": [{
+  ,{
         "_index": "transactions",
         "_type": "transaction",
         "_id": "trans0002",

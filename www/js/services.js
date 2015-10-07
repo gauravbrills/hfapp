@@ -3,7 +3,7 @@ angular.module('hfapp.services', ['ngResource'])
   .constant('ApiEndpoint', {
     url: 'http://es.pixelsorcery.in:9200'
   })
-  // For the real endpoint, we'd use this
+  // For the real endpoint, we'd use this /api
   // .constant('ApiEndpoint', {
   //  url: 'http://es.pixelsorcery.in:9200'
   // })
@@ -40,16 +40,16 @@ angular.module('hfapp.services', ['ngResource'])
     });
   }).factory('allfunds', function($resource, ApiEndpoint) {
     // http://10.0.2.2:8100 for android http://es.pixelsorcery.in:9200/transactions/transaction/_search
-    // /api/transactions/transaction/_search'
-    return $resource(ApiEndpoint.url + '/transactions/transaction/_search?size=30', {}, {
+    // ApiEndpoint.url + '/transactions/transaction/_search?size=30'
+    return $resource('/data/allfunds.json', {}, {
       getSortedFunds: {
         method: 'GET'
       }
     });
   }).factory('allfundsmodel', function($resource, ApiEndpoint) {
     // http://10.0.2.2:8100 for android http://es.pixelsorcery.in:9200/transactions/transaction/_search
-    // /api/transactions/transaction/_search'
-    return $resource(ApiEndpoint.url + '/fundrelation/fundrelation/_search', {}, {
+    // ApiEndpoint.url + '/fundrelation/fundrelation/_search'
+    return $resource('/data/model.json', {}, {
       get: {
         method: 'GET'
       }
@@ -58,7 +58,8 @@ angular.module('hfapp.services', ['ngResource'])
 
 .factory('acctsumm', function($resource, ApiEndpoint) {
   // http://10.0.2.2:8100 for android http://es.pixelsorcery.in:9200/transactions/transaction/_search
-  return $resource(ApiEndpoint.url + '/acctsummaries/account/_search?sort=_uid', {}, {
+  // ApiEndpoint.url + '/acctsummaries/account/_search?sort=_uid'
+  return $resource('/data/acctsumm.json', {}, {
     get: {
       method: 'GET'
     }
