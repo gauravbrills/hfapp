@@ -1,5 +1,22 @@
 angular.module('hfapp.controllers', [])
-  .controller('acctSummCtrl', function($scope, $window, $ionicLoading, $timeout, acctsumm) {
+  .controller('PushCtrl', function($scope, $rootScope, $ionicPush) {
+    $ionicPush.init({
+      "debug": true,
+      "onNotification": function(notification) {
+        var payload = notification.payload;
+        console.log(notification);
+      },
+      "onRegister": function(data) {
+        console.log(data.token);
+      }
+    });
+
+  })
+  .controller('acctSummCtrl', function($rootScope, $scope, $window, $ionicLoading, $timeout, acctsumm) {
+    var user = Ionic.User.current();
+    $rootScope.currentUserName = user.get('name');
+    $rootScope.avatar = user.get('avatar');
+    console.log("user " + $scope.currentUserName);
     $scope.totalAUM = 0;
     $scope.showbanner = "";
     $scope.fundtyp = "";
@@ -12,11 +29,16 @@ angular.module('hfapp.controllers', [])
       $ionicLoading.hide();
     });
   })
-  .controller('fundAumCtrl', function($scope, funds) {
-    $scope.data = funds.get();
-    $scope.data.$promise.then(function(data) {
-      fundDescRenderer(data);
+  .controller('marketcommentaryCtrl', function($scope, $ionicLoading, marketcommentary) {
+    $scope.data = marketcommentary.get();
+    $ionicLoading.show({
+      template: 'Loading the awesome...'
     });
+    $scope.data.$promise.then(function(comm) {
+      openCommGraph($scope, comm);
+      $ionicLoading.hide();
+    });
+
   })
 
 .controller('checkForUpdatesCtrl', function($scope) {

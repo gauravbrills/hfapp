@@ -7,15 +7,22 @@
         <button class="button button-icon button-clear ion-navicon" menu-toggle="left">
         </button>
       </ion-nav-buttons>
+      <ion-nav-buttons side="right">
+        <button class="button button-icon button-clear ion-android-notifications" menu-toggle="right"></button>
+        <spam class="notification">{{notificationCount}}
+        </spam>
+      </ion-nav-buttons>
     </ion-nav-bar>
     <ion-nav-view name="menuContent"></ion-nav-view>
   </ion-side-menu-content>
 
   <ion-side-menu side="left">
-    <ion-header-bar class="bar bar-header bar-dark">
-      <h1 class="title">Hi Mr Jackson</h1>
-    </ion-header-bar>
+
     <ion-content>
+      <div class="item item-avatar ">
+        <img class="avatar" src="{{avatar}}">
+        <h2>Hi {{currentUserName}}</h2>
+      </div>
       <ion-list>
         <ion-item menu-close href="#/app/acctsumm">
           Account Summary <i class="icon ion-home"></i>
@@ -23,16 +30,73 @@
         <ion-item menu-close href="#/app/allfunds">
           All Funds <i class="icon ion-paper-airplane"></i>
         </ion-item>
-        <ion-item menu-close href="#/app/fundDescription">
-          Fund Description <i class="icon ion-funnel"></i>
+        <ion-item menu-close href="#/app/marketcommentary">
+          Market Commentary <i class="icon ion-ios-book-outline"></i>
         </ion-item>
         <ion-item menu-close href="#/app/checkForUpdates">
-          Check For Updates <i class="icon ion-ios-cloud-download"></i>
+          App Config <i class="icon ion-ios-cloud-download"></i>
         </ion-item>
         <ion-item menu-close href="#/login">
           sign-out <i class="icon ion-log-out"></i>
         </ion-item>
       </ion-list>
+    </ion-content>
+  </ion-side-menu>
+  <ion-side-menu side="right">
+    <ion-header-bar class="bar bar-header ">
+      <h1 class="title pull-positive">Notifications</h1>
+    </ion-header-bar>
+    <ion-content>
+      <spam ng-repeat="pushNote in pushNotes">
+        <div class="list card">
+          <div class="item item-avatar">
+            <img src="{{pushNote.img}}">
+            <h2>{{pushNote.title}}</h2>
+            <p>{{pushNote.date}}</p>
+          </div>
+          <div class="item item-body">
+            <p>
+              {{pushNote.body}}
+            </p>
+          </div>
+        </div>
+      </spam>
+      <div class="list card">
+        <div class="item item-avatar">
+          <img src="http://ionicframework.com/img/docs/winston.jpg">
+          <h2>Mike Murphy</h2>
+          <p>November 05, 2015</p>
+        </div>
+        <div class="item item-body">
+          <p>
+            Fund A performance has been loaded for the present month
+          </p>
+        </div>
+      </div>
+      <div class="list card">
+        <div class="item ">
+          <h2>New Hume Fund Announced</h2>
+          <p>November 01, 2015</p>
+        </div>
+        <div class="item item-body">
+          <p>
+            New Hume fund announced in Energy approach more details <a href="https://www.hedgeco.net/news/05/2015/29-hedge-funds-opened-in-florida-in-2015.html">here</a>
+          </p>
+        </div>
+      </div>
+      <div class="list card">
+        <div class="item item-avatar">
+          <img src="http://ionicframework.com/img/docs/spengler.jpg">
+          <h2>Richard Wharburton</h2>
+          <p>October 23, 2015</p>
+        </div>
+        <div class="item item-body">
+          <iframe src="https://www.youtube.com/embed/QD-F9qhcEqc" frameborder="0" allowfullscreen></iframe>
+          <p>
+            Fund PD Keynote
+          </p>
+        </div>
+      </div>
     </ion-content>
   </ion-side-menu>
 </ion-side-menus>

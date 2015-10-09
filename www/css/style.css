@@ -1,3 +1,18 @@
+.notifications {
+  display: inline-block;
+  /* width: 20px; */
+  /* height: 20px; */
+  position: relative;
+  top: 0.6em;
+  left: 4.5em;
+  z-index: 999999999;
+  background-color: rgb(220, 21, 21);
+  text-align: center;
+  border-radius: 14px;
+  font-weight: bold;
+  color: white;
+  padding: 0px 4px;
+}
 #pieChart {
   position: absolute;
   top: 10px;
@@ -156,8 +171,6 @@ pierect {
     float: left;
     width: 50%;
   }
-
-
   #pieChart {
     max-width: 90%;
     margin: 0 auto;

@@ -1,6 +1,9 @@
 <ion-view view-title="Check For Updates">
   <ion-content class="padding">
     <div class="list card">
+      <a class="item item-icon-left" >
+        <i class="icon ion-easel"></i> Device Token : {{deviceToken}}
+      </a>
       <a class="item item-icon-left" ng-click="checkForUpdates()">
         <i class="icon ion-ios-cloud-download-outline"></i> Check For Updates
       </a>

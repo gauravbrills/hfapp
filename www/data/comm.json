@@ -1,0 +1,435 @@
+{
+    "took": 2,
+    "timed_out": false,
+    "_shards": {
+        "total": 5,
+        "successful": 5,
+        "failed": 0
+    },
+    "hits": {
+        "total": 30,
+        "max_score": 1,
+        "hits": [
+            {
+                "_index": "commentaries",
+                "_type": "commentary",
+                "_id": "4",
+                "_score": 1,
+                "_source": {
+                    "name": "Fund A",
+                    "news": "Chancellor of the Fund A will launch a programme on Monday to spur infrastructure investment in US, poaching the policy from the left-wing opposition to stake the government's claim to the centre ground. At the Conservative Party conference, ABC will say the government will invest 1 billion dollars by 2020 and pool local government pension pots into six wealth funds worth 25 billion pounds each to invest in vital infrastructure.",
+                    "fullText": "Chancellor of the Fund A will launch a programme on Monday to spur infrastructure investment in US, poaching the policy from the left-wing opposition to stake the government's claim to the centre ground. At the Conservative Party conference, ABC will say the government will invest 1 billion dollars by 2020 and pool local government pension pots into six wealth funds worth 25 billion pounds each to invest in vital infrastructure.",
+                    "img": "http://saveourbucks.com/wp-content/uploads/2014/04/Trading-Desk-shot.jpg",
+                    "index": 4,
+                    "date": "April 28, 2015"
+                }
+            },
+            {
+                "_index": "commentaries",
+                "_type": "commentary",
+                "_id": "9",
+                "_score": 1,
+                "_source": {
+                    "name": "Fund A",
+                    "news": "Chancellor of the Fund A will launch a programme on Monday to spur infrastructure investment in US, poaching the policy from the left-wing opposition to stake the government's claim to the centre ground. At the Conservative Party conference, ABC will say the government will invest 1 billion dollars by 2020 and pool local government pension pots into six wealth funds worth 25 billion pounds each to invest in vital infrastructure.",
+                    "fullText": "Chancellor of the Fund A will launch a programme on Monday to spur infrastructure investment in US, poaching the policy from the left-wing opposition to stake the government's claim to the centre ground. At the Conservative Party conference, ABC will say the government will invest 1 billion dollars by 2020 and pool local government pension pots into six wealth funds worth 25 billion pounds each to invest in vital infrastructure.",
+                    "img": "http://saveourbucks.com/wp-content/uploads/2014/04/Trading-Desk-shot.jpg",
+                    "index": 9,
+                    "date": "Sep 19, 2015"
+                }
+            },
+            {
+                "_index": "commentaries",
+                "_type": "commentary",
+                "_id": "11",
+                "_score": 1,
+                "_source": {
+                    "name": "Fund A",
+                    "news": "Chancellor of the Fund A will launch a programme on Monday to spur infrastructure investment in US, poaching the policy from the left-wing opposition to stake the government's claim to the centre ground. At the Conservative Party conference, ABC will say the government will invest 1 billion dollars by 2020 and pool local government pension pots into six wealth funds worth 25 billion pounds each to invest in vital infrastructure.",
+                    "fullText": "Chancellor of the Fund A will launch a programme on Monday to spur infrastructure investment in US, poaching the policy from the left-wing opposition to stake the government's claim to the centre ground. At the Conservative Party conference, ABC will say the government will invest 1 billion dollars by 2020 and pool local government pension pots into six wealth funds worth 25 billion pounds each to invest in vital infrastructure.",
+                    "img": "http://saveourbucks.com/wp-content/uploads/2014/04/Trading-Desk-shot.jpg",
+                    "index": 11,
+                    "date": "Nov 18, 2015"
+                }
+            },
+            {
+                "_index": "commentaries",
+                "_type": "commentary",
+                "_id": "16",
+                "_score": 1,
+                "_source": {
+                    "name": "Fund C",
+                    "news": "Total volume in futures on the CBOE Volatility 'index' (VIX 'index')  for September was 5.3 million contracts, up 41 per cent from September 2014, but a decrease of 17 per cent from August 2015. ",
+                    "fullText": "Total volume in futures on the CBOE Volatility 'index' (VIX 'index')  for September was 5.3 million contracts, up 41 per cent from September 2014, but a decrease of 17 per cent from August 2015. September VIX futures’ ADV was 251,207 contracts. Exchange-wide ADV at CFE was 251,376 contracts in September, an increase of 40 per cent from September 2014 and down 18 per cent from August 2015. Exchange-wide total volume for the month was 5.3 million contracts, up 40 per cent from the year-ago total and down 18 per cent from August 2015.",
+                    "img": "http://cardinalasia.com/wp-content/uploads/2013/01/HFSB-Adds-New-Member.jpg",
+                    "index": 16,
+                    "date": "Jan 12, 2015"
+                }
+            },
+            {
+                "_index": "commentaries",
+                "_type": "commentary",
+                "_id": "23",
+                "_score": 1,
+                "_source": {
+                    "name": "Fund D",
+                    "news": "The Hedging boom that buoyed Fund D's circumstances for a decade is well and truly over. Fund D's export base narrowed during the resources rush as a high exchange rate hollowed out the economy. We're yet to see manufacturing and services exports step up despite the lower currency",
+                    "fullText": "The Hedging boom that buoyed Fund D's circumstances for a decade is well and truly over. Fund D's export base narrowed during the resources rush as a high exchange rate hollowed out the economy. We're yet to see manufacturing and services exports step up despite the lower currency. Falling national income, combined with stagnant wages and record household debt leaves the country highly vulnerable to an economic shock. The commodities boom that buoyed Australia's circumstances for a decade is well and truly over. As China's economy slows, along with other emerging market economies, a further downward spiral in the price Australia gets for its key resources exports is threatening. Assurances that all would be OK because the price falls would be offset by rising export volumes are looking hollow. And there's not a lot to replace the mining boom with. Australia's export base narrowed during the resources rush as a high exchange rate hollowed out the economy. We're yet to see manufacturing and services exports step up despite the lower currency. So far, the Reserve Bank has managed to maintain growth by cutting the cash rate to a record low. But the sustained low interest rates designed to boost sluggish economic growth in Australia have created housing bubbles in key cities such as Sydney and Melbourne. Wages are growing at the slowest pace on record; yet household debt in Australia is at a level without parallel in history. In the June quarter, the ratio of household debt to disposable income hit a new record, just shy of 186 per cent. The debt burden is extraordinary: the level of household income being gobbled up by interest payments is far higher now than in the late 1980s when mortgage interest rates were at 17 per cent. If We're lucky, the property boom will top out, prices will ease, and some air will wheeze out of the bubble; lower auction clearance rates and easing prices in western Sydney suggest we might have already seen the peak.",
+                    "img": "http://cardinalasia.com/wp-content/uploads/2013/01/HFSB-Adds-New-Member.jpg",
+                    "index": 24,
+                    "date": "March 15, 2015"
+                }
+            },
+            {
+                "_index": "commentaries",
+                "_type": "commentary",
+                "_id": "28",
+                "_score": 1,
+                "_source": {
+                    "name": "Fund D",
+                    "news": "The Hedging boom that buoyed Fund D's circumstances for a decade is well and truly over. Fund D's export base narrowed during the resources rush as a high exchange rate hollowed out the economy. We're yet to see manufacturing and services exports step up despite the lower currency",
+                    "fullText": "The Hedging boom that buoyed Fund D's circumstances for a decade is well and truly over. Fund D's export base narrowed during the resources rush as a high exchange rate hollowed out the economy. We're yet to see manufacturing and services exports step up despite the lower currency. Falling national income, combined with stagnant wages and record household debt leaves the country highly vulnerable to an economic shock. The commodities boom that buoyed Australia's circumstances for a decade is well and truly over. As China's economy slows, along with other emerging market economies, a further downward spiral in the price Australia gets for its key resources exports is threatening. Assurances that all would be OK because the price falls would be offset by rising export volumes are looking hollow. And there's not a lot to replace the mining boom with. Australia's export base narrowed during the resources rush as a high exchange rate hollowed out the economy. We're yet to see manufacturing and services exports step up despite the lower currency. So far, the Reserve Bank has managed to maintain growth by cutting the cash rate to a record low. But the sustained low interest rates designed to boost sluggish economic growth in Australia have created housing bubbles in key cities such as Sydney and Melbourne. Wages are growing at the slowest pace on record; yet household debt in Australia is at a level without parallel in history. In the June quarter, the ratio of household debt to disposable income hit a new record, just shy of 186 per cent. The debt burden is extraordinary: the level of household income being gobbled up by interest payments is far higher now than in the late 1980s when mortgage interest rates were at 17 per cent. If We're lucky, the property boom will top out, prices will ease, and some air will wheeze out of the bubble; lower auction clearance rates and easing prices in western Sydney suggest we might have already seen the peak.",
+                    "img": "http://cardinalasia.com/wp-content/uploads/2013/01/HFSB-Adds-New-Member.jpg",
+                    "index": 28,
+                    "date": "July 27, 2015"
+                }
+            },
+            {
+                "_index": "commentaries",
+                "_type": "commentary",
+                "_id": "30",
+                "_score": 1,
+                "_source": {
+                    "name": "Fund D",
+                    "news": "The Hedging boom for Fund D circumstances for a decade is well and truly over. Fund D's export base narrowed during the resources rush as a high exchange rate hollowed out the economy. ",
+                    "fullText": "The Hedging boom that buoyed Fund D's circumstances for a decade is well and truly over. Fund D's export base narrowed during the resources rush as a high exchange rate hollowed out the economy. We're yet to see manufacturing and services exports step up despite the lower currency. Falling national income, combined with stagnant wages and record household debt leaves the country highly vulnerable to an economic shock. The commodities boom that buoyed Australia's circumstances for a decade is well and truly over. As China's economy slows, along with other emerging market economies, a further downward spiral in the price Australia gets for its key resources exports is threatening. Assurances that all would be OK because the price falls would be offset by rising export volumes are looking hollow. And there's not a lot to replace the mining boom with. Australia's export base narrowed during the resources rush as a high exchange rate hollowed out the economy. We're yet to see manufacturing and services exports step up despite the lower currency. So far, the Reserve Bank has managed to maintain growth by cutting the cash rate to a record low. But the sustained low interest rates designed to boost sluggish economic growth in Australia have created housing bubbles in key cities such as Sydney and Melbourne. Wages are growing at the slowest pace on record; yet household debt in Australia is at a level without parallel in history. In the June quarter, the ratio of household debt to disposable income hit a new record, just shy of 186 per cent. The debt burden is extraordinary: the level of household income being gobbled up by interest payments is far higher now than in the late 1980s when mortgage interest rates were at 17 per cent. If We're lucky, the property boom will top out, prices will ease, and some air will wheeze out of the bubble; lower auction clearance rates and easing prices in western Sydney suggest we might have already seen the peak.",
+                    "img": "http://cardinalasia.com/wp-content/uploads/2013/01/HFSB-Adds-New-Member.jpg",
+                    "index": 30,
+                    "date": "Sep 12, 2015"
+                }
+            },
+            {
+                "_index": "commentaries",
+                "_type": "commentary",
+                "_id": "5",
+                "_score": 1,
+                "_source": {
+                    "name": "Fund A",
+                    "news": "Chancellor of the Fund A will launch a programme on Monday to spur infrastructure investment in US, poaching the policy from the left-wing opposition to stake the government's claim to the centre ground. At the Conservative Party conference, ABC will say the government will invest 1 billion dollars by 2020 and pool local government pension pots into six wealth funds worth 25 billion pounds each to invest in vital infrastructure.",
+                    "fullText": "Chancellor of the Fund A will launch a programme on Monday to spur infrastructure investment in US, poaching the policy from the left-wing opposition to stake the government's claim to the centre ground. At the Conservative Party conference, ABC will say the government will invest 1 billion dollars by 2020 and pool local government pension pots into six wealth funds worth 25 billion pounds each to invest in vital infrastructure.",
+                    "img": "http://saveourbucks.com/wp-content/uploads/2014/04/Trading-Desk-shot.jpg",
+                    "index": 5,
+                    "date": "May 14, 2015"
+                }
+            },
+            {
+                "_index": "commentaries",
+                "_type": "commentary",
+                "_id": "12",
+                "_score": 1,
+                "_source": {
+                    "name": "Fund B",
+                    "news": "This submission follows the first RTS on Interest Rate Derivatives developed by ESMA and adopted by the European Commission on 6 August 2015.",
+                    "fullText": "This submission follows the first RTS on Interest Rate Derivatives developed by ESMA and adopted by the European Commission on 6 August 2015. The new rule on 'index' CDS mirrors the overall approach of the first RTS, in particular with regards to the categorisation of counterparties, the scope for frontloading and the treatment of intragroup transactions.",
+                    "img": "http://www.worldpropertyjournal.com/'news'-assets/Stock-Purchase.jpg",
+                    "index": 12,
+                    "date": "Jan 15, 2015"
+                }
+            },
+            {
+                "_index": "commentaries",
+                "_type": "commentary",
+                "_id": "17",
+                "_score": 1,
+                "_source": {
+                    "name": "Fund C",
+                    "news": "Total volume in futures on the CBOE Volatility 'index' (VIX 'index')  for September was 5.3 million contracts, up 41 per cent from September 2014, but a decrease of 17 per cent from August 2015. ",
+                    "fullText": "Total volume in futures on the CBOE Volatility 'index' (VIX 'index')  for September was 5.3 million contracts, up 41 per cent from September 2014, but a decrease of 17 per cent from August 2015. September VIX futures’ ADV was 251,207 contracts. Exchange-wide ADV at CFE was 251,376 contracts in September, an increase of 40 per cent from September 2014 and down 18 per cent from August 2015. Exchange-wide total volume for the month was 5.3 million contracts, up 40 per cent from the year-ago total and down 18 per cent from August 2015.",
+                    "img": "http://cardinalasia.com/wp-content/uploads/2013/01/HFSB-Adds-New-Member.jpg",
+                    "index": 17,
+                    "date": "Feb 22, 2015"
+                }
+            },
+            {
+                "_index": "commentaries",
+                "_type": "commentary",
+                "_id": "24",
+                "_score": 1,
+                "_source": {
+                    "name": "Fund D",
+                    "news": "The Hedging boom that buoyed Fund D's circumstances for a decade is well and truly over. Fund D's export base narrowed during the resources rush as a high exchange rate hollowed out the economy. We're yet to see manufacturing and services exports step up despite the lower currency",
+                    "fullText": "The Hedging boom that buoyed Fund D's circumstances for a decade is well and truly over. Fund D's export base narrowed during the resources rush as a high exchange rate hollowed out the economy. We're yet to see manufacturing and services exports step up despite the lower currency. Falling national income, combined with stagnant wages and record household debt leaves the country highly vulnerable to an economic shock. The commodities boom that buoyed Australia's circumstances for a decade is well and truly over. As China's economy slows, along with other emerging market economies, a further downward spiral in the price Australia gets for its key resources exports is threatening. Assurances that all would be OK because the price falls would be offset by rising export volumes are looking hollow. And there's not a lot to replace the mining boom with. Australia's export base narrowed during the resources rush as a high exchange rate hollowed out the economy. We're yet to see manufacturing and services exports step up despite the lower currency. So far, the Reserve Bank has managed to maintain growth by cutting the cash rate to a record low. But the sustained low interest rates designed to boost sluggish economic growth in Australia have created housing bubbles in key cities such as Sydney and Melbourne. Wages are growing at the slowest pace on record; yet household debt in Australia is at a level without parallel in history. In the June quarter, the ratio of household debt to disposable income hit a new record, just shy of 186 per cent. The debt burden is extraordinary: the level of household income being gobbled up by interest payments is far higher now than in the late 1980s when mortgage interest rates were at 17 per cent. If We're lucky, the property boom will top out, prices will ease, and some air will wheeze out of the bubble; lower auction clearance rates and easing prices in western Sydney suggest we might have already seen the peak.",
+                    "img": "http://cardinalasia.com/wp-content/uploads/2013/01/HFSB-Adds-New-Member.jpg",
+                    "index": 24,
+                    "date": "March 15, 2015"
+                }
+            },
+            {
+                "_index": "commentaries",
+                "_type": "commentary",
+                "_id": "29",
+                "_score": 1,
+                "_source": {
+                    "name": "Fund D",
+                    "news": "The Hedging boom for Fund D circumstances for a decade is well and truly over. Fund D's export base narrowed during the resources rush as a high exchange rate hollowed out the economy. ",
+                    "fullText": "The Hedging boom that buoyed Fund D's circumstances for a decade is well and truly over. Fund D's export base narrowed during the resources rush as a high exchange rate hollowed out the economy. We're yet to see manufacturing and services exports step up despite the lower currency. Falling national income, combined with stagnant wages and record household debt leaves the country highly vulnerable to an economic shock. The commodities boom that buoyed Australia's circumstances for a decade is well and truly over. As China's economy slows, along with other emerging market economies, a further downward spiral in the price Australia gets for its key resources exports is threatening. Assurances that all would be OK because the price falls would be offset by rising export volumes are looking hollow. And there's not a lot to replace the mining boom with. Australia's export base narrowed during the resources rush as a high exchange rate hollowed out the economy. We're yet to see manufacturing and services exports step up despite the lower currency. So far, the Reserve Bank has managed to maintain growth by cutting the cash rate to a record low. But the sustained low interest rates designed to boost sluggish economic growth in Australia have created housing bubbles in key cities such as Sydney and Melbourne. Wages are growing at the slowest pace on record; yet household debt in Australia is at a level without parallel in history. In the June quarter, the ratio of household debt to disposable income hit a new record, just shy of 186 per cent. The debt burden is extraordinary: the level of household income being gobbled up by interest payments is far higher now than in the late 1980s when mortgage interest rates were at 17 per cent. If We're lucky, the property boom will top out, prices will ease, and some air will wheeze out of the bubble; lower auction clearance rates and easing prices in western Sydney suggest we might have already seen the peak.",
+                    "img": "http://cardinalasia.com/wp-content/uploads/2013/01/HFSB-Adds-New-Member.jpg",
+                    "index": 29,
+                    "date": "Aug 20, 2015"
+                }
+            },
+            {
+                "_index": "commentaries",
+                "_type": "commentary",
+                "_id": "1",
+                "_score": 1,
+                "_source": {
+                    "name": "Fund A",
+                    "news": "Chancellor of the Fund A will launch a programme on Monday to spur infrastructure investment in US, poaching the policy from the left-wing opposition to stake the government's claim to the centre ground. At the Conservative Party conference, ABC will say the government will invest 1 billion dollars by 2020 and pool local government pension pots into six wealth funds worth 25 billion pounds each to invest in vital infrastructure.",
+                    "fullText": "Chancellor of the Fund A will launch a programme on Monday to spur infrastructure investment in US, poaching the policy from the left-wing opposition to stake the government's claim to the centre ground. At the Conservative Party conference, ABC will say the government will invest 1 billion dollars by 2020 and pool local government pension pots into six wealth funds worth 25 billion pounds each to invest in vital infrastructure.",
+                    "img": "http://saveourbucks.com/wp-content/uploads/2014/04/Trading-Desk-shot.jpg",
+                    "index": 1,
+                    "date": "Jan 8, 2015"
+                }
+            },
+            {
+                "_index": "commentaries",
+                "_type": "commentary",
+                "_id": "6",
+                "_score": 1,
+                "_source": {
+                    "name": "Fund A",
+                    "news": "Chancellor of the Fund A will launch a programme on Monday to spur infrastructure investment in US, poaching the policy from the left-wing opposition to stake the government's claim to the centre ground. At the Conservative Party conference, ABC will say the government will invest 1 billion dollars by 2020 and pool local government pension pots into six wealth funds worth 25 billion pounds each to invest in vital infrastructure.",
+                    "fullText": "Chancellor of the Fund A will launch a programme on Monday to spur infrastructure investment in US, poaching the policy from the left-wing opposition to stake the government's claim to the centre ground. At the Conservative Party conference, ABC will say the government will invest 1 billion dollars by 2020 and pool local government pension pots into six wealth funds worth 25 billion pounds each to invest in vital infrastructure.",
+                    "img": "http://saveourbucks.com/wp-content/uploads/2014/04/Trading-Desk-shot.jpg",
+                    "index": 6,
+                    "date": "June 29, 2015"
+                }
+            },
+            {
+                "_index": "commentaries",
+                "_type": "commentary",
+                "_id": "13",
+                "_score": 1,
+                "_source": {
+                    "name": "Fund B",
+                    "news": "This submission follows the first RTS on Interest Rate Derivatives developed by ESMA and adopted by the European Commission on 6 August 2015.",
+                    "fullText": "This submission follows the first RTS on Interest Rate Derivatives developed by ESMA and adopted by the European Commission on 6 August 2015. The new rule on 'index' CDS mirrors the overall approach of the first RTS, in particular with regards to the categorisation of counterparties, the scope for frontloading and the treatment of intragroup transactions.",
+                    "img": "http://www.worldpropertyjournal.com/'news'-assets/Stock-Purchase.jpg",
+                    "index": 13,
+                    "date": "Feb 05, 2015"
+                }
+            },
+            {
+                "_index": "commentaries",
+                "_type": "commentary",
+                "_id": "18",
+                "_score": 1,
+                "_source": {
+                    "name": "Fund C",
+                    "news": "Total volume in futures on the CBOE Volatility 'index' (VIX 'index')  for September was 5.3 million contracts, up 41 per cent from September 2014, but a decrease of 17 per cent from August 2015. ",
+                    "fullText": "Total volume in futures on the CBOE Volatility 'index' (VIX 'index')  for September was 5.3 million contracts, up 41 per cent from September 2014, but a decrease of 17 per cent from August 2015. September VIX futures’ ADV was 251,207 contracts. Exchange-wide ADV at CFE was 251,376 contracts in September, an increase of 40 per cent from September 2014 and down 18 per cent from August 2015. Exchange-wide total volume for the month was 5.3 million contracts, up 40 per cent from the year-ago total and down 18 per cent from August 2015.",
+                    "img": "http://cardinalasia.com/wp-content/uploads/2013/01/HFSB-Adds-New-Member.jpg",
+                    "index": 18,
+                    "date": "March 2, 2015"
+                }
+            },
+            {
+                "_index": "commentaries",
+                "_type": "commentary",
+                "_id": "20",
+                "_score": 1,
+                "_source": {
+                    "name": "Fund C",
+                    "news": "Total volume in futures on the CBOE Volatility 'index' (VIX 'index')  for September was 5.3 million contracts, up 41 per cent from September 2014, but a decrease of 17 per cent from August 2015. ",
+                    "fullText": "Total volume in futures on the CBOE Volatility 'index' (VIX 'index')  for September was 5.3 million contracts, up 41 per cent from September 2014, but a decrease of 17 per cent from August 2015. September VIX futures’ ADV was 251,207 contracts. Exchange-wide ADV at CFE was 251,376 contracts in September, an increase of 40 per cent from September 2014 and down 18 per cent from August 2015. Exchange-wide total volume for the month was 5.3 million contracts, up 40 per cent from the year-ago total and down 18 per cent from August 2015.",
+                    "img": "http://cardinalasia.com/wp-content/uploads/2013/01/HFSB-Adds-New-Member.jpg",
+                    "index": 20,
+                    "date": "May 27, 2015"
+                }
+            },
+            {
+                "_index": "commentaries",
+                "_type": "commentary",
+                "_id": "25",
+                "_score": 1,
+                "_source": {
+                    "name": "Fund D",
+                    "news": "The Hedging boom for Fund D circumstances for a decade is well and truly over. Fund D's export base narrowed during the resources rush as a high exchange rate hollowed out the economy. ",
+                    "fullText": "The Hedging boom that buoyed Fund D's circumstances for a decade is well and truly over. Fund D's export base narrowed during the resources rush as a high exchange rate hollowed out the economy. We're yet to see manufacturing and services exports step up despite the lower currency. Falling national income, combined with stagnant wages and record household debt leaves the country highly vulnerable to an economic shock. The commodities boom that buoyed Australia's circumstances for a decade is well and truly over. As China's economy slows, along with other emerging market economies, a further downward spiral in the price Australia gets for its key resources exports is threatening. Assurances that all would be OK because the price falls would be offset by rising export volumes are looking hollow. And there's not a lot to replace the mining boom with. Australia's export base narrowed during the resources rush as a high exchange rate hollowed out the economy. We're yet to see manufacturing and services exports step up despite the lower currency. So far, the Reserve Bank has managed to maintain growth by cutting the cash rate to a record low. But the sustained low interest rates designed to boost sluggish economic growth in Australia have created housing bubbles in key cities such as Sydney and Melbourne. Wages are growing at the slowest pace on record; yet household debt in Australia is at a level without parallel in history. In the June quarter, the ratio of household debt to disposable income hit a new record, just shy of 186 per cent. The debt burden is extraordinary: the level of household income being gobbled up by interest payments is far higher now than in the late 1980s when mortgage interest rates were at 17 per cent. If We're lucky, the property boom will top out, prices will ease, and some air will wheeze out of the bubble; lower auction clearance rates and easing prices in western Sydney suggest we might have already seen the peak.",
+                    "img": "http://cardinalasia.com/wp-content/uploads/2013/01/HFSB-Adds-New-Member.jpg",
+                    "index": 25,
+                    "date": "April 10, 2015"
+                }
+            },
+            {
+                "_index": "commentaries",
+                "_type": "commentary",
+                "_id": "2",
+                "_score": 1,
+                "_source": {
+                    "name": "Fund A",
+                    "news": "Chancellor of the Fund A will launch a programme on Monday to spur infrastructure investment in US, poaching the policy from the left-wing opposition to stake the government's claim to the centre ground. At the Conservative Party conference, ABC will say the government will invest 1 billion dollars by 2020 and pool local government pension pots into six wealth funds worth 25 billion pounds each to invest in vital infrastructure.",
+                    "fullText": "Chancellor of the Fund A will launch a programme on Monday to spur infrastructure investment in US, poaching the policy from the left-wing opposition to stake the government's claim to the centre ground. At the Conservative Party conference, ABC will say the government will invest 1 billion dollars by 2020 and pool local government pension pots into six wealth funds worth 25 billion pounds each to invest in vital infrastructure.",
+                    "img": "http://saveourbucks.com/wp-content/uploads/2014/04/Trading-Desk-shot.jpg",
+                    "index": 2,
+                    "date": "Feb 16, 2015"
+                }
+            },
+            {
+                "_index": "commentaries",
+                "_type": "commentary",
+                "_id": "7",
+                "_score": 1,
+                "_source": {
+                    "name": "Fund A",
+                    "news": "Chancellor of the Fund A will launch a programme on Monday to spur infrastructure investment in US, poaching the policy from the left-wing opposition to stake the government's claim to the centre ground. At the Conservative Party conference, ABC will say the government will invest 1 billion dollars by 2020 and pool local government pension pots into six wealth funds worth 25 billion pounds each to invest in vital infrastructure.",
+                    "fullText": "Chancellor of the Fund A will launch a programme on Monday to spur infrastructure investment in US, poaching the policy from the left-wing opposition to stake the government's claim to the centre ground. At the Conservative Party conference, ABC will say the government will invest 1 billion dollars by 2020 and pool local government pension pots into six wealth funds worth 25 billion pounds each to invest in vital infrastructure.",
+                    "img": "http://saveourbucks.com/wp-content/uploads/2014/04/Trading-Desk-shot.jpg",
+                    "index": 7,
+                    "date": "July 19, 2015"
+                }
+            },
+            {
+                "_index": "commentaries",
+                "_type": "commentary",
+                "_id": "14",
+                "_score": 1,
+                "_source": {
+                    "name": "Fund B",
+                    "news": "This submission follows the first RTS on Interest Rate Derivatives developed by ESMA and adopted by the European Commission on 6 August 2015.",
+                    "fullText": "This submission follows the first RTS on Interest Rate Derivatives developed by ESMA and adopted by the European Commission on 6 August 2015. The new rule on 'index' CDS mirrors the overall approach of the first RTS, in particular with regards to the categorisation of counterparties, the scope for frontloading and the treatment of intragroup transactions.",
+                    "img": "http://www.worldpropertyjournal.com/'news'-assets/Stock-Purchase.jpg",
+                    "index": 14,
+                    "date": "March 2, 2015"
+                }
+            },
+            {
+                "_index": "commentaries",
+                "_type": "commentary",
+                "_id": "19",
+                "_score": 1,
+                "_source": {
+                    "name": "Fund C",
+                    "news": "Total volume in futures on the CBOE Volatility 'index' (VIX 'index')  for September was 5.3 million contracts, up 41 per cent from September 2014, but a decrease of 17 per cent from August 2015. ",
+                    "fullText": "Total volume in futures on the CBOE Volatility 'index' (VIX 'index')  for September was 5.3 million contracts, up 41 per cent from September 2014, but a decrease of 17 per cent from August 2015. September VIX futures’ ADV was 251,207 contracts. Exchange-wide ADV at CFE was 251,376 contracts in September, an increase of 40 per cent from September 2014 and down 18 per cent from August 2015. Exchange-wide total volume for the month was 5.3 million contracts, up 40 per cent from the year-ago total and down 18 per cent from August 2015.",
+                    "img": "http://cardinalasia.com/wp-content/uploads/2013/01/HFSB-Adds-New-Member.jpg",
+                    "index": 19,
+                    "date": "April 17, 2015"
+                }
+            },
+            {
+                "_index": "commentaries",
+                "_type": "commentary",
+                "_id": "21",
+                "_score": 1,
+                "_source": {
+                    "name": "Fund C",
+                    "news": "Total volume in futures on the CBOE Volatility 'index' (VIX 'index')  for September was 5.3 million contracts, up 41 per cent from September 2014, but a decrease of 17 per cent from August 2015. ",
+                    "fullText": "Total volume in futures on the CBOE Volatility 'index' (VIX 'index')  for September was 5.3 million contracts, up 41 per cent from September 2014, but a decrease of 17 per cent from August 2015. September VIX futures’ ADV was 251,207 contracts. Exchange-wide ADV at CFE was 251,376 contracts in September, an increase of 40 per cent from September 2014 and down 18 per cent from August 2015. Exchange-wide total volume for the month was 5.3 million contracts, up 40 per cent from the year-ago total and down 18 per cent from August 2015.",
+                    "img": "http://cardinalasia.com/wp-content/uploads/2013/01/HFSB-Adds-New-Member.jpg",
+                    "index": 21,
+                    "date": "June 20, 2015"
+                }
+            },
+            {
+                "_index": "commentaries",
+                "_type": "commentary",
+                "_id": "26",
+                "_score": 1,
+                "_source": {
+                    "name": "Fund D",
+                    "news": "The Hedging boom that buoyed Fund D's circumstances for a decade is well and truly over. Fund D's export base narrowed during the resources rush as a high exchange rate hollowed out the economy. We're yet to see manufacturing and services exports step up despite the lower currency",
+                    "fullText": "The Hedging boom that buoyed Fund D's circumstances for a decade is well and truly over. Fund D's export base narrowed during the resources rush as a high exchange rate hollowed out the economy. We're yet to see manufacturing and services exports step up despite the lower currency. Falling national income, combined with stagnant wages and record household debt leaves the country highly vulnerable to an economic shock. The commodities boom that buoyed Australia's circumstances for a decade is well and truly over. As China's economy slows, along with other emerging market economies, a further downward spiral in the price Australia gets for its key resources exports is threatening. Assurances that all would be OK because the price falls would be offset by rising export volumes are looking hollow. And there's not a lot to replace the mining boom with. Australia's export base narrowed during the resources rush as a high exchange rate hollowed out the economy. We're yet to see manufacturing and services exports step up despite the lower currency. So far, the Reserve Bank has managed to maintain growth by cutting the cash rate to a record low. But the sustained low interest rates designed to boost sluggish economic growth in Australia have created housing bubbles in key cities such as Sydney and Melbourne. Wages are growing at the slowest pace on record; yet household debt in Australia is at a level without parallel in history. In the June quarter, the ratio of household debt to disposable income hit a new record, just shy of 186 per cent. The debt burden is extraordinary: the level of household income being gobbled up by interest payments is far higher now than in the late 1980s when mortgage interest rates were at 17 per cent. If We're lucky, the property boom will top out, prices will ease, and some air will wheeze out of the bubble; lower auction clearance rates and easing prices in western Sydney suggest we might have already seen the peak.",
+                    "img": "http://cardinalasia.com/wp-content/uploads/2013/01/HFSB-Adds-New-Member.jpg",
+                    "index": 26,
+                    "date": "May 20, 2015"
+                }
+            },
+            {
+                "_index": "commentaries",
+                "_type": "commentary",
+                "_id": "3",
+                "_score": 1,
+                "_source": {
+                    "name": "Fund A",
+                    "news": "Chancellor of the Fund A will launch a programme on Monday to spur infrastructure investment in US, poaching the policy from the left-wing opposition to stake the government's claim to the centre ground. At the Conservative Party conference, ABC will say the government will invest 1 billion dollars by 2020 and pool local government pension pots into six wealth funds worth 25 billion pounds each to invest in vital infrastructure.",
+                    "fullText": "Chancellor of the Fund A will launch a programme on Monday to spur infrastructure investment in US, poaching the policy from the left-wing opposition to stake the government's claim to the centre ground. At the Conservative Party conference, ABC will say the government will invest 1 billion dollars by 2020 and pool local government pension pots into six wealth funds worth 25 billion pounds each to invest in vital infrastructure.",
+                    "img": "http://saveourbucks.com/wp-content/uploads/2014/04/Trading-Desk-shot.jpg",
+                    "index": 3,
+                    "date": "March 19, 2015"
+                }
+            },
+            {
+                "_index": "commentaries",
+                "_type": "commentary",
+                "_id": "8",
+                "_score": 1,
+                "_source": {
+                    "name": "Fund A",
+                    "news": "Chancellor of the Fund A will launch a programme on Monday to spur infrastructure investment in US, poaching the policy from the left-wing opposition to stake the government's claim to the centre ground. At the Conservative Party conference, ABC will say the government will invest 1 billion dollars by 2020 and pool local government pension pots into six wealth funds worth 25 billion pounds each to invest in vital infrastructure.",
+                    "fullText": "Chancellor of the Fund A will launch a programme on Monday to spur infrastructure investment in US, poaching the policy from the left-wing opposition to stake the government's claim to the centre ground. At the Conservative Party conference, ABC will say the government will invest 1 billion dollars by 2020 and pool local government pension pots into six wealth funds worth 25 billion pounds each to invest in vital infrastructure.",
+                    "img": "http://saveourbucks.com/wp-content/uploads/2014/04/Trading-Desk-shot.jpg",
+                    "index": 8,
+                    "date": "Aug 9, 2015"
+                }
+            },
+            {
+                "_index": "commentaries",
+                "_type": "commentary",
+                "_id": "10",
+                "_score": 1,
+                "_source": {
+                    "name": "Fund A",
+                    "news": "Chancellor of the Fund A will launch a programme on Monday to spur infrastructure investment in US, poaching the policy from the left-wing opposition to stake the government's claim to the centre ground. At the Conservative Party conference, ABC will say the government will invest 1 billion dollars by 2020 and pool local government pension pots into six wealth funds worth 25 billion pounds each to invest in vital infrastructure.",
+                    "fullText": "Chancellor of the Fund A will launch a programme on Monday to spur infrastructure investment in US, poaching the policy from the left-wing opposition to stake the government's claim to the centre ground. At the Conservative Party conference, ABC will say the government will invest 1 billion dollars by 2020 and pool local government pension pots into six wealth funds worth 25 billion pounds each to invest in vital infrastructure.",
+                    "img": "http://saveourbucks.com/wp-content/uploads/2014/04/Trading-Desk-shot.jpg",
+                    "index": 10,
+                    "date": "Oct 29, 2015"
+                }
+            },
+            {
+                "_index": "commentaries",
+                "_type": "commentary",
+                "_id": "15",
+                "_score": 1,
+                "_source": {
+                    "name": "Fund B",
+                    "news": "This submission follows the first RTS on Interest Rate Derivatives developed by ESMA and adopted by the European Commission on 6 August 2015.",
+                    "fullText": "This submission follows the first RTS on Interest Rate Derivatives developed by ESMA and adopted by the European Commission on 6 August 2015. The new rule on 'index' CDS mirrors the overall approach of the first RTS, in particular with regards to the categorisation of counterparties, the scope for frontloading and the treatment of intragroup transactions.",
+                    "img": "http://www.worldpropertyjournal.com/'news'-assets/Stock-Purchase.jpg",
+                    "index": 15,
+                    "date": "April 12, 2015"
+                }
+            },
+            {
+                "_index": "commentaries",
+                "_type": "commentary",
+                "_id": "22",
+                "_score": 1,
+                "_source": {
+                    "name": "Fund D",
+                    "news": "The Hedging boom that buoyed Fund D's circumstances for a decade is well and truly over. Fund D's export base narrowed during the resources rush as a high exchange rate hollowed out the economy. We're yet to see manufacturing and services exports step up despite the lower currency",
+                    "fullText": "The Hedging boom that buoyed Fund D's circumstances for a decade is well and truly over. Fund D's export base narrowed during the resources rush as a high exchange rate hollowed out the economy. We're yet to see manufacturing and services exports step up despite the lower currency. Falling national income, combined with stagnant wages and record household debt leaves the country highly vulnerable to an economic shock. The commodities boom that buoyed Australia's circumstances for a decade is well and truly over.  We're yet to see manufacturing and services exports step up despite the lower currency. So far, the Reserve Bank has managed to maintain growth by cutting the cash rate to a record low. But the sustained low interest rates designed to boost sluggish economic growth in Australia have created housing bubbles in key cities such as Sydney and Melbourne. Wages are growing at the slowest pace on record; yet household debt in Australia is at a level without parallel in history. In the June quarter, the ratio of household debt to disposable income hit a new record, just shy of 186 per cent. The debt burden is extraordinary: the level of household income being gobbled up by interest payments is far higher now than in the late 1980s when mortgage interest rates were at 17 per cent. If we're lucky, the property boom will top out, prices will ease, and some air will wheeze out of the bubble; lower auction clearance rates and easing prices in western Sydney suggest we might have already seen the peak.",
+                    "img": "http://cardinalasia.com/wp-content/uploads/2013/01/HFSB-Adds-New-Member.jpg",
+                    "index": 22,
+                    "date": "Jan 2, 2015"
+                }
+            },
+            {
+                "_index": "commentaries",
+                "_type": "commentary",
+                "_id": "27",
+                "_score": 1,
+                "_source": {
+                    "name": "Fund D",
+                    "news": "The Hedging boom for Fund D circumstances for a decade is well and truly over. Fund D's export base narrowed during the resources rush as a high exchange rate hollowed out the economy. ",
+                    "fullText": "The Hedging boom that buoyed Fund D's circumstances for a decade is well and truly over. Fund D's export base narrowed during the resources rush as a high exchange rate hollowed out the economy. We're yet to see manufacturing and services exports step up despite the lower currency. Falling national income, combined with stagnant wages and record household debt leaves the country highly vulnerable to an economic shock. The commodities boom that buoyed Australia's circumstances for a decade is well and truly over. As China's economy slows, along with other emerging market economies, a further downward spiral in the price Australia gets for its key resources exports is threatening. Assurances that all would be OK because the price falls would be offset by rising export volumes are looking hollow. And there's not a lot to replace the mining boom with. Australia's export base narrowed during the resources rush as a high exchange rate hollowed out the economy. We're yet to see manufacturing and services exports step up despite the lower currency. So far, the Reserve Bank has managed to maintain growth by cutting the cash rate to a record low. But the sustained low interest rates designed to boost sluggish economic growth in Australia have created housing bubbles in key cities such as Sydney and Melbourne. Wages are growing at the slowest pace on record; yet household debt in Australia is at a level without parallel in history. In the June quarter, the ratio of household debt to disposable income hit a new record, just shy of 186 per cent. The debt burden is extraordinary: the level of household income being gobbled up by interest payments is far higher now than in the late 1980s when mortgage interest rates were at 17 per cent. If We're lucky, the property boom will top out, prices will ease, and some air will wheeze out of the bubble; lower auction clearance rates and easing prices in western Sydney suggest we might have already seen the peak.",
+                    "img": "http://cardinalasia.com/wp-content/uploads/2013/01/HFSB-Adds-New-Member.jpg",
+                    "index": 27,
+                    "date": "June 25, 2015"
+                }
+            }
+        ]
+    }
+}

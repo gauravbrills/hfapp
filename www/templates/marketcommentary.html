@@ -1,0 +1,25 @@
+<ion-view view-title="Market Commentary">
+  <ion-content>
+    <div class="list card">
+      <div class="item item-body">
+        <div id="container"></div>
+      </div>
+      <div class="item item-body" ng-hide="showComm">
+        <p>
+          <div class="ion-android-hand"> Touch each fund legend to see Annual Meetings and Quarterly Fund Updates</div>
+        </p>
+      </div>
+      <div class="item item-avatar" ng-show="showComm">
+        <img src="http://ionicframework.com/img/docs/mcfly.jpg">
+        <h2>{{currentFund.name}}</h2>
+        <p>{{currentFund.date}}</p>
+      </div>
+      <div class="item item-body" ng-show="showComm">
+        <img style="float:left;height:180px;padding-top:5px;padding-right: 25px;" src="{{currentFund.img}}">
+        <p class="padding">
+          {{currentFund.fullText}}
+        </p>
+      </div>
+    </div>
+  </ion-content>
+</ion-view>

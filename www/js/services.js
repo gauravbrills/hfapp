@@ -32,6 +32,7 @@ angular.module('hfapp.services', ['ngResource'])
   })
   .factory('funds', function($resource) {
     // http://10.0.2.2:8100 for android http://es.pixelsorcery.in:9200/transactions/transaction/_search
+    // '/data/aum.json'
     // /api/transactions/transaction/_search'
     return $resource('/data/aum.json', {}, {
       get: {
@@ -40,28 +41,40 @@ angular.module('hfapp.services', ['ngResource'])
     });
   }).factory('allfunds', function($resource, ApiEndpoint) {
     // http://10.0.2.2:8100 for android http://es.pixelsorcery.in:9200/transactions/transaction/_search
+    // '/data/allfunds.json'
     // ApiEndpoint.url + '/transactions/transaction/_search?size=30'
-    return $resource('/data/allfunds.json', {}, {
+    return $resource(ApiEndpoint.url + '/transactions/transaction/_search?size=30', {}, {
       getSortedFunds: {
         method: 'GET'
       }
     });
   }).factory('allfundsmodel', function($resource, ApiEndpoint) {
     // http://10.0.2.2:8100 for android http://es.pixelsorcery.in:9200/transactions/transaction/_search
+    // '/data/model.json'
     // ApiEndpoint.url + '/fundrelation/fundrelation/_search'
-    return $resource('/data/model.json', {}, {
+    return $resource(ApiEndpoint.url + '/fundrelation/fundrelation/_search', {}, {
       get: {
         method: 'GET'
       }
     });
   })
-
-.factory('acctsumm', function($resource, ApiEndpoint) {
-  // http://10.0.2.2:8100 for android http://es.pixelsorcery.in:9200/transactions/transaction/_search
-  // ApiEndpoint.url + '/acctsummaries/account/_search?sort=_uid'
-  return $resource('/data/acctsumm.json', {}, {
-    get: {
-      method: 'GET'
-    }
+  .factory('marketcommentary', function($resource, ApiEndpoint) {
+    // http://10.0.2.2:8100 for android http://es.pixelsorcery.in:9200/transactions/transaction/_search
+    // '/data/comm.json'
+    // ApiEndpoint.url + '/commentaries/commentary/_search?size=31'
+    return $resource(ApiEndpoint.url + '/commentaries/commentary/_search?size=31', {}, {
+      get: {
+        method: 'GET'
+      }
+    });
+  })
+  .factory('acctsumm', function($resource, ApiEndpoint) {
+    // http://10.0.2.2:8100 for android http://es.pixelsorcery.in:9200/transactions/transaction/_search
+    // '/data/acctsumm.json'
+    // ApiEndpoint.url + '/acctsummaries/account/_search?sort=_uid'
+    return $resource(ApiEndpoint.url + '/acctsummaries/account/_search?sort=_uid', {}, {
+      get: {
+        method: 'GET'
+      }
+    });
   });
-});
