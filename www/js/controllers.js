@@ -41,28 +41,47 @@ angular.module('hfapp.controllers', [])
 
   })
 
-.controller('checkForUpdatesCtrl', function($scope) {
+.controller('checkForUpdatesCtrl', function($rootScope, $scope, $ionicPopup) {
     var deploy = new Ionic.Deploy();
-
+    // change notification Status
+    $scope.changeStatus = function() {
+      if ($scope.silenceNotification == false) {
+        $rootScope.silenceNotification = true;
+      } else
+        $rootScope.silenceNotification = false;
+    };
     // Update app code with new release from Ionic Deploy
     $scope.doUpdate = function() {
       deploy.update().then(function(res) {
-        console.log('Ionic Deploy: Update Success! ', res);
+        var alertPopup = $ionicPopup.alert({
+          title: 'Update Status!',
+          template: 'Ionic Deploy: Update Success!'
+        });
       }, function(err) {
-        console.log('Ionic Deploy: Update error! ', err);
+        var alertPopup = $ionicPopup.alert({
+          title: 'Update Status!',
+          template: 'Ionic Deploy: Update error! ' + err
+        });
       }, function(prog) {
-        console.log('Ionic Deploy: Progress... ', prog);
+        var alertPopup = $ionicPopup.alert({
+          title: 'Update Status!',
+          template: 'Ionic Deploy: Update error! ' + prog
+        });
       });
     };
 
     // Check Ionic Deploy for new code
     $scope.checkForUpdates = function() {
-      console.log('Ionic Deploy: Checking for updates');
+      var alertPopup = $ionicPopup.alert({
+        title: 'Update Status!',
+        template: 'Ionic Deploy: Checking for updates'
+      });
       deploy.check().then(function(hasUpdate) {
         console.log('Ionic Deploy: Update available: ' + hasUpdate);
         $scope.hasUpdate = hasUpdate;
+        alertPopup.template = 'Ionic Deploy: Update available: ' + hasUpdate;
       }, function(err) {
-        console.error('Ionic Deploy: Unable to check for updates', err);
+        alertPopup.template = 'Ionic Deploy: Unable to check for updates ' + err;
       });
     }
   })
@@ -162,14 +181,6 @@ angular.module('hfapp.controllers', [])
           }
         }
         // watch range change
-        /*$scope.$watch('graphCurr', function(newValue, oldValue) {
-          $scope.chart.yAxis[0].setExtremes(newValue, $scope.graphMax);
-          $scope.chart.showResetZoom();
-          console.log("Translate -- " + newValue);
-          if (!$scope.$$phase) {
-            $scope.$apply();
-          }
-        });*/
       $scope.translateGraph = function translateGraph(graphCurr) {
         $scope.chart.yAxis[0].setExtremes(graphCurr, $scope.graphMax);
         $scope.chart.showResetZoom();

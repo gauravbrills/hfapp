@@ -5,12 +5,14 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('hfapp', ['ionic', 'ionic.service.core', 'ionic.service.push', 'hfapp.controllers', 'hfapp.services'])
+angular.module('hfapp', ['ionic', 'ionic.service.core', 'ionic.service.push', 'ionic.service.analytics', 'hfapp.controllers', 'hfapp.services'])
 
-.run(function($rootScope, $ionicPopup, $ionicPlatform) {
+.run(function($rootScope, $ionicPopup, $ionicPlatform, $ionicAnalytics) {
   $ionicPlatform.ready(function() {
     Ionic.io();
+    $ionicAnalytics.register();
     $rootScope.pushNotes = [];
+    $rootScope.silenceNotification = false;
     var user = Ionic.User.current();
     // this will give you a fresh user or the previously saved 'current user'
     var success = function(loadedUser) {
@@ -37,17 +39,19 @@ angular.module('hfapp', ['ionic', 'ionic.service.core', 'ionic.service.push', 'h
         var pushNote = $rootScope.$eval(text);
         $rootScope.pushNotes.push(pushNote);
         $rootScope.notificationCount = $rootScope.pushNotes.length;
-        var popup = $ionicPopup.alert({
-          title: "<i class='icon ion-lightbulb'></i>  Fund Notification",
-          template: pushNote.title
-        });
+        if (!$rootScope.silenceNotification) {
+          var popup = $ionicPopup.alert({
+            title: "<i class='icon ion-lightbulb'></i>  Fund Notification",
+            template: pushNote.title
+          });
+        }
         if (!$rootScope.$$phase) {
           $rootScope.$apply();
         }
         console.log("added ", pushNote);
       },
       "onRegister": function(data) {
-        $rootScope.deviceToken = data.token;
+        $rootScope.deviceToken = data.token + " : " + data.platform;
         console.log("device token " + data.token);
       },
       "pluginConfig": {
