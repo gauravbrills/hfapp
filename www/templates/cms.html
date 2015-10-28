@@ -1,0 +1,54 @@
+<ion-view view-title="App Content Management Console">
+  <ion-content class="padding">
+    <div class="bar">
+      <div class="col">Code Value</div>
+      <div class="col">Decision Code</div>
+      <div class="col">Decision Value</div>
+      <div class="col">Content</div>
+      <div class="col">Actions</div>
+    </div>
+    <br>
+    <br>
+    <div class="row" ng-repeat="rule in rules" ng-model="rule">
+      <div class="col">
+        <label class="item item-input item-select">
+          <div class="input-label">
+            Code
+          </div>
+          <select ng-model="rule.codeValue" ng-change="populateDecisionCode(rule)">
+            <option>asummnote</option>
+            <option>asummmspcnote</option>
+          </select>
+        </label>
+      </div>
+      <div class="col">
+        <label class="item item-input item-select">
+          <div class="input-label">
+            DecisionCode
+          </div>
+          <select ng-model="rule.decisionCode" ng-change="populateDecisionValues(rule)" ng-options="dcode as dcode for dcode in  decisionCodes"></select>
+        </label>
+      </div>
+      <div class="col">
+        <label class="item item-input item-select">
+          <div class="input-label">
+            DecisionValue
+          </div>
+          <select ng-model="rule.decisionValue" ng-change="" ng-options="score as score for score in  decisionValues"></select>
+        </label>
+      </div>
+      <div class="col">
+        <label class="item item-input">
+          <input type="text" placeholder="Content" ng-model="rule.content">
+        </label>
+      </div>
+      <div class="col">
+        <button class="button button-positive" ng-click="saveRule(rule)">Save</button>
+        <button class="button button-assertive" ng-click="deleteRule(rule)">Delete</button>
+      </div>
+    </div>
+
+      <button class="button button-assertive" ng-click="addRule()">Add Rule </button>
+
+    </ion-content>
+</ion-view>

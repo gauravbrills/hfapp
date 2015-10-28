@@ -13,28 +13,11 @@ angular.module('hfapp', ['ionic', 'ionic.service.core', 'ionic.service.push', 'i
     $ionicAnalytics.register();
     $rootScope.pushNotes = [];
     $rootScope.silenceNotification = false;
-    var user = Ionic.User.current();
-    // this will give you a fresh user or the previously saved 'current user'
-    var success = function(loadedUser) {
-      // if this user should be treated as the current user,
-      // you will need to set it as such:
-      Ionic.User.current(loadedUser);
-      // assuming you previous had var user = Ionic.User.current()
-      // you will need to update your variable reference
-      var user = Ionic.User.current();
-      console.log('Found User ' + user.get('name'));
-    };
-    var failure = function(error) {
-      console.log('something went wrong in getting user');
-      user.id = Ionic.User.anonymousId();
-      user.save();
-    };
-    Ionic.User.load('c920919f-18a5-4f4c-a2f8-1eca3477689a').then(success, failure);
-    // kick off the platform web client
     var push = new Ionic.Push({
       "debug": true,
       "onNotification": function(notification) {
-        var text = notification._raw.text;
+        var text = notification._raw.text; //for dummy push
+        //var text = notification.title; // for real push
         text = text.replace(/#/g, '"');
         var pushNote = $rootScope.$eval(text);
         $rootScope.pushNotes.push(pushNote);
@@ -51,8 +34,9 @@ angular.module('hfapp', ['ionic', 'ionic.service.core', 'ionic.service.push', 'i
         console.log("added ", pushNote);
       },
       "onRegister": function(data) {
-        $rootScope.deviceToken = data.token + " : " + data.platform;
-        console.log("device token " + data.token);
+        $rootScope.deviceToken = data.token;
+        //user.addPushToken(data.token);
+        //user.save();
       },
       "pluginConfig": {
         "ios": {
@@ -65,10 +49,11 @@ angular.module('hfapp', ['ionic', 'ionic.service.core', 'ionic.service.push', 'i
       }
     });
 
-    push.register(function(token) {
-      console.log("Device token:" + token.token + token.platform);
-    });
-    push.addTokenToUser(user);
+    var callback = function(pushToken) {
+      console.log(pushToken.token);
+    }
+
+    push.register(callback);
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
     if (window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {
@@ -138,6 +123,16 @@ angular.module('hfapp', ['ionic', 'ionic.service.core', 'ionic.service.push', 'i
         'menuContent': {
           templateUrl: 'templates/checkForUpdates.html',
           controller: 'checkForUpdatesCtrl'
+        }
+      }
+    })
+    .state('app.cms', {
+      cache: false,
+      url: '/cms',
+      views: {
+        'menuContent': {
+          templateUrl: 'templates/cms.html',
+          controller: 'cmsCtrl'
         }
       }
     })

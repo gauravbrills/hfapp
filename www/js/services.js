@@ -1,23 +1,34 @@
 'use strict'
 angular.module('hfapp.services', ['ngResource'])
   .constant('ApiEndpoint', {
-    url: 'http://es.pixelsorcery.in:9200'
+    url: '/api'
   })
   // For the real endpoint, we'd use this /api
   // .constant('ApiEndpoint', {
-  //  url: 'http://es.pixelsorcery.in:9200'
+  //  url: 'http://elastic.pixelsorcery.in/elasticsearch'
   // })
-  .service('LoginService', function($q) {
+  .service('LoginService', function($q, $rootScope, user, $ionicPopup, $ionicPlatform, $ionicPush) {
     return {
       loginUser: function(name, pw) {
         var deferred = $q.defer();
         var promise = deferred.promise;
-
-        if (name == 'user' && pw == 'secret') {
-          deferred.resolve('Welcome ' + name + '!');
-        } else {
-          deferred.reject('Wrong credentials.');
-        }
+        // Get data from user service
+        user.get({
+          userid: name
+        }).$promise.then(function(data) {
+            if (pw == data._source.password) {
+              $rootScope.user = data._source;
+              initCloudServices($rootScope, $ionicPopup, $ionicPlatform, $ionicPush);
+              deferred.resolve('Welcome ' + name + '!');
+            } else {
+              deferred.reject('Wrong credentials.');
+            }
+          },
+          function(reason) {
+            deferred.reject('Wrong credentials.');
+            console.log('Failed: ' + reason);
+          });
+        // --------
         promise.success = function(fn) {
           promise.then(fn);
           return promise;
@@ -30,12 +41,11 @@ angular.module('hfapp.services', ['ngResource'])
       }
     }
   })
-  .factory('funds', function($resource) {
-    // http://10.0.2.2:8100 for android http://es.pixelsorcery.in:9200/transactions/transaction/_search
-    // '/data/aum.json'
-    // /api/transactions/transaction/_search'
-    return $resource('/data/aum.json', {}, {
-      get: {
+  .factory('user', function($resource, ApiEndpoint) {
+    return $resource(ApiEndpoint.url + '/users/user/:userid', {
+      userid: "@userid"
+    }, {
+      getByUserId: {
         method: 'GET'
       }
     });
@@ -45,6 +55,15 @@ angular.module('hfapp.services', ['ngResource'])
     // ApiEndpoint.url + '/transactions/transaction/_search?size=30'
     return $resource(ApiEndpoint.url + '/transactions/transaction/_search?size=30', {}, {
       getSortedFunds: {
+        method: 'GET'
+      }
+    });
+  }).factory('cms', function($resource, ApiEndpoint) {
+    // http://10.0.2.2:8100 for android http://es.pixelsorcery.in:9200/transactions/transaction/_search
+    // '/data/allfunds.json'
+    // ApiEndpoint.url + '/transactions/transaction/_search?size=30'
+    return $resource(ApiEndpoint.url + '/ruleengine/rule/_search', {}, {
+      getAllRules: {
         method: 'GET'
       }
     });

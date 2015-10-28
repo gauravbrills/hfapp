@@ -29,12 +29,12 @@ function drawacctsumm(data, $window, $scope, $timeout) {
      */
   for (var i = 0; i < data.hits.hits.length; i++) {
     node = data.hits.hits[i];
-    if (node._source.privateFundFlg == true) {
-      publicCapitalFundArray.push(node._source);
-      totalPHF = totalPHF + node._source.Equity;
+    if (node._source.query.privateFundFlg == true) {
+      publicCapitalFundArray.push(node._source.query);
+      totalPHF = totalPHF + node._source.query.Equity;
     } else {
-      hedgeFundArray.push(node._source);
-      totalHF = totalHF + node._source.Equity;
+      hedgeFundArray.push(node._source.query);
+      totalHF = totalHF + node._source.query.Equity;
     }
   }
   //  console.log(angular.toJson(publicCapitalFundArray,true) + " -< public");
@@ -90,7 +90,10 @@ function showHedgeFundsMaster(hedgeFundArray, publicCapitalFundArray, $window, t
     document.getElementById("pieChart").innerHTML = "";
     document.getElementById("pieChart2").style.display = 'none';
     document.getElementById("pieChart").style.display = 'block';
+    document.getElementById("chartdiv").style.display = 'none';
     document.getElementById("chartdiv2").style.display = 'none';
+    document.getElementById("privhfytmtd").style.display = 'none';
+    document.getElementById("hfytmtd").style.display = 'none';
     var color = d3.scale.category20(),
       radius = width / 2.35,
       innerRadius = (width / 2) * .45;
@@ -212,6 +215,9 @@ function showHedgeFundsMaster(hedgeFundArray, publicCapitalFundArray, $window, t
     document.getElementById("pieChart").style.display = 'none';
     document.getElementById("pieChart2").style.display = 'block';
     document.getElementById("chartdiv").style.display = 'none';
+    document.getElementById("chartdiv2").style.display = 'none';
+    document.getElementById("privhfytmtd").style.display = 'none';
+    document.getElementById("hfytmtd").style.display = 'none';
     var color = d3.scale.category20(),
       radius = width / 2.35,
       innerRadius = (width / 2) * .45;
@@ -319,7 +325,8 @@ function showHedgeFundsMaster(hedgeFundArray, publicCapitalFundArray, $window, t
 function showHedgeFundTransactions(fundName, equity, color, hedgeFundArray) {
   document.getElementById("chartdiv").style.display = 'block';
   document.getElementById("chartdiv2").style.display = 'none';
-
+  document.getElementById("privhfytmtd").style.display = 'none';
+  document.getElementById("hfytmtd").style.display = 'block';
   var chart = AmCharts.makeChart("chartdiv", {
     "type": "serial",
     "theme": "none",
@@ -426,27 +433,40 @@ function showHedgeFundTransactions(fundName, equity, color, hedgeFundArray) {
   function zoomChart() {
     chart.zoomToIndexes(chart.dataProvider.length - 40, chart.dataProvider.length - 1);
   }
+  var fundnames = [];
+  fundnames.push(fundName);
+  showBarGph('#hfytmtd', '', getSeries(fundName, hedgeFundArray), fundnames);
+
 }
 
-function getTransactions(fundName, hedgeFundArray) {
-  for (i = 0; i < hedgeFundArray.length; i++) {
-    if (hedgeFundArray[i].fundName == fundName) {
-      return hedgeFundArray[i].Transactions;
+function getTransactions(fundName, hfArray) {
+  for (i = 0; i < hfArray.length; i++) {
+    if (hfArray[i].fundName == fundName) {
+      return hfArray[i].Transactions;
     }
   }
 }
 
-function getTransactionsPublicCapital(fundName, publicCapitalFundArray) {
-  for (i = 0; i < publicCapitalFundArray.length; i++) {
-    if (publicCapitalFundArray[i].fundName == fundName) {
-      return publicCapitalFundArray[i].Transactions;
+function getSeries(fundName, hfArray) {
+  for (i = 0; i < hfArray.length; i++) {
+    if (hfArray[i].fundName == fundName) {
+      return [{
+        name: 'YTD',
+        data: [hfArray[i].YTD]
+      }, {
+        name: 'MTD',
+        data: [hfArray[i].MTD]
+      }];
     }
   }
 }
+
 
 function showPublicCapitalTransactions(fundName, color, publicCapitalFundArray) {
   document.getElementById("chartdiv").style.display = 'block';
   document.getElementById("chartdiv2").style.display = 'none';
+  document.getElementById("privhfytmtd").style.display = 'block';
+  document.getElementById("hfytmtd").style.display = 'none';
   var chart = AmCharts.makeChart("chartdiv", {
     "type": "serial",
     "theme": "none",
@@ -546,7 +566,7 @@ function showPublicCapitalTransactions(fundName, color, publicCapitalFundArray) 
         }
       ]
     },
-    "dataProvider": getTransactionsPublicCapital(fundName, publicCapitalFundArray)
+    "dataProvider": getTransactions(fundName, publicCapitalFundArray)
   });
 
   chart.addListener("rendered", zoomChart);
@@ -555,4 +575,7 @@ function showPublicCapitalTransactions(fundName, color, publicCapitalFundArray) 
   function zoomChart() {
     chart.zoomToIndexes(chart.dataProvider.length - 40, chart.dataProvider.length - 1);
   }
+  var fundnames = [];
+  fundnames.push(fundName);
+  showBarGph('#privhfytmtd', ' ', getSeries(fundName, publicCapitalFundArray), fundnames);
 }

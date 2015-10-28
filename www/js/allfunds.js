@@ -47,7 +47,7 @@ function pruneData(approach, datum) {
     LongPositions = [],
     ShortPositions = [];
   angular.forEach(datum.hits.hits, function(value, key) {
-    var node = value._source._source;
+    var node = value._source.query;
     if (node.InvestmentApproach == approach) {
       ytd.push(node.YTD);
       mtd.push(node.MTD);
@@ -143,9 +143,9 @@ function showContGraph(title, yText, $scope, timeSeries, datum) {
   }
 }
 
-function showBarGph(title, series, data) {
+function showBarGph(id,title, series, fundnames) {
   $(function() {
-    $('#graph').highcharts({
+    $(id).highcharts({
       title: {
         text: title,
         x: -20 //center
@@ -154,7 +154,7 @@ function showBarGph(title, series, data) {
         type: 'bar'
       },
       xAxis: {
-        categories: data.fundnames,
+        categories: fundnames,
         title: {
           text: " Funds "
         }
@@ -200,7 +200,7 @@ function showBarGph(title, series, data) {
 }
 
 function createAllFundsViz($scope, $window, model, funds, svg, arc, path, layout) {
-  var modelObj = model.hits.hits[0]._source._source;
+  var modelObj = model.hits.hits[0]._source;
 
   var width = $window.innerWidth / 1.3,
     height = $window.innerHeight / 1.3;
@@ -305,19 +305,19 @@ function createAllFundsViz($scope, $window, model, funds, svg, arc, path, layout
     var category;
     // sort funds
     funds.hits.hits.sort(function compare(a, b) {
-      return a._source._source.fundName.localeCompare(b._source._source.fundName);
+      return a._source.query.fundName.localeCompare(b._source.query.fundName);
     });
 
 
-    fundName = funds.hits.hits[index]._source._source.fundName;
-    investmentApproach = funds.hits.hits[index]._source._source.InvestmentApproach;
-    inceptionDate = funds.hits.hits[index]._source._source.InceptionDate;
-    strategyAUM = funds.hits.hits[index]._source._source.StrategyAUM;
-    MTD = funds.hits.hits[index]._source._source.MTD + "%";
-    YTD = funds.hits.hits[index]._source._source.YTD + "%";
-    annualizedSinceInception = funds.hits.hits[index]._source._source.AnnualizedSinceInception;
-    status = funds.hits.hits[index]._source._source.Status;
-    category = funds.hits.hits[index]._source._source.Category;
+    fundName = funds.hits.hits[index]._source.query.fundName;
+    investmentApproach = funds.hits.hits[index]._source.query.InvestmentApproach;
+    inceptionDate = funds.hits.hits[index]._source.query.InceptionDate;
+    strategyAUM = funds.hits.hits[index]._source.query.StrategyAUM;
+    MTD = funds.hits.hits[index]._source.query.MTD + "%";
+    YTD = funds.hits.hits[index]._source.query.YTD + "%";
+    annualizedSinceInception = funds.hits.hits[index]._source.query.AnnualizedSinceInception;
+    status = funds.hits.hits[index]._source.query.Status;
+    category = funds.hits.hits[index]._source.query.Category;
 
     $scope.fundName = fundName;
     $scope.fundapproach = investmentApproach;
@@ -327,7 +327,7 @@ function createAllFundsViz($scope, $window, model, funds, svg, arc, path, layout
     $scope.YTD = YTD;
     $scope.annualizedSinceInception = annualizedSinceInception;
     $scope.status = status;
-    $scope.category = funds.hits.hits[index]._source._source.Category;
+    $scope.category = funds.hits.hits[index]._source.query.Category;
     $scope.$apply();
   }
 }

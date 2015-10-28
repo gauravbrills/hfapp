@@ -1,4 +1,4 @@
-<ion-view view-title="Account Summary (Split by Fund AUM)" >
+<ion-view view-title="Account Summary (Split by Fund AUM)">
   <ion-content class="padding" data-tap-disabled="true">
     <div class="bar padding">
       <div class="col-md-8 col-lg-8">
@@ -29,8 +29,17 @@
         </div>
       </div>
     </div>
+    <div class="row">
+      <div class="col-md-offset-5 col-md-8">
+        <div class="box">
+          <div id="hfytmtd" style="display:none;min-width: 200px; max-width: 74%;height: 280px;margin: 0 auto"></div>
+          <div id="privhfytmtd" style="display:none;min-width: 200px; max-width: 74%;height: 280px;margin: 0 auto"></div>
+        </div>
+      </div>
+    </div>
   </ion-content>
-  <div class="bar bar-footer bar-balanced">
-    <i class="pull-left">Total Assets under management : $ {{totalAUM}}</i>
+  <div class="bar bar-footer bar-balanced ">
+    <i class="pull-left ">Total Assets under management : $ {{totalAUM}}</i>
+    <i class="pull-right "> {{asummnoti}}</i>
   </div>
 </ion-view>

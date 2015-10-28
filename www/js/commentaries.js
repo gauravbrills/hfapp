@@ -8,7 +8,7 @@ function openCommGraph($scope, comm) {
   openCommentary = function openCommentary(fund, month) {
     var nodes = comm.hits.hits;
     angular.forEach(nodes, function(value, key) {
-      var node = value._source;
+      var node = value._source.query;
       if (node.name == fund && node.date.startsWith(month)) {
         $scope.currentFund = new currentFund(node.name, node.date, node.fullText, node.img);
         $scope.showComm = true;
