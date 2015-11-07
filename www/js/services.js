@@ -17,7 +17,15 @@ angular.module('hfapp.services', ['ngResource'])
           userid: name
         }).$promise.then(function(data) {
             if (pw == data._source.password) {
-              $rootScope.user = data._source;
+              $rootScope.userEs = data._source;
+              // update devicetoken
+              $rootScope.userEs.devicetoken = $rootScope.deviceToken;
+              user.update({
+                userid: $rootScope.userEs.uname
+              }, $rootScope.userEs).$promise.then(function(data) {
+                console.log("devicetoken updated", data);
+              });
+              // init cloud services
               initCloudServices($rootScope, $ionicPopup, $ionicPlatform, $ionicPush);
               deferred.resolve('Welcome ' + name + '!');
             } else {
@@ -47,6 +55,18 @@ angular.module('hfapp.services', ['ngResource'])
     }, {
       getByUserId: {
         method: 'GET'
+      },
+      get: {
+        method: 'GET',
+        params: {
+          userid: "_search"
+        }
+      },
+      update: {
+        method: 'PUT',
+        params: {
+          userid: "@userid"
+        }
       }
     });
   }).factory('allfunds', function($resource, ApiEndpoint) {
@@ -62,9 +82,32 @@ angular.module('hfapp.services', ['ngResource'])
     // http://10.0.2.2:8100 for android http://es.pixelsorcery.in:9200/transactions/transaction/_search
     // '/data/allfunds.json'
     // ApiEndpoint.url + '/transactions/transaction/_search?size=30'
-    return $resource(ApiEndpoint.url + '/ruleengine/rule/_search', {}, {
+    return $resource(ApiEndpoint.url + '/ruleengine/rule/:term', {
+      term: "@term"
+    }, {
       getAllRules: {
-        method: 'GET'
+        method: 'GET',
+        params: {
+          term: "_search"
+        }
+      },
+      get: {
+        method: 'GET',
+        params: {
+          term: "@term"
+        }
+      },
+      update: {
+        method: 'PUT',
+        params: {
+          term: "@term"
+        }
+      },
+      delete: {
+        method: 'DELETE',
+        params: {
+          term: "@term"
+        }
       }
     });
   }).factory('allfundsmodel', function($resource, ApiEndpoint) {

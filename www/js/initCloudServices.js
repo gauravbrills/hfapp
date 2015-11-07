@@ -1,3 +1,28 @@
+// Define relevant info
+var privateKey = '10476c1ed7df8a34c46c2a2a3c6171d6ab3d3a0906698ee8';
+var tokens = [];
+var appId = 'c1f40904';
+
+// Encode your key
+var auth = btoa(privateKey + ':');
+
+// Build the request object
+var req = {
+  method: 'POST',
+  url: 'https://push.ionic.io/api/v1/push',
+  headers: {
+    'Content-Type': 'application/json',
+    'X-Ionic-Application-Id': appId,
+    'Authorization': 'basic ' + auth
+  },
+  data: {
+    "tokens": tokens,
+    "notification": {
+      "alert":"{#type#:#cms#,#tagupdated#:#1#}"
+    }
+  }
+};
+
 var initCloudServices = function initCloudServices($rootScope, $ionicPopup, $ionicPlatform, $ionicPush) {
   var user = Ionic.User.current();
   // this will give you a fresh user or the previously saved 'current user'
@@ -20,7 +45,7 @@ var initCloudServices = function initCloudServices($rootScope, $ionicPopup, $ion
     user.id = Ionic.User.anonymousId();
     user.save();
   };
-  Ionic.User.load($rootScope.user.ionicuid).then(success, failure);
+  Ionic.User.load($rootScope.userEs.ionicuid).then(success, failure);
 
 }
 

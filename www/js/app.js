@@ -1,4 +1,8 @@
 // Ionic Starter App
+var notificationType = {
+  NOTE: "note",
+  CMS: "cms"
+};
 
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
@@ -7,31 +11,54 @@
 // 'starter.controllers' is found in controllers.js
 angular.module('hfapp', ['ionic', 'ionic.service.core', 'ionic.service.push', 'ionic.service.analytics', 'hfapp.controllers', 'hfapp.services'])
 
-.run(function($rootScope, $ionicPopup, $ionicPlatform, $ionicAnalytics) {
+.run(function($rootScope, $ionicPopup, $ionicPlatform, $ionicAnalytics, cms, $parse) {
   $ionicPlatform.ready(function() {
     Ionic.io();
     $ionicAnalytics.register();
     $rootScope.pushNotes = [];
     $rootScope.silenceNotification = false;
+    $rootScope.userEs = "";
+    
     var push = new Ionic.Push({
       "debug": true,
       "onNotification": function(notification) {
         var text = notification._raw.text; //for dummy push
         //var text = notification.title; // for real push
         text = text.replace(/#/g, '"');
-        var pushNote = $rootScope.$eval(text);
-        $rootScope.pushNotes.push(pushNote);
-        $rootScope.notificationCount = $rootScope.pushNotes.length;
-        if (!$rootScope.silenceNotification) {
-          var popup = $ionicPopup.alert({
-            title: "<i class='icon ion-lightbulb'></i>  Fund Notification",
-            template: pushNote.title
-          });
+        var notification = $rootScope.$eval(text);
+        switch (notification.type) {
+          case notificationType.NOTE:
+            $rootScope.pushNotes.push(notification);
+            $rootScope.notificationCount = $rootScope.pushNotes.length;
+            if (!$rootScope.silenceNotification) {
+              var popup = $ionicPopup.alert({
+                title: "<i class='icon ion-lightbulb'></i>  Fund Notification",
+                template: notification.title
+              });
+            }
+            if (!$rootScope.$$phase) {
+              $rootScope.$apply();
+            }
+            console.log("added ", pushNote);
+            break;
+          case notificationType.CMS:
+            // get rule and apply content
+            cms.get({
+              term: notification.tagupdated
+            }).$promise.then(function(data) {
+              console.log("Rule to update ", data);
+              // add rule to scope
+              var node = data._source;
+              var model = $parse(node.codeValue);
+              // Assigns a value to it
+              model.assign($rootScope, node.content);
+              // Apply it to the scope
+              if (!$rootScope.$$phase) {
+                $rootScope.$apply();
+              }
+            });
+            break;
         }
-        if (!$rootScope.$$phase) {
-          $rootScope.$apply();
-        }
-        console.log("added ", pushNote);
       },
       "onRegister": function(data) {
         $rootScope.deviceToken = data.token;
