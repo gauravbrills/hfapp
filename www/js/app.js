@@ -9,7 +9,7 @@ var notificationType = {
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('hfapp', ['ionic', 'ionic.service.core', 'ionic.service.push', 'ionic.service.analytics', 'hfapp.controllers', 'hfapp.services'])
+angular.module('hfapp', ['ionic','ionic.service.core',  'ionic.service.push', 'ionic.service.analytics', 'hfapp.controllers', 'hfapp.services'])
 
 .run(function($rootScope, $ionicPopup, $ionicPlatform, $ionicAnalytics, cms, $parse) {
   $ionicPlatform.ready(function() {
@@ -18,7 +18,7 @@ angular.module('hfapp', ['ionic', 'ionic.service.core', 'ionic.service.push', 'i
     $rootScope.pushNotes = [];
     $rootScope.silenceNotification = false;
     $rootScope.userEs = "";
-    
+    $rootScope.authToken = "Basic " + btoa('gmfi1py62w' + ":" + '4g9jgk6eea');
     var push = new Ionic.Push({
       "debug": true,
       "onNotification": function(notification) {

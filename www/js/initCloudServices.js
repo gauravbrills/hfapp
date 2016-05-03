@@ -2,10 +2,15 @@
 var privateKey = '10476c1ed7df8a34c46c2a2a3c6171d6ab3d3a0906698ee8';
 var tokens = [];
 var appId = 'c1f40904';
-
+var options = {
+  'remember': true
+};
+var details = {
+  'email': 'example@example.com',
+  'password': 'secretpassword'
+};
 // Encode your key
 var auth = btoa(privateKey + ':');
-
 // Build the request object
 var req = {
   method: 'POST',
@@ -18,7 +23,7 @@ var req = {
   data: {
     "tokens": tokens,
     "notification": {
-      "alert":"{#type#:#cms#,#tagupdated#:#1#}"
+      "alert": "{#type#:#cms#,#tagupdated#:#1#}"
     }
   }
 };
@@ -35,6 +40,7 @@ var initCloudServices = function initCloudServices($rootScope, $ionicPopup, $ion
     // you will need to update your variable reference
     var user = Ionic.User.current();
     user.addPushToken($rootScope.deviceToken);
+    user.migrate();
     user.save();
     $rootScope.currentUserName = user.get('name');
     $rootScope.avatar = user.get('avatar');
@@ -42,16 +48,20 @@ var initCloudServices = function initCloudServices($rootScope, $ionicPopup, $ion
   };
   var failure = function(error) {
     console.log('something went wrong in getting user');
+    Ionic.Auth.signup(details);
     user.id = Ionic.User.anonymousId();
     user.save();
   };
-  Ionic.User.load($rootScope.userEs.ionicuid).then(success, failure);
+  details.password = $rootScope.userEs.password;
+  details.email = $rootScope.userEs.uname;
+  Ionic.Auth.login('basic', options, details).then(success, failure);
+  //Ionic.User.load($rootScope.userEs.ionicuid).then(success, failure);
 
 }
 
 function kickOffpush($rootScope, $ionicPopup, $ionicPlatform, $ionicPush) {
   // kick off the platform web client
-$ionicPush.init({
+  $ionicPush.init({
     "debug": true,
     "onNotification": function(notification) {
       // var text = notification._raw.text; -- for dummy push
@@ -86,6 +96,6 @@ $ionicPush.init({
       }
     }
   });
-$ionicPush.register();
+  $ionicPush.register();
 
 }

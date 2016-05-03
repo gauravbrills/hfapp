@@ -29,12 +29,12 @@ function drawacctsumm(data, $window, $scope, $timeout) {
      */
   for (var i = 0; i < data.hits.hits.length; i++) {
     node = data.hits.hits[i];
-    if (node._source.query.privateFundFlg == true) {
-      publicCapitalFundArray.push(node._source.query);
-      totalPHF = totalPHF + node._source.query.Equity;
+    if (node._source.privateFundFlg == true) {
+      publicCapitalFundArray.push(node._source);
+      totalPHF = totalPHF + node._source.Equity;
     } else {
-      hedgeFundArray.push(node._source.query);
-      totalHF = totalHF + node._source.query.Equity;
+      hedgeFundArray.push(node._source);
+      totalHF = totalHF + node._source.Equity;
     }
   }
   //  console.log(angular.toJson(publicCapitalFundArray,true) + " -< public");

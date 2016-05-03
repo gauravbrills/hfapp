@@ -1,7 +1,7 @@
 'use strict'
 angular.module('hfapp.services', ['ngResource'])
   .constant('ApiEndpoint', {
-    url: '/api'
+    url: 'https://hf-harness-5501403966.us-east-1.bonsai.io'
   })
   // For the real endpoint, we'd use this /api
   // .constant('ApiEndpoint', {
@@ -49,33 +49,46 @@ angular.module('hfapp.services', ['ngResource'])
       }
     }
   })
-  .factory('user', function($resource, ApiEndpoint) {
+  .factory('user', function($resource, $rootScope, ApiEndpoint) {
+
     return $resource(ApiEndpoint.url + '/users/user/:userid', {
       userid: "@userid"
     }, {
       getByUserId: {
-        method: 'GET'
+        method: 'GET',
+        headers: {
+          'Authorization': $rootScope.authToken
+        }
       },
       get: {
         method: 'GET',
         params: {
           userid: "_search"
+        },
+        headers: {
+          'Authorization': $rootScope.authToken
         }
       },
       update: {
         method: 'PUT',
         params: {
           userid: "@userid"
+        },
+        headers: {
+          'Authorization': $rootScope.authToken
         }
       }
     });
-  }).factory('allfunds', function($resource, ApiEndpoint) {
+  }).factory('allfunds', function($resource, $rootScope, ApiEndpoint) {
     // http://10.0.2.2:8100 for android http://es.pixelsorcery.in:9200/transactions/transaction/_search
     // '/data/allfunds.json'
     // ApiEndpoint.url + '/transactions/transaction/_search?size=30'
     return $resource(ApiEndpoint.url + '/transactions/transaction/_search?size=30', {}, {
       getSortedFunds: {
-        method: 'GET'
+        method: 'GET',
+        headers: {
+          'Authorization': $rootScope.authToken
+        }
       }
     });
   }).factory('cms', function($resource, ApiEndpoint) {
@@ -110,33 +123,42 @@ angular.module('hfapp.services', ['ngResource'])
         }
       }
     });
-  }).factory('allfundsmodel', function($resource, ApiEndpoint) {
+  }).factory('allfundsmodel', function($resource, $rootScope, ApiEndpoint) {
     // http://10.0.2.2:8100 for android http://es.pixelsorcery.in:9200/transactions/transaction/_search
     // '/data/model.json'
     // ApiEndpoint.url + '/fundrelation/fundrelation/_search'
     return $resource(ApiEndpoint.url + '/fundrelation/fundrelation/_search', {}, {
       get: {
-        method: 'GET'
+        method: 'GET',
+        headers: {
+          'Authorization': $rootScope.authToken
+        }
       }
     });
   })
-  .factory('marketcommentary', function($resource, ApiEndpoint) {
+  .factory('marketcommentary', function($resource, $rootScope, ApiEndpoint) {
     // http://10.0.2.2:8100 for android http://es.pixelsorcery.in:9200/transactions/transaction/_search
     // '/data/comm.json'
     // ApiEndpoint.url + '/commentaries/commentary/_search?size=31'
     return $resource(ApiEndpoint.url + '/commentaries/commentary/_search?size=31', {}, {
       get: {
-        method: 'GET'
+        method: 'GET',
+        headers: {
+          'Authorization': $rootScope.authToken
+        }
       }
     });
   })
-  .factory('acctsumm', function($resource, ApiEndpoint) {
+  .factory('acctsumm', function($resource, $rootScope, ApiEndpoint) {
     // http://10.0.2.2:8100 for android http://es.pixelsorcery.in:9200/transactions/transaction/_search
     // '/data/acctsumm.json'
     // ApiEndpoint.url + '/acctsummaries/account/_search?sort=_uid'
     return $resource(ApiEndpoint.url + '/acctsummaries/account/_search?sort=_uid', {}, {
       get: {
-        method: 'GET'
+        method: 'GET',
+        headers: {
+          'Authorization': $rootScope.authToken
+        }
       }
     });
   });

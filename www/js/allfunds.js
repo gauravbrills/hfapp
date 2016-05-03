@@ -47,7 +47,7 @@ function pruneData(approach, datum) {
     LongPositions = [],
     ShortPositions = [];
   angular.forEach(datum.hits.hits, function(value, key) {
-    var node = value._source.query;
+    var node = value._source;
     if (node.InvestmentApproach == approach) {
       ytd.push(node.YTD);
       mtd.push(node.MTD);
@@ -305,19 +305,19 @@ function createAllFundsViz($scope, $window, model, funds, svg, arc, path, layout
     var category;
     // sort funds
     funds.hits.hits.sort(function compare(a, b) {
-      return a._source.query.fundName.localeCompare(b._source.query.fundName);
+      return a._source.fundName.localeCompare(b._source.fundName);
     });
 
 
-    fundName = funds.hits.hits[index]._source.query.fundName;
-    investmentApproach = funds.hits.hits[index]._source.query.InvestmentApproach;
-    inceptionDate = funds.hits.hits[index]._source.query.InceptionDate;
-    strategyAUM = funds.hits.hits[index]._source.query.StrategyAUM;
-    MTD = funds.hits.hits[index]._source.query.MTD + "%";
-    YTD = funds.hits.hits[index]._source.query.YTD + "%";
-    annualizedSinceInception = funds.hits.hits[index]._source.query.AnnualizedSinceInception;
-    status = funds.hits.hits[index]._source.query.Status;
-    category = funds.hits.hits[index]._source.query.Category;
+    fundName = funds.hits.hits[index]._source.fundName;
+    investmentApproach = funds.hits.hits[index]._source.InvestmentApproach;
+    inceptionDate = funds.hits.hits[index]._source.InceptionDate;
+    strategyAUM = funds.hits.hits[index]._source.StrategyAUM;
+    MTD = funds.hits.hits[index]._source.MTD + "%";
+    YTD = funds.hits.hits[index]._source.YTD + "%";
+    annualizedSinceInception = funds.hits.hits[index]._source.AnnualizedSinceInception;
+    status = funds.hits.hits[index]._source.Status;
+    category = funds.hits.hits[index]._source.Category;
 
     $scope.fundName = fundName;
     $scope.fundapproach = investmentApproach;
@@ -327,7 +327,7 @@ function createAllFundsViz($scope, $window, model, funds, svg, arc, path, layout
     $scope.YTD = YTD;
     $scope.annualizedSinceInception = annualizedSinceInception;
     $scope.status = status;
-    $scope.category = funds.hits.hits[index]._source.query.Category;
+    $scope.category = funds.hits.hits[index]._source.Category;
     $scope.$apply();
   }
 }
