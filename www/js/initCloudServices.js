@@ -1,101 +1,86 @@
 // Define relevant info
-var privateKey = '10476c1ed7df8a34c46c2a2a3c6171d6ab3d3a0906698ee8';
+var jwt = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI5NmJlNDZkNy1mMzU4LTQ4NDEtYmM4ZC02NTQ3ODdiMDhlMmUifQ.tJU0hfLNwNu_fljgsYrNtELVLGHAosSP16prO2I2CKs';
+  // Auth token for Bonsai Api
+var authToken = "Basic " + btoa('gmfi1py62w' + ":" + '4g9jgk6eea');
 var tokens = [];
 var appId = 'c1f40904';
 var options = {
-  'remember': true
+    'remember': true
 };
 var details = {
-  'email': 'example@example.com',
-  'password': 'secretpassword'
+    'email': 'example@example.com',
+    'password': 'secretpassword'
 };
+
+// optionally passed custom data
+details.custom = {
+    'avatar': 'http://ionicframework.com/img/docs/mcfly.jpg'
+};
+
 // Encode your key
-var auth = btoa(privateKey + ':');
+//var auth = btoa(privateKey + ':');
 // Build the request object
 var req = {
-  method: 'POST',
-  url: 'https://push.ionic.io/api/v1/push',
-  headers: {
-    'Content-Type': 'application/json',
-    'X-Ionic-Application-Id': appId,
-    'Authorization': 'basic ' + auth
-  },
-  data: {
-    "tokens": tokens,
-    "notification": {
-      "alert": "{#type#:#cms#,#tagupdated#:#1#}"
+    method: 'POST',
+    url: 'https://api.ionic.io/push/notifications',
+    headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + jwt
+    },
+    data: {
+        "tokens": tokens,
+        "profile": "hfapp",
+        "notification": {
+            "alert": "{#type#:#cms#,#tagupdated#:#1#}"
+        }
     }
-  }
 };
 
-var initCloudServices = function initCloudServices($rootScope, $ionicPopup, $ionicPlatform, $ionicPush) {
-  var user = Ionic.User.current();
-  // this will give you a fresh user or the previously saved 'current user'
-  var success = function(loadedUser) {
-    // if this user should be treated as the current user,
-    // you will need to set it as such:
-    Ionic.User.current(loadedUser);
-    //kickOffpush($rootScope, $ionicPopup, $ionicPlatform, $ionicPush);
-    // assuming you previous had var user = Ionic.User.current()
-    // you will need to update your variable reference
+function updateIonicUser($rootScope) {
     var user = Ionic.User.current();
-    user.addPushToken($rootScope.deviceToken);
-    user.migrate();
+    user.set('avatar', $rootScope.profile.avatar);
+    user.set('name', $rootScope.profile.name);
+    user.set('email', $rootScope.profile.email);
     user.save();
-    $rootScope.currentUserName = user.get('name');
-    $rootScope.avatar = user.get('avatar');
-    console.log('Found User ' + user.get('name'));
-  };
-  var failure = function(error) {
-    console.log('something went wrong in getting user');
-    Ionic.Auth.signup(details);
-    user.id = Ionic.User.anonymousId();
-    user.save();
-  };
-  details.password = $rootScope.userEs.password;
-  details.email = $rootScope.userEs.uname;
-  Ionic.Auth.login('basic', options, details).then(success, failure);
-  //Ionic.User.load($rootScope.userEs.ionicuid).then(success, failure);
-
 }
 
 function kickOffpush($rootScope, $ionicPopup, $ionicPlatform, $ionicPush) {
-  // kick off the platform web client
-  $ionicPush.init({
-    "debug": true,
-    "onNotification": function(notification) {
-      // var text = notification._raw.text; -- for dummy push
-      var text = notification.title; // for real push
-      text = text.replace(/#/g, '"');
-      var pushNote = $rootScope.$eval(text);
-      $rootScope.pushNotes.push(pushNote);
-      $rootScope.notificationCount = $rootScope.pushNotes.length;
-      if (!$rootScope.silenceNotification) {
-        var popup = $ionicPopup.alert({
-          title: "<i class='icon ion-lightbulb'></i>  Fund Notification",
-          template: pushNote.title
-        });
-      }
-      if (!$rootScope.$$phase) {
-        $rootScope.$apply();
-      }
-      console.log("added ", pushNote);
-    },
-    "onRegister": function(data) {
-      $rootScope.deviceToken = data.token;
-      user.addPushToken(data.token);
-      user.save();
-    },
-    "pluginConfig": {
-      "ios": {
-        "badge": true,
-        "sound": true
-      },
-      "android": {
-        "iconColor": "#343434"
-      }
-    }
-  });
-  $ionicPush.register();
+    // kick off the platform web client
+    $ionicPush.init({
+        "debug": true,
+        "onNotification": function(notification) {
+            // var text = notification._raw.text; -- for dummy push
+            var text = notification.title; // for real push
+            text = text.replace(/#/g, '"');
+            var pushNote = $rootScope.$eval(text);
+            $rootScope.pushNotes.push(pushNote);
+            $rootScope.notificationCount = $rootScope.pushNotes.length;
+            if (!$rootScope.silenceNotification) {
+                var popup = $ionicPopup.alert({
+                    title: "<i class='icon ion-lightbulb'></i>  Fund Notification",
+                    template: pushNote.title
+                });
+            }
+            if (!$rootScope.$$phase) {
+                $rootScope.$apply();
+            }
+            console.log("added ", pushNote);
+        },
+        "onRegister": function(data) {
+            $rootScope.deviceToken = data.token;
+            user.addPushToken(data.token);
+            user.save();
+        },
+        "pluginConfig": {
+            "ios": {
+                "badge": true,
+                "sound": true
+            },
+            "android": {
+                "iconColor": "#343434"
+            }
+        }
+    });
+    $ionicPush.register();
 
 }

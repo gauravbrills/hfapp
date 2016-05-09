@@ -1,0 +1,29 @@
+<ion-view view-title="App Content Management Console">
+    <ion-content class="padding">
+        <div class="list card">
+            <div class="item item-avatar">
+                <img src="{{profile.avatar}}">
+                <h2>{{profile.name}}</h2>
+                <p>{{profile.email}}</p>
+            </div>
+            <div class="item item-body">
+                <h2> </h2>
+                <label class="item item-input item-floating-label">
+                    <span class="input-label">Email (Username)</span>
+                    <input type="text" placeholder="email" ng-model="profile.email">
+                </label>
+                <label class="item item-input item-floating-label">
+                    <span class="input-label">Avatar</span>
+                    <input type="text" placeholder="Avatar" ng-model="profile.avatar">
+                </label>
+                <label class="item item-input item-floating-label">
+                    <span class="input-label">Name</span>
+                    <input type="text" placeholder="name" ng-model="profile.name">
+                </label>
+                <label class="item">
+                    <button class="button button-block button-positive" ng-click="update()">Update Profile </button>
+                </label>
+            </div>
+        </div>
+    </ion-content>
+</ion-view>
