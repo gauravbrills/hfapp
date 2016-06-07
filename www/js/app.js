@@ -14,7 +14,7 @@ angular.module('hfapp', ['ionic', 'ionic.service.core', 'ionic.service.push', 'i
         $rootScope.pushNotes = [];
         $rootScope.silenceNotification = false;
         $rootScope.userEs = "";
-      
+
         var push = new Ionic.Push({
             "debug": true,
             "onNotification": function(notification) {
@@ -169,7 +169,7 @@ angular.module('hfapp', ['ionic', 'ionic.service.core', 'ionic.service.push', 'i
             url: '/userprofile',
             views: {
                 'menuContent': {
-                    templateUrl: 'templates/userprofile.html',
+                    templateUrl: 'templates/userProfile.html',
                     controller: 'userprofileCtrl'
                 }
             }

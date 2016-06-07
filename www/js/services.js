@@ -12,20 +12,22 @@ angular.module('hfapp.services', ['ngResource'])
             loginUser: function(name, pw) {
                 var deferred = $q.defer();
                 var promise = deferred.promise;
-                // Get data from user service
-                var user = Ionic.User.current();
                 // this will give you a fresh user or the previously saved 'current user'
                 var success = function(loadedUser) {
                     Ionic.User.current(loadedUser);
-                    var user = Ionic.User.current();
-                    user.set('pushToken', $rootScope.deviceToken);
-                    user.migrate();
-                    user.save();
+                    var iUser = Ionic.User.current();
+                    iUser.set('pushToken', $rootScope.deviceToken);
+                    user.update({
+                        userid: name
+                    }, $rootScope.profile);
+                    iUser.migrate();
+                    iUser.save();
                     // get details
                     $rootScope.profile.email = name;
-                    $rootScope.profile.name = user.get('name');
-                    $rootScope.profile.avatar = user.get('avatar');
-                    console.log('Found User ' + user.get('name'));
+                    $rootScope.profile.pushToken = iUser.get('pushToken');
+                    $rootScope.profile.name = iUser.get('name');
+                    $rootScope.profile.avatar = iUser.get('avatar');
+                    console.log('Found User ' + iUser.get('name'));
                     deferred.resolve('Welcome ' + name + '!');
 
                 };
@@ -38,6 +40,7 @@ angular.module('hfapp.services', ['ngResource'])
                 };
                 details.password = pw;
                 details.email = name;
+                Ionic.Auth.signup(details);
                 Ionic.Auth.login('basic', options, details).then(success, failure);
 
                 // --------
@@ -55,7 +58,7 @@ angular.module('hfapp.services', ['ngResource'])
     })
     .factory('user', function($resource, $rootScope, ApiEndpoint) {
 
-        return $resource(ApiEndpoint.url + '/users/user/:userid', {
+        return $resource(ApiEndpoint.url + '/hf/users/:userid', {
             userid: "@userid"
         }, {
             getByUserId: {

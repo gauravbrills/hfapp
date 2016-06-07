@@ -48,16 +48,16 @@ angular.module('hfapp.controllers', [])
                         var node = value._source;
                         req = {
                             method: 'POST',
-                            url: 'https://push.ionic.io/api/v1/push',
+                            url: 'https://api.ionic.io/push/notifications',
                             headers: {
                                 'Content-Type': 'application/json',
-                                'X-Ionic-Application-Id': appId,
-                                'Authorization': 'basic ' + auth
+                                'Authorization': 'Bearer ' + jwt
                             },
                             data: {
-                                "tokens": [node.devicetoken],
+                                "tokens": [node.pushToken],
+                                "profile": profile,
                                 "notification": {
-                                    "alert": "{#type#:#cms#,#tagupdated#:#" + rule.id + "#}"
+                                    "message": "{#type#:#cms#,#tagupdated#:#" + rule.id + "#}"
                                 }
                             }
                         };
@@ -182,7 +182,7 @@ angular.module('hfapp.controllers', [])
             }).error(function(data) {
                 var alertPopup = $ionicPopup.alert({
                     title: 'Login failed!',
-                    template: 'Please check your credentials!'
+                    template: 'Please check your Username Or Password!'
                 });
             });
         }
@@ -190,7 +190,7 @@ angular.module('hfapp.controllers', [])
     .controller('userprofileCtrl', function($scope, $rootScope, $ionicPopup) {
         $scope.update = function() {
             updateIonicUser($rootScope);
-            var alertPopup = $ionicPopup.alert({                
+            var alertPopup = $ionicPopup.alert({
                 template: 'Profile Updated Successfuly !'
             });
         }

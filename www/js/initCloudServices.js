@@ -1,8 +1,9 @@
 // Define relevant info
-var jwt = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI5NmJlNDZkNy1mMzU4LTQ4NDEtYmM4ZC02NTQ3ODdiMDhlMmUifQ.tJU0hfLNwNu_fljgsYrNtELVLGHAosSP16prO2I2CKs';
-  // Auth token for Bonsai Api
+var jwt = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJlZWMxM2RkMC01ZTMyLTQyNTItYWNlNy0zMDk1Njk2MTgwNjYifQ.MRhccCkK0yy_wYK57fRC13PB38xUPkFwtAiO8IMRBLY';
+// Auth token for Bonsai Api
 var authToken = "Basic " + btoa('gmfi1py62w' + ":" + '4g9jgk6eea');
 var tokens = [];
+var profile = "hfapp";
 var appId = 'c1f40904';
 var options = {
     'remember': true
@@ -17,8 +18,6 @@ details.custom = {
     'avatar': 'http://ionicframework.com/img/docs/mcfly.jpg'
 };
 
-// Encode your key
-//var auth = btoa(privateKey + ':');
 // Build the request object
 var req = {
     method: 'POST',
@@ -27,7 +26,7 @@ var req = {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer ' + jwt
     },
-    data: {
+    notification: {
         "tokens": tokens,
         "profile": "hfapp",
         "notification": {
@@ -50,7 +49,7 @@ function kickOffpush($rootScope, $ionicPopup, $ionicPlatform, $ionicPush) {
         "debug": true,
         "onNotification": function(notification) {
             // var text = notification._raw.text; -- for dummy push
-            var text = notification.title; // for real push
+            var text = notification.text; // for real push
             text = text.replace(/#/g, '"');
             var pushNote = $rootScope.$eval(text);
             $rootScope.pushNotes.push(pushNote);
