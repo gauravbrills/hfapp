@@ -4,7 +4,7 @@ var notificationType = {
     CMS: "cms"
 };
 
-angular.module('hfapp', ['ionic', 'ionic.service.core', 'ionic.service.push', 'ionic.service.analytics', 'hfapp.controllers', 'hfapp.services'])
+angular.module('hfapp', ['ionic', 'pdf', 'ionic.service.core', 'ionic.service.push', 'ionic.service.analytics', 'hfapp.controllers', 'hfapp.services'])
 
 .run(function($rootScope, $ionicPopup, $ionicPlatform, $ionicAnalytics, cms, $parse) {
     $ionicPlatform.ready(function() {

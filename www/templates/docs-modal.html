@@ -1,0 +1,48 @@
+<ion-modal-view style="width: 90%; height: 90%;top: 5%; left: 5%; right: 5%; bottom: 5%;">
+    <ion-header-bar class="bar bar-positive">
+        <h1 class="title">{{fundName}} Documents</h1>
+        <div class="buttons">
+            <button class="button button-icon ion-ios-close-outline" ng-click="alldocsModal.hide()">
+            </button>
+        </div>
+    </ion-header-bar>
+    <ion-content data-tap-disabled="true">
+        <div class="item hf-divider">
+            Account Statements
+        </div>
+        <div class="list card">
+            <div class="item item-avatar">
+                <img src="http://erasmus.teicm.gr/images/document/document.png" ng-click="openDocs('Q1 Sample Fund')">
+                <h2>Q1 Sample Fund</h2>
+                <p>03/01/2016</p>
+            </div>
+        </div>
+        <div class="list card">
+            <div class="item item-avatar">
+                <img src="http://erasmus.teicm.gr/images/document/document.png" ng-click="openDocs('Q2 Sample Fund')">
+                <h2>Q2 Sample Fund</h2>
+                <p>05/01/2016</p>
+            </div>
+        </div>
+        <div class="item hf-divider">
+            Quarterly Commentaries
+        </div>
+        <div class="list card">
+            <div class="item item-avatar">
+                <img src="http://erasmus.teicm.gr/images/document/document.png" ng-click="openDocs('Q3_Commentary')">
+                <h2>Q3_Commentary</h2>
+                  <p>09/01/2016</p>
+            </div>
+        </div>
+        <div class="item hf-divider">
+            Operating Reports
+        </div>
+        <div class="list card">
+            <div class="item item-avatar">
+                <img src="http://erasmus.teicm.gr/images/document/document.png" ng-click="openDocs('Q1_Operating_Report')">
+                <h2>Q1_Operating_Report</h2>
+                <p>03/01/2012</p>
+            </div>
+        </div>
+    </ion-content>
+</ion-modal-view>

@@ -38,9 +38,14 @@ angular.module('hfapp.controllers', [])
             $ionicLoading.show({
                 template: 'Saving and Propagating Rule'
             });
-            cms.update({
-                term: rule.id
-            }, rule).$promise.then(function(data) {
+            if (rule.codeValue) {
+                promise = cms.update({
+                    term: rule.codeValue
+                }, rule).$promise;
+            } else {
+                promise = cms.create(rule).$promise;
+            }
+            promise.then(function(data) {
                 // add tokens to push request and rule trigger
                 // get tokens
                 user.get().$promise.then(function(data) {
@@ -57,7 +62,7 @@ angular.module('hfapp.controllers', [])
                                 "tokens": [node.pushToken],
                                 "profile": profile,
                                 "notification": {
-                                    "message": "{#type#:#cms#,#tagupdated#:#" + rule.id + "#}"
+                                    "message": "{#type#:#cms#,#tagupdated#:#" + rule.codeValue + "#}"
                                 }
                             }
                         };
@@ -198,15 +203,17 @@ angular.module('hfapp.controllers', [])
     .controller('allfundsCtrl', function($rootScope, $scope, $ionicModal, $ionicLoading, $window, allfunds, allfundsmodel) {
         $scope.fundapproach = "All";
         $scope.graphCurr = 0;
+        $scope.material = '/data/HedgeFundSummary.pdf';
+        $scope.pdfUrl = $scope.material;
+
         // get all funds data
-        $scope.model = allfundsmodel.get();
-        //$scope.data = allfunds.getSortedFunds('{ "sort": { "fundName": { "order": "asc" }}}');
+        $scope.allfundsmodel = allfundsmodel.get();
         $scope.data = allfunds.getSortedFunds();
         $ionicLoading.show({
             template: 'Loading the awesome...'
         });
         $scope.data.$promise.then(function(data) {
-            $scope.model.$promise.then(function(model) {
+            $scope.allfundsmodel.$promise.then(function(model) {
                 createAllFundsViz($scope, $window, model, data);
                 $ionicLoading.hide();
             });
@@ -215,28 +222,30 @@ angular.module('hfapp.controllers', [])
                 scope: $scope,
                 animation: 'slide-in-up'
             }).then(function(modal) {
-                $scope.modal = modal;
+                $scope.allfundsModal = modal;
             });
+            $ionicModal.fromTemplateUrl('templates/docs-modal.html', {
+                scope: $scope,
+                animation: 'slide-in-up'
+            }).then(function(modal) {
+                $scope.alldocsModal = modal;
+            });
+            $ionicModal.fromTemplateUrl('templates/pdfview-modal.html', {
+                scope: $scope,
+                animation: 'slide-in-up'
+            }).then(function(modal) {
+                $scope.pdfview = modal;
+            });
+            // ...
             $scope.openFndVizModal = function() {
-                $scope.modal.show();
+                $scope.allfundsModal.show();
                 renderDataVizModal($scope);
-
             };
-            $scope.closeModal = function() {
-                $scope.modal.hide();
+            $scope.openDocs = function(docName) {
+                $scope.pdfview.show();
+                $scope.docName = docName;
             };
-            //Cleanup the modal when we're done with it!
-            $scope.$on('$destroy', function() {
-                $scope.modal.remove();
-            });
-            // Execute action on hide modal
-            $scope.$on('modal.hidden', function() {
-                // Execute action
-            });
-            // Execute action on remove modal
-            $scope.$on('modal.removed', function() {
-                // Execute action
-            });
+            cleanupModal($scope, [$scope.allfundsModal, $scope.alldocsModal]);
             // graph corousal
             $scope.openGraph = function openGraph(key) {
                     if (key == "NETRET") {

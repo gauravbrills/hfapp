@@ -21,7 +21,7 @@
                     <input type="text" placeholder="name" ng-model="profile.name">
                 </label>
                 <label class="item">
-                    <button class="button button-block button-positive" ng-click="update()">Update Profile </button>
+                    <button ion-track-tap="Profile Update" ion-track-data="{ user : profile.email }" class="button button-block button-positive" ng-click="update()">Update Profile </button>
                 </label>
             </div>
         </div>

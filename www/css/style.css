@@ -187,10 +187,23 @@ path.chord {
   stroke: #000;
   stroke-width: .25px;
 }
+path.fade {
+   display: none;
+ }
+
 #circle:hover path.fade {
-  display: none;
+  fill-opacity: .1;
 }
+
+#circle:hover path.show {
+  fill: #000;
+}
+
 .chartLabel {
   font: 16px sans-serif;
   fill: #666;
+}
+.hf-divider {
+    color: #FFFFFF;
+    background-color: #42A5F5
 }

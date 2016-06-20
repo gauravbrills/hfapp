@@ -24,7 +24,7 @@
                 <h2>Hi {{profile.name}}</h2>
             </div>
             <ion-list>
-                <ion-item menu-close href="#/app/acctsumm">
+                <ion-item ion-track-tap="AccountSummmary" ion-track-data="{ user : profile.name }" menu-close href="#/app/acctsumm">
                     Account Summary <i class="icon ion-home"></i>
                 </ion-item>
                 <ion-item menu-close href="#/app/allfunds">

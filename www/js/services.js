@@ -126,6 +126,12 @@ angular.module('hfapp.services', ['ngResource'])
                     'Authorization': authToken
                 }
             },
+            create: {
+                method: 'POST',
+                headers: {
+                    'Authorization': authToken
+                }
+            },
             delete: {
                 method: 'DELETE',
                 params: {
