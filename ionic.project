@@ -1,10 +1,4 @@
 {
   "name": "hfApp",
-  "app_id": "c1f40904",
-  "proxies": [
-    {
-      "path": "/api",
-      "proxyUrl": "http://es.pixelsorcery.in:9200/"
-    }
-  ]
+  "app_id": "b286ae2c"
 }
