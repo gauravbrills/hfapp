@@ -188,7 +188,11 @@ path.chord {
   stroke-width: .25px;
 }
 path.fade {
-   display: none;
+   fill-opacity: .1;
+ }
+
+ path.show {
+   fill: #000;
  }
 
 #circle:hover path.fade {

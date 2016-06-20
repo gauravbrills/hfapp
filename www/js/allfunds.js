@@ -238,38 +238,21 @@ function createAllFundsViz($scope, $window, model, funds, svg, arc, path, layout
         .data(layout.groups)
         .enter().append("g")
         .attr("class", "group")
-        .on("click", click)
-        .on("mouseover", mouseover)
-        .on("mouseout", mouseout);
-
-    function mouseover(d, i) {
-        chord.classed("fade", function(p) {
-            return p.source.index != i &&
-                p.target.index != i;
-        });
-
-        chord.classed("show", function(p) {
-            return p.source.index == i ||
-                p.target.index == i;
-        });
-    }
-
-    function mouseout(d, i) {
-        chord.classed("fade", function(p) {
-            return p.source.index != i &&
-                p.target.index != i;
-        });
-
-        chord.classed("show", function(p) {
-            return p.source.index == i ||
-                p.target.index == i;
-        });
-    }
+        .on("click", click);
 
     function click(d, i) {
+        chord.classed("fade", function(p) {
+            return p.source.index != i &&
+                p.target.index != i;
+        });
+
+        chord.classed("show", function(p) {
+            return p.source.index == i ||
+                p.target.index == i;
+        });
         populateFundInfo(i); // as in json 0th entry is different , generic info not fund specific
         document.getElementById("fundProps").style.display = 'block';
-      }
+    }
 
     function chordMouseover(d, i) {
         d3.select("#info")
