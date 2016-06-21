@@ -3,11 +3,12 @@
   "version": "1.0.0",
   "description": "hfapp : a data viz effort to make sense of Financial data",
   "dependencies": {
+    "angular-resource": "^1.5.7",
     "gulp": "^3.5.6",
-    "gulp-sass": "^1.3.3",
     "gulp-concat": "^2.2.0",
     "gulp-minify-css": "^0.3.0",
-    "gulp-rename": "^1.2.0"
+    "gulp-rename": "^1.2.0",
+    "gulp-sass": "^1.3.3"
   },
   "devDependencies": {
     "bower": "^1.3.3",

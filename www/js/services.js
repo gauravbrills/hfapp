@@ -1,10 +1,10 @@
 'use strict'
 angular.module('hfapp.services', ['ngResource'])
     .constant('ApiEndpoint', {
-        url: 'https://hf-harness-5501403966.us-east-1.bonsai.io'
+        url: '/test'
     })
     // For the real endpoint, we'd use this /api
-    // .constant('ApiEndpoint', {
+    // .constant('ApiEndpoint', {https://hf-harness-5501403966.us-east-1.bonsai.io
     //  url: 'http://elastic.pixelsorcery.in/elasticsearch'
     // })
     .service('LoginService', function($q, $rootScope, user, $ionicPopup, $ionicPlatform, $ionicPush) {
