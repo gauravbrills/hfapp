@@ -1,10 +1,10 @@
 // Define relevant info
-var jwt = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJlZWMxM2RkMC01ZTMyLTQyNTItYWNlNy0zMDk1Njk2MTgwNjYifQ.MRhccCkK0yy_wYK57fRC13PB38xUPkFwtAiO8IMRBLY';
+var jwt = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJkNDNlYmY2NC0yNTg1LTRiMmQtYjAxNi1iNGRlZTk4NjgyN2IifQ.Le4epmZvwCDbJlSniw9QRlHuTkSMnZYhTTYgPVFqNpA';
 // Auth token for Bonsai Api
 var authToken = "Basic " + btoa('gmfi1py62w' + ":" + '4g9jgk6eea');
 var tokens = [];
 var profile = "hfapp";
-var appId = 'b286ae2c';
+var appId = '756d4b92';
 var options = {
     'remember': true
 };
